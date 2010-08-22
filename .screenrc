@@ -1,0 +1,43 @@
+# ~/.screenrc
+
+defmonitor off
+defscrollback 10000
+deflogin on
+defflow off
+defutf8 on
+defbce on
+defhstatus "[screen ^En] ^Et"
+term screen-256color-bce
+terminfo rxvt* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo rxvt* ti@:te@
+#attrcolor b ".I"
+allpartial off
+autodetach on
+startup_message off
+unsetenv DISPLAY
+shell -$SHELL
+shelltitle "$ |terminal"
+nonblock on
+msgwait 2
+silencewait 15
+crlf off
+activity "active: %n (%t) [%w:%s]"
+vbell off
+vbell_msg ""
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+altscreen on
+
+#hardstatus alwayslastline "%{= w}%-w%{= Bk}%n %t%{-}%+w %-="
+sorendition +b kG
+
+bindkey "^[Od" prev  # change window with ctrl-left
+bindkey "^[Oc" next  # change window with ctrl-right
+bind k
+bind ^k
+bind K kill
+bind = resize =
+bind + resize +3
+bind - resize -3
+
+focus
+select 0
