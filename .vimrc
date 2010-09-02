@@ -93,8 +93,11 @@ set directory=/tmp		" swap file directory
 set backupskip+=*.gpg		" don't save backups of *.gpg files
 
 " {{{1 keymapping
+nmap <F3> diffget
+nmap <F4> diffput
+nmap <F7> [czz
+nmap <F8> ]czz
 set pastetoggle=<F5>		" stop indenting when pasting with the mouse 
-map Q gq
 
 " {{{2 toggle spell check
 let b:myLang=0
@@ -137,6 +140,9 @@ augroup encrypted
     \ silent u |
     \ setlocal nobin
 augroup END
+
+autocmd BufWrite *.pl
+    \ %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
 
 " {{{1 latex suite
 
