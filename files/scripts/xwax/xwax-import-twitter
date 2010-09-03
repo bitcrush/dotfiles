@@ -16,7 +16,7 @@ LPLYD="/tmp/xwax_last_played.txt"
 # check if a first track got loaded and twitter it bti (http://gregkh.github.com/bti/)
 if [ -f $LPLYD ]; then
     TWITUNE=$(cat $LPLYD | sed 's/^[0-9]*\ //;s/\.mp3$\|\.flac$\|\.wav$\|\.ogg$//')
-    echo "np: $TWITUNE" | bti 1> /dev/null 2> /dev/null &
+    echo "#nowplaying: $TWITUNE http://streaming.fueralle.org:8000/radiot.ogg.m3u #dnb #drumandbass" | bti 1> /dev/null 2> /dev/null &
     echo $(basename "$FILE") > $LPLYD
 else
     unset TWITUNE
