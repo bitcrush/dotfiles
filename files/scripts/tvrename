@@ -84,7 +84,14 @@ $WGET -q $EPURL -O $LIST
 
 # regex episode title to taste
 EPTIT=$(cat $LIST | grep -e "\s$SEASON-$EPISODE" | \
-    sed -r "s/^.*[0-9]'>//;s/<\/a.*$//;s/\b(.)/\U\1/g;s/[,;:\?\!]//g;s/\&/And/g;s/\.\ /\ /g;s/'(.)/'\L\1/g;s/\ /./g")
+    sed -r "s/^.*[0-9]'>//;\
+	    s/<\/a.*$//;\
+	    s/\b(.)/\U\1/g;\
+	    s/[,;:\?\!]//g;\
+	    s/\&/And/g;\
+	    s/\.\ /\ /g;\
+	    s/'(.)/'\L\1/g;\
+	    s/\ /./g")
 
 # prefix single digit seasons with a 0 (e.g.: S05)
 if [ "`echo $SEASON | wc -m`" == "2" ] ; then SEASON="0$SEASON"; fi
