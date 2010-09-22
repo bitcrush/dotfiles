@@ -1,0 +1,100 @@
+#!/bin/bash 
+
+# this script determines show, season, episode and title
+# of a given tv-show file and labels it according to the
+# information fetched from epguides.com
+#
+# the resulting filename pattern looks like this:
+# [show].S[season]E[episode].[episode title].[file extension]
+
+FILENAME=$(basename $1 | sed 's/\(.*\)/\L\1/')  # lowercase filename
+EXT=${FILENAME##*.}  # determine filetype extension
+WGET=$(which wget)  # determine path to wget
+
+# usage help
+if [ "$#" != "1" ]; then
+    echo "Usage: $0 filename"
+    exit 1
+fi
+
+# determine name of the show and set url
+case $FILENAME in
+    two.and.a.half.men.*)
+	SHOW="Two.And.A.Half.Men"
+	EPURL="http://epguides.com/TwoAndAHalfMen/"
+	;;
+    *big.bang.theory.*)
+	SHOW="The.Big.Bang.Theory"
+	EPURL="http://epguides.com/BigBangTheory/"
+	;;
+    futurama.*)
+	SHOW="Futurama"
+	EPURL="http://epguides.com/Futurama/"
+	;;
+    *boondocks.*)
+	SHOW="The.Boondocks"
+	EPURL="http://epguides.com/Boondocks/"
+	;;
+    *boardwalk.empire.*)
+	SHOW="Boardwalk.Empire"
+	EPURL="http://epguides.com/BoardwalkEmpire/"
+	;;
+    breaking.bad.*)
+	SHOW="Breaking.Bad"
+	EPURL="http://epguides.com/BreakingBad/"
+	;;
+    dexter.*)
+	SHOW="Dexter"
+	EPURL="http://epguides.com/Dexter/"
+	;;
+    american.dad.*)
+	SHOW="American.Dad"
+	EPURL="http://epguides.com/AmericanDad/"
+	;;
+    family.guy.*)
+	SHOW="Family.Guy"
+	EPURL="http://epguides.com/FamilyGuy/"
+	;;
+    *cleveland.show.*)
+	SHOW="The.Cleveland.Show"
+	EPURL="http://epguides.com/ClevelandShow/"
+	;;
+    the.simpsons.*)
+	SHOW="The.Simpsons"
+	EPURL="http://epguides.com/Simpsons/"
+	;;
+    south.park.*)
+	SHOW="South.Park"
+	EPURL="http://epguides.com/SouthPark/"
+	;;
+    *)
+	echo "Whut ? The show is unknown."
+	exit 1
+	;;
+esac
+
+# extract numbers of season and episode from the filename
+SEASEP=$(echo $FILENAME | grep -oE 's[0-9]*e[0-9]*')
+SEASON=$(echo $SEASEP | grep -oE 's[0-9]*' | sed 's/s0\|s//g')
+EPISODE=$(echo $SEASEP | grep -oE 'e[0-9]*' | sed 's/e//g')
+
+# fetch episode list and save to file
+LIST="/tmp/$SHOW.list"
+$WGET -q $EPURL -O $LIST
+
+# regex episode title to taste
+EPTIT=$(cat $LIST | grep -e "\s$SEASON-$EPISODE" | \
+    sed -r "s/^.*[0-9]'>//;s/<\/a.*$//;s/\b(.)/\U\1/g;s/[,;:\?\!]//g;s/\&/And/g;s/\.\ /\ /g;s/'(.)/'\L\1/g;s/\ /./g")
+
+# prefix single digit seasons with a 0 (e.g.: S05)
+if [ "`echo $SEASON | wc -m`" == "2" ] ; then SEASON="0$SEASON"; fi
+
+# concatenate the filename pattern
+NEWTIT="$SHOW.S$SEASON"E"$EPISODE.$EPTIT.$EXT"
+
+echo $NEWTIT
+
+# clean up
+rm $LIST
+
+exit 0
