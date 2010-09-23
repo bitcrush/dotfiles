@@ -99,6 +99,9 @@ nmap <F7> [czz
 nmap <F8> ]czz
 set pastetoggle=<F5>		" stop indenting when pasting with the mouse 
 
+" {{{1 commands
+command -range=% Sprunge :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us | xclip
+
 " {{{2 toggle spell check
 let b:myLang=0
 let g:myLangList=["nospell","de_de","en_us"]
