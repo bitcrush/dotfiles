@@ -44,6 +44,7 @@ alias exit="clear; exit"
 alias irssi='screen -D -R irssi irssi'
 alias rtorrent='screen -D -R rtorrent rtorrent'
 alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
+alias rbots='ssh -t bha screen -D -r bots'
 alias newsbeuter='TERM=xterm newsbeuter'
 alias chm-d="find -type d -exec chmod 755 {} \;"
 alias chm-f="find -type f -exec chmod 644 {} \;"
