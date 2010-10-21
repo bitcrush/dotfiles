@@ -2,9 +2,10 @@
 
 Xft.dpi:		96
 Xft.antialias:		True
-Xft.hinting:		full
+Xft.autohint:		False
+Xft.hinting:		True
 Xft.hintstyle:		hintslight
-Xft.rgba:		subpixel
+Xft.rgba:		rgb
 Xft.lcdfilter:		lcddefault
 
 Xcursor.theme:		Neutral_Plus
@@ -15,10 +16,10 @@ URxvt*borderWidth:	0
 URxvt*cursorBlink:	False
 URxvt*cursorColor:	#d8d8d8
 !URxvt*fading:		20
-URxvt*font:		xft:Terminus:size=8:autohint=true
-URxvt*boldFont:		xft:Terminus:style=bold:size=8:autohint=true
-URxvt*italicFont:	xft:Terminus:style=italic:size=8:autohint=true
-URxvt*boldItalicFont:	xft:Terminus:style=bolditalic:size=8:autohint=true
+URxvt*font:		xft:Terminus:size=8
+URxvt*boldFont:		xft:Terminus:style=bold:size=8
+URxvt*italicFont:	xft:Terminus:style=italic:size=8
+URxvt*boldItalicFont:	xft:Terminus:style=bolditalic:size=8
 URxvt*inheritPixmap:	False
 URxvt*internalBorder:	4
 URxvt*jumpScroll:	True
