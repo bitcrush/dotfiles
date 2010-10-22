@@ -57,6 +57,7 @@ case $FILENAME in
 	EPURL="http://epguides.com/BreakingBad/"
 	;;
     dexter*)
+	SHOW="Dexter"
 	EPURL="http://epguides.com/Dexter/"
 	;;
     american?dad*)
