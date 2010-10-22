@@ -189,6 +189,10 @@ genpasswd() {
 	tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 
+shdebug() {
+	env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' sh -x $*
+}
+
 function zle-line-init zle-keymap-select {
     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
     RPS2=$RPS1
