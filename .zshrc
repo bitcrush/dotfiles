@@ -3,6 +3,26 @@
 # $HOME/.zshrc
 # vim: fdm=marker ts=4 sw=4
 
+# environment {{{1
+# Dircolors...
+eval `dircolors -b`
+ 
+# Exports
+typeset -U path
+path=($HOME/bin/ $path)
+test -n "$DISPLAY" && export TERM='rxvt-256color'
+export LC_ALL='en_US.utf8'
+export LANGUAGE='en_US.utf8'
+export LOCALE='en_US.utf8'
+export LC_COLLATE='C'
+export EDITOR='vim'
+export PAGER='less'
+export VISUAL='vim'
+export BROWSER='firefox'
+export HISTCONTROL='ignoredups'
+export MOZ_DISABLE_PANGO=1
+#export OOO_FORCE_DESKTOP='gnome'
+
 # source files {{{1
 source ~/.zsh/style
 #source ~/.zsh/zle
