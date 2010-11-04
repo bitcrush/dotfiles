@@ -23,6 +23,15 @@ export HISTCONTROL='ignoredups'
 export MOZ_DISABLE_PANGO=1
 #export OOO_FORCE_DESKTOP='gnome'
 
+# color manpages without using most
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
 # source files {{{1
 source ~/.zsh/style
 #source ~/.zsh/zle
@@ -61,8 +70,9 @@ alias fgit="cd /mnt/sdb3/cache/git/"
 alias fxwax="cd /mnt/sdb3/xwax/"
 alias grep='grep --color=auto -d skip'
 alias exit="clear; exit"
-alias irssi='screen -D -R irssi irssi'
+alias irssi="screen -D -R irssi irssi"
 alias rtorrent='screen -D -R rtorrent rtorrent'
+alias wrk='screen -c $XDG_CONFIG_HOME/scriptz/screen-wrk -D -R wrk'
 alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
 alias rbots='ssh -t bha screen -D -r bots'
 alias newsbeuter='TERM=xterm newsbeuter'
