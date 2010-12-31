@@ -62,6 +62,8 @@ alias ls="ls -A -h --group-directories-first -F --color=auto"
 alias lb="ls -A -s --block-size=1 --group-directories-first -F --color=auto"
 alias ll="ls --group-directories-first --color -l -F"
 alias rm="rm -I"
+alias cp="advcp -g"
+alias mv="advmv -g"
 alias dl="cd /home/racoon/files/downloads"
 alias music="cd /mnt/music/music"
 alias fkvm="cd /mnt/sdb3/kvm"
@@ -71,7 +73,7 @@ alias fxwax="cd /mnt/sdb3/xwax/"
 alias grep='grep --color=auto -d skip'
 alias exit="clear; exit"
 alias irssi="screen -D -R irssi irssi"
-alias rtorrent='screen -D -R rtorrent rtorrent'
+#alias rtorrent='screen -D -R rtorrent rtorrent'
 alias wrk='screen -c $XDG_CONFIG_HOME/scriptz/screen-wrk -D -R wrk'
 alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
 alias rbots='ssh -t bha screen -D -r bots'
