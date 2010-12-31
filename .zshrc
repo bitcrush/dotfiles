@@ -130,33 +130,33 @@ HISTSIZE=3000
 SAVEHIST=3000
 
 # options {{{1
-setopt automenu				# use menu completion after 2nd TAB
-setopt autocd				# try cd command if not executable
-setopt autopushd			# automatically append dirs to the push/pop list
-setopt pushd_minus			# switch + and - when used on directory stack number
-setopt globdots				# no leading . in a filename required to be matched
-setopt noclobber			# use >! and >>! instead of > and >> to create or truncate files
-setopt histreduceblanks		# remove superfluous blanks from history lines
-setopt histignorespace		# remove history lines with leading space
-setopt sharehistory			# share history in realtime between shells and use timestamps
-#setopt incappendhistory	# every zsh session appends to history file (without waiting til shell exits)
-#setopt extendedhistory		# puts timestamps in the history
-setopt pushdignoredups		# don't push duplicates onto the directory stack
-setopt histignorealldups	# remove duplicates from history
-#setopt cdablevars			# avoid the need for an explicit $
-setopt nohup				# and don't kill them, either
-setopt nolisttypes			# show types in completion
-setopt extendedglob			# weird & wacky pattern matching - yay zsh!
-setopt completeinword		# not just at the end
-setopt alwaystoend			# when complete from middle, move cursor
-setopt nopromptcr			# don't add \n which overwrites cmds with no \n
-setopt histverify			# when using ! cmds, confirm first
-setopt interactivecomments	# escape commands so i can use them later
-setopt nobeep				# turn off beeps
+setopt automenu             # use menu completion after 2nd TAB
+setopt autocd               # try cd command if not executable
+setopt autopushd            # automatically append dirs to the push/pop list
+setopt pushd_minus          # switch + and - when used on directory stack number
+setopt globdots             # no leading . in a filename required to be matched
+setopt noclobber            # use >! and >>! instead of > and >> to create or truncate files
+setopt histreduceblanks     # remove superfluous blanks from history lines
+setopt histignorespace      # remove history lines with leading space
+setopt sharehistory         # share history in realtime between shells and use timestamps
+#setopt incappendhistory    # every zsh session appends to history file (without waiting til shell exits)
+#setopt extendedhistory     # puts timestamps in the history
+setopt pushdignoredups      # don't push duplicates onto the directory stack
+setopt histignorealldups    # remove duplicates from history
+#setopt cdablevars          # avoid the need for an explicit $
+setopt nohup                # and don't kill them, either
+setopt nolisttypes          # show types in completion
+setopt extendedglob         # weird & wacky pattern matching - yay zsh!
+setopt completeinword       # not just at the end
+setopt alwaystoend          # when complete from middle, move cursor
+setopt nopromptcr           # don't add \n which overwrites cmds with no \n
+setopt histverify           # when using ! cmds, confirm first
+setopt interactivecomments  # escape commands so i can use them later
+setopt nobeep               # turn off beeps
 
 
 # completion {{{1
-compctl -/ cd				# type a dir's name to cd into it
+compctl -/ cd               # type a dir's name to cd into it
 
 # functions {{{1
 extract () {
@@ -216,13 +216,13 @@ mkcd () { mkdir "$1" && cd "$1"; }
 psgrep () { ps ax | grep $1 | grep -v grep }
 
 genpasswd() {
-	local l=$1
-	[ "$l" == "" ] && l=20
-	tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
+    local l=$1
+    [ "$l" == "" ] && l=20
+    tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 
 shdebug() {
-	env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' sh -x $*
+    env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' sh -x $*
 }
 
 function zle-line-init zle-keymap-select {
