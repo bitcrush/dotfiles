@@ -13,11 +13,13 @@ Xcursor.theme:		Neutral_Plus
 ! ---| urxvt |--- {{{1
 URxvt*depth:		24
 URxvt*borderWidth:	0
+URxvt*buffered:		True
 URxvt*cursorBlink:	False
 URxvt*cursorColor:	#d8d8d8
 !URxvt*fading:		20
 URxvt*font:		xft:Terminus:size=8
 URxvt*boldFont:		xft:Terminus:style=bold:size=8
+URxvt*intensityStyles:	True
 URxvt*italicFont:	xft:Terminus:style=italic:size=8
 URxvt*boldItalicFont:	xft:Terminus:style=bolditalic:size=8
 URxvt*inheritPixmap:	False
@@ -31,8 +33,10 @@ URxvt*scrollTtyKeypress:True
 URxvt*scrollTtyOutput:	False
 URxvt*scrollwithbuffer:	False
 URxvt*secondaryScroll:	True
+URxvt*skipScroll:	True
 URxvt*termName:		rxvt-256color
 URxvt*urgentOnBell: 	True
+URxvt*visualBell:	false
 
 ! Real transparency (with composite and xcompmgr)
 !urxvtTrans*depth:      32
@@ -46,139 +50,20 @@ URxvt*matcher.button:	1
 URxvt*matcher.pattern.0: \\b(?:(?:https?|ftp):\/\/|mailto:)[\\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+ [\\w\-\@;\/?:&=%\$_+!*\x27()~]
 URxvt*matcher.pattern.1: \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
 URxvt*matcher.pattern.2: \\bhttp:\/\/(www.youtube|youtube).com\/watch\\?v=([\\w-]*)
-URxvt*matcher.launcher.2: /home/racoon/files/scripts/youtube-dl
+!URxvt*matcher.launcher.2: /home/racoon/files/scripts/youtube-dl
 URxvt*tabbed.tabbar-fg:	7
 URxvt*tabbed.tabbar-bg:	8
 URxvt*tabbed.tab-fg:	15
 URxvt*tabbed.tab-bg:	8
 
-! ---| zenburn colors |--- {{{1
-URxvt*background:  #3a3a3a
-URxvt*foreground:  #dcdccc
-! black 
-URxvt*color0:      #1E2320
-URxvt*color8:      #709080
-! red
-URxvt*color1:      #705050
-URxvt*color9:      #dca3a3
-! green
-URxvt*color2:      #60b48a
-URxvt*color10:     #c3bf9f
-! yellow
-URxvt*color3:      #dfaf8f
-URxvt*color11:     #f0dfaf
-! blue
-URxvt*color4:      #506070
-URxvt*color12:     #94bff3
-! magenta
-URxvt*color5:      #dc8cc3
-URxvt*color13:     #ec93d3
-! cyan
-URxvt*color6:      #8cd0d3
-URxvt*color14:     #93e0e3
-! white
-URxvt*color7:      #dcdccc
-URxvt*color15:     #ffffff
-! ---| sicpsnake colors |--- {{{1
-!*background:    #292929
-!*foreground:    #ffffff
-!! Black
-!*color0:    #404040
-!*color8:    #505050
-!! Red
-!*color1:    #CE5666
-!*color9:    #952743
-!! Green
-!*color2:    #80A673
-!*color10:    #97D599
-!! Yellow
-!*color3:    #E0BC93
-!*color11:    #FFCAA2
-!! Blue
-!*color4:    #778BAF
-!*color12:    #5A667F
-!! Magenta
-!*color5:    #94738C
-!*color13:    #D8ADCE
-!! Cyan
-!*color6:    #B5D2DD
-!*color14:    #82A9CC
-!! White
-!*color7:    #d2d2d2
-!*color15:    #ffffff
-! ---| jhvid colors |--- {{{1
-!*background: #353333
-!*foreground: #ffffff
-!*color0: #464444
-!*color8: #8a8888
-!*color1: #EF3460
-!*color9: #F25A7D
-!*color2: #BDEF34
-!*color10: #DCF692
-!*color3: #EFC334
-!*color11: #F6DF92
-!*color4: #34BDEF
-!*color12: #92AAF6
-!*color5: #B300FF
-!*color13: #DF92F6
-!*color6: #3DD8FF
-!*color14: #5AF2CE
-!*color7: #FFFFFF
-!*color15: #FFFFFF
-! ---| thayers colors |--- {{{1
-!*background:		#1b1d1e
-!*foreground:		#a0a0a0
-! Black
-!*color0:		#000000
-!*color8:		#505354
-! Red
-!*color1:		#f92672
-!*color9:		#ff669d
-! Green
-!*color2:		#a6e22e
-!*color10:		#beed5f
-! Yellow
-!*color3:		#fd971f
-!*color11:		#e6db74
-! Blue
-!*color4:		#66d9ef
-!*color12:		#66d9ef
-! Magenta
-!*color5:		#9e6ff3
-!*color13:		#9e6ff3
-! Cyan 
-!*color6:		#5e7175
-!*color14:		#a3babf
-! White
-!*color7:		#ccccc6
-!*color15:		#f8f8f2
-! ---| default colors |--- {{{1
-!*background:		#262626
-!*foreground:		#bababa
-! Black
-!*color0:		#000000
-!*color8:		#585858
-! Red
-!*color1:		#ff6565
-!*color9:		#D84848
-! Green
-!*color2:		#5dce4c
-!*color10:		#7ccb2a
-! Yellow
-!*color3:		#eab93d
-!*color11:		#ffc123
-! Blue
-!*color4:		#204a87
-!*color12:		#3465a4
-! Magenta
-!*color5:		#ce5c00
-!*color13:		#f57900
-! Cyan 
-!*color6:		#89b6e2
-!*color14:		#46a4ff
-! White
-!*color7:		#cccccc
-!*color15:		#ffffff
+! ---| colors |--- {{{1
+!#include "/home/racoon/.themes/terminal_colors/default.xcolors"
+!#include "/home/racoon/.themes/terminal_colors/jhvid.xcolors"
+!#include "/home/racoon/.themes/terminal_colors/sicpsnake.xcolors"
+!#include "/home/racoon/.themes/terminal_colors/thayer.xcolors"
+!#include "/home/racoon/.themes/terminal_colors/theywillknow.xcolors"
+#include "/home/racoon/.themes/terminal_colors/zenburn.xcolors"
+
 ! ---| xcalc |--- {{{1
 xcalc*geometry:				200x275
 xcalc*font:				-*-terminus-medium-r-*-*-14-120-*-*-*-*-*-*
@@ -226,6 +111,7 @@ xcalc.ti.button38.background:		#555595
 xcalc.ti.button39.background:		#555595
 XCalc*Cursor:				hand2
 XCalc*ShapeStyle:			rectangle
+
 ! ---| xmessage |--- {{{1
 xmessage*maxWidth:		400
 xmessage*maxHeight:		200
@@ -246,3 +132,4 @@ xmessage*form.message.Scroll:	WhenNeeded
 xmessage*Command.highlightThickness:    1
 xmessage*Command.internalWidth:         5
 xmessage*Command.internalHeight:        3
+
