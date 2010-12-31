@@ -5,8 +5,22 @@
 " Capitalize the first character of all words -> :s/\<[a-z]/\u&/g
 
 " {{{1 settings
+" set 256 colors if supported by terminal
+if $TERM =~ "-256color"
+  set t_Co=256
+  colorscheme zenburn
+else
+  colorscheme default
+endif
+
+" set the window title in screen
+if $STY != ""
+  set t_ts=k
+  set t_fs=\
+endif
+
 set nocompatible		" Use Vim defaults instead of 100% vi compatibility
-set t_Co=256			" support 256color terminals
+"set t_Co=256			" support 256color terminals
 set encoding=utf-8		" UTF-8 by default
 set backspace=indent,eol,start	" more powerful backspacing
 set shell=/bin/sh		" default shell
@@ -24,6 +38,10 @@ set complete=.,t,i,b,w,k	" set matches for insert-mode completion
 set infercase			" completion recognizes capitalization
 set whichwrap=h,l,<,>,[,]	" allow jumping to their closing chars
 set clipboard+=unnamed		" use system clipboard
+
+" default comment symbols
+let g:StartComment="#"
+let g:EndComment=""
 
 " {{{1 look
 set showcmd			" display incomplete commands
@@ -45,7 +63,6 @@ set splitbelow			" put new split windows below
 set cmdheight=1			" cmdprompt height
 set laststatus=2		" show status line
 set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|%=%3p%%
-colorscheme	zenburn
 
 if has('mouse')
   set mouse=a
@@ -74,7 +91,7 @@ set smartcase			" search: use case if any caps used
 set magic			" Use some magic in search patterns?  Certainly!
 
 " {{{1 indenting
-set noexpandtab			" Don't insert spaces instead of tab chars
+set expandtab			" insert spaces instead of tab chars
 set tabstop=8			" a n-space tab width
 set softtabstop=4		" counts n spaces when DELETE or BCKSPCE is used
 set shiftwidth=4		" allows the use of < and > for VISUAL indenting
@@ -93,11 +110,40 @@ set directory=/tmp		" swap file directory
 set backupskip+=*.gpg		" don't save backups of *.gpg files
 
 " {{{1 keymapping
-nmap <F3> diffget
-nmap <F4> diffput
-nmap <F7> [czz
-nmap <F8> ]czz
+" unmap annoying keys
+nnoremap q: <Nop>
+nnoremap q/ <Nop>
+nnoremap q? <Nop>
+
+" quicker window navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" quicker buffer navigation
+nnoremap <C-n> :next<CR>
+nnoremap <C-p> :prev<CR>
+
+" comment/uncomment a visual block
+vmap <LocalLeader>c :call CommentLines()<CR>
+
+" vimdiff keybinds
+nmap <F7> [czz			" jump to previous diff code
+nmap <F8> ]czz			" jump to next diff code
+
 set pastetoggle=<F5>		" stop indenting when pasting with the mouse 
+
+" {{{1 functions
+function! CommentLines()
+  try
+    execute ":s@^".g:StartComment."@\@g"
+    execute ":s@".g:EndComment."$@@g"
+  catch
+    execute ":s@^@".g:StartComment."@g"
+    execute ":s@$@".g:EndComment."@g"
+  endtry
+endfunction
 
 " {{{1 commands
 command -range=% Sprunge :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us | xclip
@@ -120,34 +166,43 @@ nmap <silent> <F2> :call ToggleSpell()<CR>
 imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 
 " {{{1 autocommands
-augroup encrypted
-  au!
-  " Disable swap files, and set binary file format before reading the file
-  autocmd BufReadPre,FileReadPre *.gpg
-    \ setlocal viminfo=
-    \ setlocal noswapfile bin
-  " Decrypt the contents after reading the file, reset binary file format
-  " and run any BufReadPost autocmds matching the file name without the .gpg
-  " extension
-  autocmd BufReadPost,FileReadPost *.gpg
-    \ execute "'[,']!gpg --decrypt --default-recipient-self" |
-    \ setlocal nobin |
-    \ execute "doautocmd BufReadPost " . expand("%:r")
-  " Set binary file format and encrypt the contents before writing the file
-  autocmd BufWritePre,FileWritePre *.gpg
-    \ setlocal bin |
-    \ '[,']!gpg --encrypt --default-recipient-self
-  " After writing the file, do an :undo to revert the encryption in the
-  " buffer, and reset binary file format
-  autocmd BufWritePost,FileWritePost *.gpg
-    \ silent u |
-    \ setlocal nobin
-augroup END
 
-autocmd BufWrite *.pl
-    \ %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
+if has('autocmd')
+    " vim itself
+    au FileType vim let g:StartComment = "\""
+    au BufWritePost ~/.vimrc source %
 
-" {{{1 latex suite
+    " gpg encrypted files
+    augroup encrypted
+	au!
+    	" Disable swap files, and set binary file format before reading the file
+    	autocmd BufReadPre,FileReadPre *.gpg
+    	  \ setlocal viminfo=
+    	  \ setlocal noswapfile bin
+    	" Decrypt the contents after reading the file, reset binary file format
+    	" and run any BufReadPost autocmds matching the file name without the .gpg
+    	" extension
+    	autocmd BufReadPost,FileReadPost *.gpg
+    	  \ execute "'[,']!gpg --decrypt --default-recipient-self" |
+    	  \ setlocal nobin |
+    	  \ execute "doautocmd BufReadPost " . expand("%:r")
+    	" Set binary file format and encrypt the contents before writing the file
+    	autocmd BufWritePre,FileWritePre *.gpg
+    	  \ setlocal bin |
+    	  \ '[,']!gpg --encrypt --default-recipient-self
+    	" After writing the file, do an :undo to revert the encryption in the
+    	" buffer, and reset binary file format
+    	autocmd BufWritePost,FileWritePost *.gpg
+    	  \ silent u |
+    	  \ setlocal nobin
+    augroup END
+    
+    autocmd BufWrite *.pl
+        \ %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
+endif
+
+" {{{1 plugin options
+" {{{2 latex suite
 
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
@@ -158,3 +213,7 @@ set grepprg=grep\ -nH\ $*
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+
+" {{{2 gist
+let g:gist_clip_command='xclip -selection clipboard'
+let g:gist_browser_command = 'firefox %URL% &'
