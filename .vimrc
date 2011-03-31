@@ -3,6 +3,7 @@
 
 " tips
 " Capitalize the first character of all words -> :s/\<[a-z]/\u&/g
+" :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g
 
 " {{{1 settings
 " set 256 colors if supported by terminal
@@ -126,7 +127,7 @@ nnoremap <C-n> :next<CR>
 nnoremap <C-p> :prev<CR>
 
 " comment/uncomment a visual block
-vmap <LocalLeader>c :call CommentLines()<CR>
+vmap <C-c> :call CommentLines()<CR><CR>
 
 " vimdiff keybinds
 nmap <F7> [czz			" jump to previous diff code
@@ -172,6 +173,11 @@ if has('autocmd')
     au FileType vim let g:StartComment = "\""
     au BufWritePost ~/.vimrc source %
 
+    " filetype detection for gmsh files
+    augroup filetypedetect
+        au! BufRead,BufNewFile *.geo,*.GEO        setfiletype gmsh
+    augroup END
+ 
     " gpg encrypted files
     augroup encrypted
 	au!
