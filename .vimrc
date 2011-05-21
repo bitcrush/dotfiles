@@ -9,7 +9,12 @@
 " set 256 colors if supported by terminal
 if $TERM =~ "-256color"
   set t_Co=256
-  colorscheme zenburn
+    if &diff
+        set background=dark
+        colorscheme peaksea
+    else
+        colorscheme zenburn
+    endif
 else
   colorscheme default
 endif
@@ -44,6 +49,8 @@ set clipboard+=unnamed		" use system clipboard
 let g:StartComment="#"
 let g:EndComment=""
 
+let g:is_posix=1
+
 " {{{1 look
 set showcmd			" display incomplete commands
 set showmode			" show current mode
@@ -63,7 +70,8 @@ set t_vb=			" no argument means no flash for visual bell
 set splitbelow			" put new split windows below
 set cmdheight=1			" cmdprompt height
 set laststatus=2		" show status line
-set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|%=%3p%%
+set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|\ %{fugitive#statusline()}\ %=%3p%%
+
 
 if has('mouse')
   set mouse=a
