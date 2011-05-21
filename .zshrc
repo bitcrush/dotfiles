@@ -9,7 +9,7 @@ eval `dircolors -b`
  
 # Exports
 typeset -U path
-path=($HOME/bin/ $path)
+path=($HOME/bin/ /usr/bin/core_perl/ /usr/bin/vendor_perl/ $path)
 test -n "$DISPLAY" && export TERM='rxvt-256color'
 export LC_ALL='en_US.utf8'
 export LANGUAGE='en_US.utf8'
@@ -55,8 +55,7 @@ alias e="$EDITOR"
 alias l="$PAGER"
 alias m="mplayer"
 alias p="pacman"
-alias b="bauerbill"
-alias ba="bauerbill --aur"
+alias y="yaourt"
 alias s="sudo "
 alias ls="ls -A -h --group-directories-first -F --color=auto"
 alias lb="ls -A -s --block-size=1 --group-directories-first -F --color=auto"
@@ -85,44 +84,9 @@ alias myip="wget -q http://whatismyip.org -O - | cat && echo"
 alias awreload="echo 'awesome.restart()' | awesome-client"
 alias rreconn="wget -O - --post-data 'disconnect=Trennen' http://192.168.2.1/cgi-bin/statusprocess.exe > /dev/null 2> /dev/null"
 alias ledoff="ssh rr gpio enable 3"
+alias aljazeera="rtmpdump -v -r rtmp://livestfslivefs.fplive.net/livestfslive-live/ -y "aljazeera_en_veryhigh" -a "aljazeeraflashlive-live" -o -| mplayer -"
+alias defrag="quake3 +set fs_game defrag +disconnect"
 alias startx="startx -nolisten tcp"
-
-# prompt {{{1
-case $TERM in
-    *xterm*|rxvt|rxvt-unicode|rxvt-256color|(dt|k|E)term)
-        precmd () { print -Pn "\e]0;%~\a" }
-        preexec () { print -Pn "\e]0;%~ ($1)\a" }
-    ;;
-    screen)
-        precmd () {
-            print -Pn "\e]83;title \"$1\"\a"
-            print -Pn "\e]0;%n@%M [%~]\a"
-        }
-        preexec () {
-            print -Pn "\e]83;title \"$1\"\a"
-            print -Pn "\e]0;%n@%M [%~] ($1)\a"
-        }
-    ;;
-esac
-
-setprompt () {
-    autoload -U colors zsh/terminfo
-    colors
-    setopt prompt_subst
- 
-    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-        eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-        eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-    done
-    PR_NO_COLOR="%{$terminfo[sgr0]%}"
-    PR_USER="%n"
-    PR_DATE="%T"
- 
-    PROMPT=$'${PR_GREEN}${PR_USER}${PR_NO_COLOR} ${PR_WHITE}%~${PR_NO_COLOR} ${PR_MAGENTA}»${PR_NO_COLOR} '
-    #RPROMPT=$'${PR_MAGENTA}«${PR_NO_COLOR} ${PR_BLUE}${PR_DATE}${PR_NO_COLOR}'
-}
- 
-setprompt
 
 # history {{{1
 HISTFILE=~/.zsh/history
@@ -130,59 +94,75 @@ HISTSIZE=3000
 SAVEHIST=3000
 
 # options {{{1
-setopt automenu             # use menu completion after 2nd TAB
-setopt autocd               # try cd command if not executable
-setopt autopushd            # automatically append dirs to the push/pop list
-setopt pushd_minus          # switch + and - when used on directory stack number
-setopt globdots             # no leading . in a filename required to be matched
-setopt noclobber            # use >! and >>! instead of > and >> to create or truncate files
-setopt histreduceblanks     # remove superfluous blanks from history lines
-setopt histignorespace      # remove history lines with leading space
-setopt sharehistory         # share history in realtime between shells and use timestamps
-#setopt incappendhistory    # every zsh session appends to history file (without waiting til shell exits)
-#setopt extendedhistory     # puts timestamps in the history
-setopt pushdignoredups      # don't push duplicates onto the directory stack
-setopt histignorealldups    # remove duplicates from history
+setopt alwaystoend          # when complete from middle, move cursor
+setopt auto_cd              # try cd command if not executable
+setopt auto_menu            # use menu completion after 2nd TAB
+setopt auto_pushd           # automatically append dirs to the push/pop list
 #setopt cdablevars          # avoid the need for an explicit $
+setopt completeinword       # not just at the end
+setopt extendedglob         # weird & wacky pattern matching - yay zsh!
+#setopt extendedhistory     # puts timestamps in the history
+unsetopt flow_control       # if unset, output flow control via start/stop characters (usually assigned to ^S/^Q) is disabled
+setopt globdots             # no leading . in a filename required to be matched
+setopt histignorealldups    # remove duplicates from history
+setopt histignorespace      # remove history lines with leading space
+setopt histreduceblanks     # remove superfluous blanks from history lines
+setopt histverify           # when using ! cmds, confirm first
+#setopt incappendhistory    # every zsh session appends to history file (without waiting til shell exits)
+setopt interactivecomments  # escape commands so i can use them later
+unsetopt menu_complete      # do not autoselect the first completion entry
+setopt multios              # perform implicit tees or cats when multiple redirections are attempted
+setopt nobeep               # turn off beeps
+setopt noclobber            # use >! and >>! instead of > and >> to create or truncate files
 setopt nohup                # and don't kill them, either
 setopt nolisttypes          # show types in completion
-setopt extendedglob         # weird & wacky pattern matching - yay zsh!
-setopt completeinword       # not just at the end
-setopt alwaystoend          # when complete from middle, move cursor
-setopt nopromptcr           # don't add \n which overwrites cmds with no \n
-setopt histverify           # when using ! cmds, confirm first
-setopt interactivecomments  # escape commands so i can use them later
-setopt nobeep               # turn off beeps
-
+#setopt nopromptcr          # don't add \n which overwrites cmds with no \n
+setopt pushd_minus          # switch + and - when used on directory stack number
+setopt pushdignoredups      # don't push duplicates onto the directory stack
+setopt sharehistory         # share history in realtime between shells and use timestamps
 
 # completion {{{1
 compctl -/ cd               # type a dir's name to cd into it
 
 # functions {{{1
-extract () {
+extract() {
     local old_dirs current_dirs lower
-    lower=${(L)1}
     old_dirs=( *(N/) )
-    if [[ $lower == *.tar.gz || $lower == *.tgz ]]; then
-        tar xvzf $1
-    elif [[ $lower == *.gz ]]; then
-        gunzip $1
-    elif [[ $lower == *.tar.bz2 || $lower == *.tbz ]]; then
-        tar xvjf $1
-    elif [[ $lower == *.bz2 ]]; then
-        bunzip2 $1
-    elif [[ $lower == *.zip ]]; then
-        unzip $1
-    elif [[ $lower == *.rar ]]; then
-        unrar x $1
-    elif [[ $lower == *.tar ]]; then
-        tar xvf $1
-    elif [[ $lower == *.lha ]]; then
-        lha e $1
-    else
-        print "Unknown archive type: $1"
-        return 1
+    unset REMOVE_ARCHIVE
+    
+    if test "$1" = "-r"; then
+        REMOVE_ARCHIVE=1
+        shift
     fi
+
+    if [[ -f $1 ]]; then
+        lower=${(L)1}
+        case $lower in
+            *.tar.bz2) tar xvjf $1;;
+            *.tar.gz) tar xvzf $1;;
+            *.tar.xz) tar xvJf $1;;
+            *.tar.lzma) tar --lzma -xvf $1;;
+            *.bz2) bunzip $1;;
+            *.rar) unrar x $1;;
+            *.gz) gunzip $1;;
+            *.tar) tar xvf $1;;
+            *.tbz2) tar xvjf $1;;
+            *.tgz) tar xvzf $1;;
+            *.zip) unzip $1;;
+            *.Z) uncompress $1;;
+            *.7z) 7z x $1;;
+            *) echo "'$1' cannot be extracted via >extract<"; return 1;;
+        esac
+
+        if [[ $REMOVE_ARCHIVE -eq 1 && $? -eq 0 ]]; then
+            echo removing "$1";
+            /bin/rm "$1";
+        fi
+
+    else
+        echo "'$1' is not a valid file"
+    fi
+
     # Change in to the newly created directory, and
     # list the directory contents, if there is one.
     current_dirs=( *(N/) )
@@ -213,7 +193,7 @@ udevinfo () {
 
 mkcd () { mkdir "$1" && cd "$1"; }
 
-psgrep () { ps ax | grep $1 | grep -v grep }
+psgrep () { ps ax | grep $1 | grep -v grep; }
 
 genpasswd() {
     local l=$1
@@ -221,17 +201,84 @@ genpasswd() {
     tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 
-shdebug() {
-    env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' sh -x $*
+shdebug() { env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' sh -x $*; }
+
+bashdebug() { env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' bash -x $*; }
+
+irclog() {
+    local LOG="$1"
+    local SEARCH="$2"
+    local LOGPATH=$HOME/files/logs/irclogs
+    case $LOG in
+        bc) grep "$SEARCH" "$LOGPATH/B_OFTC/#bitcrush.log" ;;
+        g) grep "$SEARCH" "$LOGPATH/B_OFTC/geroyche.log" ;;
+        s) grep "$SEARCH" "$LOGPATH/B_OFTC/sure.log" ;;
+        t) grep "$SEARCH" "$LOGPATH/B_OFTC/tex.log" ;;
+        *) echo "\"$LOG\" is not a supported parameter (bc,g,s,t)" ;;
+    esac
 }
 
-function zle-line-init zle-keymap-select {
-    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-    RPS2=$RPS1
-    zle reset-prompt
+yamj() {
+    local HD="$1"
+    cd $HOME/files/downloads/popcorn\ hour/yamj
+    case $HD in
+        nici) ./MovieJukebox.sh -k -c -p tvjukebox-nici.properties ;;
+        movie) ./MovieJukebox.sh -k -c ;;
+        tv) ./MovieJukebox.sh -k -c -p tvjukebox.properties ;;
+        *) echo "\"$HD\" unknown argument." ;;
+    esac
 }
-zle -N zle-line-init
-zle -N zle-keymap-select
+
+flac2mp3() {
+    for i in *.flac; do
+        flac -d "$i" && lame --cbr -m s -h -b 320 "${i/.flac/.wav}" "${i/.flac/.mp3}" && \
+        rm "${i/.flac/.wav}" && \
+        [[ $1 = "-d" ]] && rm "$i"
+    done
+}
+
+git_prompt_branch() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}"
+}
+
+git_prompt_status() {
+    INDEX=$(git status --porcelain 2> /dev/null)
+    STATUS=""
+    if $(echo "$INDEX" | grep '^?? ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_UNTRACKED$STATUS"
+    fi
+    if $(echo "$INDEX" | grep '^A ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
+    elif $(echo "$INDEX" | grep '^M ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
+    fi
+    if $(echo "$INDEX" | grep '^ M ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
+    elif $(echo "$INDEX" | grep '^AM ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
+    elif $(echo "$INDEX" | grep '^ T ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
+    fi
+    if $(echo "$INDEX" | grep '^R ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_RENAMED$STATUS"
+    fi
+    if $(echo "$INDEX" | grep '^ D ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
+    fi
+    if $(echo "$INDEX" | grep '^UU ' &> /dev/null); then
+        STATUS="$ZSH_THEME_GIT_PROMPT_UNMERGED$STATUS"
+    fi
+    echo $STATUS
+}
+
+#zle-line-init zle-keymap-select {
+#    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+#    RPS2=$RPS1
+#    zle reset-prompt
+#}
+#zle -N zle-line-init
+#zle -N zle-keymap-select
 
 # keybinds {{{1
 bindkey "\e[1~" beginning-of-line
@@ -244,3 +291,35 @@ bindkey "\e[6~" end-of-history
 bindkey "\e[A" history-search-backward
 bindkey "\e[B" history-search-forward
 bindkey -M menuselect "\C-N" accept-and-menu-complete
+
+# prompt {{{1
+setprompt() {
+    autoload -U colors zsh/terminfo
+    colors
+    setopt prompt_subst
+ 
+    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+        eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+        eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+    done
+
+    PR_NO_COLOR="%{$terminfo[sgr0]%}"
+    PR_USER="%n"
+
+    ZSH_THEME_GIT_PROMPT_PREFIX="${PR_MAGENTA}« ${PR_BLUE}git:${PR_RED}"
+    ZSH_THEME_GIT_PROMPT_SUFFIX="${PR_NO_COLOR}"
+    ZSH_THEME_GIT_PROMPT_DIRTY="${PR_BLUE} ${PR_YELLOW}*${PR_NO_COLOR}"
+    ZSH_THEME_GIT_PROMPT_CLEAN="${PR_BLUE}"
+ 
+    ZSH_THEME_GIT_PROMPT_ADDED="${PR_GREEN} +"
+    ZSH_THEME_GIT_PROMPT_MODIFIED="${PR_BLUE} M"
+    ZSH_THEME_GIT_PROMPT_DELETED="${PR_RED} D"
+    ZSH_THEME_GIT_PROMPT_RENAMED="${PR_MAGENTA} R"
+    ZSH_THEME_GIT_PROMPT_UNMERGED="${PR_YELLOW} ═"
+    ZSH_THEME_GIT_PROMPT_UNTRACKED="${PR_CYAN} -"
+
+    PROMPT=$'${PR_GREEN}${PR_USER}${PR_NO_COLOR} ${PR_WHITE}%~${PR_NO_COLOR} ${PR_MAGENTA}%(!.#.») ${PR_NO_COLOR} '
+    RPS1='$(git_prompt_branch)$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX'
+}
+ 
+setprompt
