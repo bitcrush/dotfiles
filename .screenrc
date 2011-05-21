@@ -14,7 +14,7 @@ termcapinfo rxvt* ti@:te@
 allpartial off
 autodetach on
 startup_message off
-unsetenv DISPLAY
+#unsetenv DISPLAY
 shell -$SHELL
 shelltitle "$ |terminal"
 nonblock on
