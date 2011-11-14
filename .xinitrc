@@ -15,5 +15,6 @@ setxkbmap -option terminate:ctrl_alt_bksp &
 [ `pidof urxvtd` ] || urxvtd -q -o -f &&
 sleep 5 &&
 xsetroot -solid '#3A3A3A' &
+hotot &
 dropboxd &
 exec ssh-agent awesome 2> ~/.config/awesome/session-log
