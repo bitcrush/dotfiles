@@ -115,12 +115,10 @@ alias rbots='ssh -t bha screen -D -r bots'
 alias newsbeuter='TERM=xterm newsbeuter'
 alias chm-d="find -type d -exec chmod 755 {} \;"
 alias chm-f="find -type f -exec chmod 644 {} \;"
-alias lower="convmv --lower --notest $1"
 alias myip="wget -q http://whatismyip.org -O - | cat && echo"
 alias awreload="echo 'awesome.restart()' | awesome-client"
 alias rreconn="wget -O - --post-data 'disconnect=Trennen' http://192.168.2.1/cgi-bin/statusprocess.exe > /dev/null 2> /dev/null"
 alias ledoff="ssh rr gpio enable 3"
-alias aljazeera="rtmpdump -v -r rtmp://livestfslivefs.fplive.net/livestfslive-live/ -y "aljazeera_en_veryhigh" -a "aljazeeraflashlive-live" -o -| mplayer -"
 alias defrag="quake3 +set fs_game defrag +disconnect"
 alias startx="startx -nolisten tcp"
 
