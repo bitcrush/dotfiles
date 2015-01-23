@@ -21,10 +21,13 @@ export LC_COLLATE='C'
 export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
-export BROWSER='firefox'
+export BROWSER='chromium'
 export HISTCONTROL='ignoredups'
 export MOZ_DISABLE_PANGO=1
-#export OOO_FORCE_DESKTOP='gnome'
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
+export LIBVA_DRIVER_NAME="vdpau"
+export VDPAU_DRIVER="r600"
+export STEAM_FRAME_FORCE_CLOSE=1
 
 # color manpages without using most
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -34,6 +37,27 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
+
+# linux console colors
+if [ "$TERM" = "linux" ]; then
+    echo -en "\e]P0000000" #black
+    echo -en "\e]P8505354" #darkgrey
+    echo -en "\e]P1f92672" #darkred
+    echo -en "\e]P9ff5995" #red
+    echo -en "\e]P282b414" #darkgreen
+    echo -en "\e]PAb6e354" #green
+    echo -en "\e]P3fd971f" #brown
+    echo -en "\e]PBfeed6c" #yellow
+    echo -en "\e]P456c2d6" #darkblue
+    echo -en "\e]PC8cedff" #blue
+    echo -en "\e]P58c54fe" #darkmagenta
+    echo -en "\e]PD9e6ffe" #magenta
+    echo -en "\e]P6465457" #darkcyan
+    echo -en "\e]PE899ca1" #cyan
+    echo -en "\e]P7ccccc6" #lightgrey
+    echo -en "\e]PFf8f8f2" #white
+    clear # back to default input colours
+fi
 
 # source files {{{1
 #source ~/.zsh/zle
@@ -50,7 +74,7 @@ autoload zmv
 # math
 autoload -U zcalc
 
-zmodload zsh/complist
+#zmodload zsh/complist
 
 ## smart urls
 autoload -U url-quote-magic
@@ -74,7 +98,7 @@ bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
 bindkey "\e[A" history-search-backward
 bindkey "\e[B" history-search-forward
-bindkey -M menuselect "\C-n" accept-and-menu-complete
+#bindkey -M menuselect "\C-n" accept-and-menu-complete
 
 ## file rename magic
 bindkey "^xp" copy-prev-shell-word
@@ -89,38 +113,41 @@ fi
 # aliases {{{1
 alias e="$EDITOR"
 alias l="$PAGER"
-alias m="mplayer"
+alias m="mplayer -nolirc"
 alias p="pacman"
-alias y="yaourt"
 alias s="sudo "
 alias ls="ls -A -h --group-directories-first -F --color=auto"
 alias lb="ls -A -s --block-size=1 --group-directories-first -F --color=auto"
 alias ll="ls --group-directories-first --color -l -F"
 alias rm="rm -I"
-alias cp="advcp -g"
-alias mv="advmv -g"
+alias mkdir="mkdir -pv"
 alias dl="cd /home/racoon/files/downloads"
-alias music="cd /mnt/music/music"
-alias fkvm="cd /mnt/sdb3/kvm"
+alias fmusic="cd /mnt/music/music"
 alias fabs="cd /mnt/sdb3/cache/abs/local/"
 alias fgit="cd /mnt/sdb3/cache/git/"
-alias fxwax="cd /mnt/hd4/audio/xwax/"
 alias grep='grep --color=auto -d skip'
-alias exit="clear; exit"
 alias irssi="screen -D -R irssi irssi"
-#alias rtorrent='screen -D -R rtorrent rtorrent'
-alias wrk='screen -c $XDG_CONFIG_HOME/scriptz/screen-wrk -D -R wrk'
-alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
-alias rbots='ssh -t bha screen -D -r bots'
+alias wrk='screen -c $HOME/.config/scriptz/screen-wrk -D -R wrk'
+#alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
 alias newsbeuter='TERM=xterm newsbeuter'
 alias chm-d="find -type d -exec chmod 755 {} \;"
 alias chm-f="find -type f -exec chmod 644 {} \;"
-alias myip="wget -q http://whatismyip.org -O - | cat && echo"
-alias awreload="echo 'awesome.restart()' | awesome-client"
-alias rreconn="wget -O - --post-data 'disconnect=Trennen' http://192.168.2.1/cgi-bin/statusprocess.exe > /dev/null 2> /dev/null"
-alias ledoff="ssh rr gpio enable 3"
-alias defrag="quake3 +set fs_game defrag +disconnect"
+alias myip="curl icanhazip.com"
+alias defrag="/opt/quake3/iodfengine.x86_64 +set fs_game defrag +disconnect"
+alias mkpw="makepasswd --chars=10 --string=123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ-_. --count=1"
+alias skype='xhost +local: && sudo -u skype /usr/bin/skype'
 alias startx="startx -nolisten tcp"
+#alias mailfetch="ssh rha fdm fetch && offlineimap -u basic -o"
+alias xev-slim="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
+alias pd="plowdown --skip-final --run-after ~/files/scripts/ariaplow.sh"
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias go='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
 
 # history {{{1
 HISTFILE=~/.zsh/history
@@ -238,6 +265,7 @@ zstyle ':completion:*:manuals.*' insert-sections true
 
 # functions {{{1
 
+# extract {{{2
 function extract() {
     local old_dirs current_dirs lower
     old_dirs=( *(N/) )
@@ -287,6 +315,7 @@ function extract() {
     done
 }
 
+# roll {{{2
 function roll () {
     FILE=$1
     case $FILE in
@@ -294,54 +323,40 @@ function roll () {
         *.tar.gz) shift && tar czf $FILE $* ;;
         *.tgz) shift && tar czf $FILE $* ;;
         *.tar) shift && tar cf $FILE $* ;;
-        *.zip) shift && zip $FILE $* ;;
-        *.7z) shift && 7z x $FILE $* ;;
+        *.zip) shift && zip $FILE -r $* ;;
+        *.7z) shift && 7z a $FILE $* ;;
     esac
 }
 
+# udevinfo {{{2
 function udevinfo () {
     DPATH=$(udevadm info -q path -n $1)
     udevadm info -a -p $DPATH
 }
 
+# mkcd {{{2
 function mkcd () { mkdir "$1" && cd "$1"; }
 
+# psgrep {{{2
 function psgrep () { ps ax | grep $1 | grep -v grep; }
 
+# genpasswd {{{2
 function genpasswd() {
     local l=$1
     [ "$l" == "" ] && l=20
     tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 
+# debug {{{2
 function shdebug() { env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' sh -x $*; }
-
 function bashdebug() { env PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' bash -x $*; }
 
-function irclog() {
-    local LOG="$1"
-    local SEARCH="$2"
-    local LOGPATH=$HOME/files/logs/irclogs
-    case $LOG in
-        bc) grep "$SEARCH" "$LOGPATH/B_OFTC/#bitcrush.log" ;;
-        g) grep "$SEARCH" "$LOGPATH/B_OFTC/geroyche.log" ;;
-        s) grep "$SEARCH" "$LOGPATH/B_OFTC/sure.log" ;;
-        t) grep "$SEARCH" "$LOGPATH/B_OFTC/tex.log" ;;
-        *) echo "\"$LOG\" is not a supported parameter (bc,g,s,t)" ;;
-    esac
+# youtubeConvert {{{2
+function youtubeConvert() {
+    ffmpeg -i $1 -c:v libx264 -crf 18 -preset slow -pix_fmt yuv420p -c:a copy ${1%.*}\ \(youtube\ ready\).mkv
 }
 
-function yamj() {
-    local HD="$1"
-    cd $HOME/files/downloads/popcorn\ hour/yamj
-    case $HD in
-        nici) ./MovieJukebox.sh -k -c -p tvjukebox-nici.properties ;;
-        movie) ./MovieJukebox.sh -k -c ;;
-        tv) ./MovieJukebox.sh -k -c -p tvjukebox.properties ;;
-        *) echo "\"$HD\" unknown argument." ;;
-    esac
-}
-
+# flac2mp3 {{{2
 function flac2mp3() {
     [[ $1 = "-d" ]] && DEL=1 && shift
     for i in "$@"; do
@@ -366,6 +381,7 @@ function flac2mp3() {
     done
 }
 
+# filename2tag {{{2
 function filename2tag() {
     for file in "$@"; do
         ALBUM=$(sed 's/\(\[.*\] \)\?\(.*\)\( - \)\(.*\)\([[(][12][09][0-9][0-9][])]\)/\4/' <<<"${PWD##*/}")
@@ -392,6 +408,7 @@ function filename2tag() {
     done
 }
 
+# tag2filename {{{2
 function tag2filename() {
     for file in "$@"; do
         case $file in
@@ -420,18 +437,7 @@ function tag2filename() {
     done
 }
 
-function dpub() {
-    for i in "$@"; do
-        [[ -e $i ]] || ( echo "\"$i\" not found." && continue )
-        file=$(readlink -f $i)
-        if grep '[dD]ropbox' - <<<"$file" &> /dev/null; then
-            dropbox puburl "/home/racoon/files/Dropbox/${file##*[dD]ropbox}"
-        else
-            echo "i don't think so." && continue
-        fi
-    done
-}
-
+# git_prompt {{{2
 function git_prompt_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
     echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}"
@@ -481,7 +487,8 @@ setprompt() {
     PR_NO_COLOR="%{$terminfo[sgr0]%}"
     PR_USER="%n"
 
-    ZSH_THEME_GIT_PROMPT_PREFIX="${PR_BLUE}git:${PR_RED}"
+    ZSH_THEME_GIT_PROMPT_PREFIX="${PR_RED}"
+    #ZSH_THEME_GIT_PROMPT_PREFIX="${PR_BLUE}git:${PR_RED}"
     ZSH_THEME_GIT_PROMPT_SUFFIX="${PR_NO_COLOR}"
     ZSH_THEME_GIT_PROMPT_DIRTY="${PR_BLUE} ${PR_YELLOW}*${PR_NO_COLOR}"
     ZSH_THEME_GIT_PROMPT_CLEAN="${PR_BLUE}"
