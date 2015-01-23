@@ -27,6 +27,10 @@ shell_patterns=0
 	tar cf - "$Pwd" | 7za a -si "$tar.tar.7z" && \
 	echo "../$tar.tar.7z created."
 
++ t d
+4       Compress the current subdirectory (zip)
+        zip -r %s.zip %s
+
 =+ f \.tar\.gz$ | f \.tar\.z$ | f \.tgz$ | f \.tpz$ | f \.tar\.lz$ | f \.tar\.lzma$ | f \.tar\.7z$ | f \.tar\.xz$ | f \.tar\.Z$ | f \.tar\.bz2$ & t r
 x       Extract the contents of a compressed tar file
 	unset PRG
@@ -58,6 +62,20 @@ x       Extract the contents of a compressed tar file
 ################################################
 ########## user hooks ##########################
 ################################################
+
++ ! t t
+g       play all audio files in deadbeef
+        IFS=$(echo -en "\n\b")
+        files=`find . -maxdepth 1 -type f -regextype posix-egrep -iregex '.*(mp3|flac|wav|ogg|m4a|aif+)$' | sort`
+        deadbeef $files &
+
++ f \.[Aa][Ii][Ff][Ff]$ | f \.[Aa][Ii][Ff]$ | f \.[Mm][Pp]3$ | f \.[Mm]4[Aa]$ | f \.[Ww][Aa][Vv]$ | f \.[Oo][Gg][Gg]$ | f \.[Ff][Ll][Aa][Cc]$ | f \.[Aa][Pp][Ee]$ & t r & t t
+q       queue tracks in deadbeef
+        deadbeef --queue %s &
+
++ f \.[Aa][Ii][Ff][Ff]$ | f \.[Aa][Ii][Ff]$ | f \.[Mm][Pp]3$ | f \.[Mm]4[Aa]$ | f \.[Ww][Aa][Vv]$ | f \.[Oo][Gg][Gg]$ | f \.[Ff][Ll][Aa][Cc]$ | f \.[Aa][Pp][Ee]$ & t r & ! t t
+q       queue track in deadbeef
+        deadbeef --queue %f &
 
 + f \.[Aa][Ii][Ff][Ff]$ | f \.[Aa][Ii][Ff]$ | f \.[Mm][Pp]3$ | f \.[Mm]4[Aa]$ | f \.[Ww][Aa][Vv]$ | f \.[Oo][Gg][Gg]$ | f \.[Ff][Ll][Aa][Cc]$ | f \.[Aa][Pp][Ee]$ & t r & ! t t
 s       Analyse current audio file with spek
@@ -96,44 +114,3 @@ f       decode flac to wave
 	    /usr/bin/flac -d "$i"
         done
 
-#+ t t & f \.[Aa][Ii][Ff][Ff]$ | f \.[Aa][Ii][Ff]$ | f \.[Mm][Pp]3$ | f \.[Mm]4[Aa]$ | f \.[Ww][Aa][Vv]$ | f \.[Oo][Gg][Gg]$ | f \.[Ff][Ll][Aa][Cc]$ | f \.[Aa][Pp][Ee]$
-+ t t
-g       play in deadbeef
-        deadbeef %s &
-#g       play in gnome-mplayer
-#        gnome-mplayer %s &
-
-+ ! t t
-#g       play all audio files in gnome-mplayer
-g       queue audio files in deadbeef
-        IFS=$(echo -en "\n\b")
-        files=`find . -maxdepth 1 -type f -regextype posix-egrep -iregex '.*(mp3|flac|wav|ogg|m4a|aif+)$' | sort`
-#        gnome-mplayer -q $files &
-        deadbeef --queue $files &
-
-
-# ### xwax related ###
-#
-# + t r | t d & d /mnt/hd4/audio/xwax/.*
-# l       Link to xwax/recent
-# 	RELPATH=${PWD#*xwax/}
-#         for i in %s
-#         do
-# 	    cd /mnt/hd4/audio/xwax/recent/
-# 	    ln -s ../"$RELPATH"/"$i" .
-#         done
-# 
-# + d /mnt/hd4/audio/.*
-# P       Enter playlist name
-#         PLP="/mnt/hd4/audio/xwax/playlists"
-# 	PLF=%{enter playlist name}
-#         echo "$PLF" > "$PLP/.current"
-# 
-# + d /mnt/hd4/audio/.* & f \.[Aa][Ii][Ff][Ff]$ | f \.[Aa][Ii][Ff]$ | f \.[Mm][Pp]3$ | f \.[Mm]4[Aa]$ | f \.[Ww][Aa][Vv]$ | f \.[Oo][Gg][Gg]$ | f \.[Ff][Ll][Aa][Cc]$ | f \.[Aa][Pp][Ee]$
-# p       Add to playlist
-#         PLP="/mnt/hd4/audio/xwax/playlists"
-# 	PLF="`cat $PLP/.current`"
-#         for i in %s
-#         do
-# 	    readlink -f "$i" >> "$PLP/$PLF"
-#         done
