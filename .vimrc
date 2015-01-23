@@ -20,10 +20,10 @@ else
 endif
 
 " set the window title in screen
-if $STY != ""
-  set t_ts=k
-  set t_fs=\
-endif
+"if $STY != ""
+"  set t_ts=k
+"  set t_fs=\
+"endif
 
 set nocompatible		" Use Vim defaults instead of 100% vi compatibility
 "set t_Co=256			" support 256color terminals
@@ -102,12 +102,12 @@ set magic			" Use some magic in search patterns?  Certainly!
 " {{{1 indenting
 set expandtab			" insert spaces instead of tab chars
 set tabstop=8			" a n-space tab width
-set softtabstop=4		" counts n spaces when DELETE or BCKSPCE is used
+set softtabstop=4		" counts n spaces when DELETE or BACKSPACE is used
 set shiftwidth=4		" allows the use of < and > for VISUAL indenting
 set shiftround			" shift to certain columns, not just n spaces
 set noautoindent		" auto indents next new line
-set copyindent			" autoindent uses the same chars as prev
-set cindent			" Automatic program indenting
+"set copyindent			" autoindent uses the same chars as prev
+"set cindent			" Automatic program indenting
 set cinkeys-=0#			" Comments don't fiddle with indenting
 set cino=(0			" Indent newlines after opening parenthesis
 filetype plugin indent on	" use file type based indentation
@@ -141,6 +141,7 @@ vmap <C-c> :call CommentLines()<CR><CR>
 nmap <F7> [czz			" jump to previous diff code
 nmap <F8> ]czz			" jump to next diff code
 
+inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
 set pastetoggle=<F5>		" stop indenting when pasting with the mouse 
 
 " {{{1 functions
@@ -153,6 +154,18 @@ function! CommentLines()
     execute ":s@$@".g:EndComment."@g"
   endtry
 endfunction
+
+function! TwiddleCase(str)
+  if a:str ==# toupper(a:str)
+    let result = tolower(a:str)
+  elseif a:str ==# tolower(a:str)
+    let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+  else
+    let result = toupper(a:str)
+  endif
+  return result
+endfunction
+vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " {{{1 commands
 command -range=% Sprunge :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us | xclip
@@ -230,4 +243,4 @@ let g:tex_flavor='latex'
 
 " {{{2 gist
 let g:gist_clip_command='xclip -selection clipboard'
-let g:gist_browser_command = 'firefox %URL% &'
+let g:gist_browser_command = 'chromium %URL% &'
