@@ -3,18 +3,26 @@
 # ~/.xinitrc
 
 export SDL_VIDEO_X11_DGAMOUSE="0"
-nvidia-settings -l &
-nvidia-settings -a InitialPixmapPlacement=2 -a GlyphCache=1 &
+[[ -f ${HOME}/.Xresources ]] && xrdb -merge ${HOME}/.Xresources
 xset m 0 0 &
 xset r rate 200 30 &
 xset s on &
+xset +fp /usr/share/fonts/local
+xset fp rehash
 numlockx on &
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
 setxkbmap -option terminate:ctrl_alt_bksp &
 (amixer -- sset DAC,0 -32dB && amixer -- sset DAC,1 -32dB) > /dev/null &&
 
-[ `pidof urxvtd` ] || urxvtd -q -o -f &&
 sleep 5 &&
-xsetroot -solid '#3A3A3A' &
-hotot &
-dropboxd &
-exec ssh-agent awesome 2> ~/.config/awesome/session-log
+xhost +local: &
+wmname LG3D &
+compton --config ~/.compton.conf -b &
+dunst &
+
+#conky -c ${HOME}/files/scripts/conky/.conky_dwm | while read -r; do xsetroot -name "${REPLY}BOTTOM=blub"; done &
+#conky -c ${HOME}/files/scripts/conky/.conky_dwm | while read -r; do xsetroot -name "$REPLY"; done &
+
+#exec ssh-agent dwm
+exec ssh-agent i3 # -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
