@@ -7,9 +7,6 @@
 # Dircolors...
 eval `dircolors -b`
  
-# set default umasks for root/user
-(( EUID != 0 )) && umask 002 || umask 022
-
 # Exports
 typeset -U path
 path=($HOME/bin/ /usr/bin/core_perl/ /usr/bin/vendor_perl/ $path)
