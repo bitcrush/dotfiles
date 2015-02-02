@@ -12,12 +12,7 @@ Xcursor.theme:		Neutral_Plus
 
 ! ---| colors |--- {{{1
 !#include "/home/racoon/.themes/terminal_colors/default.xcolors"
-!#include "/home/racoon/.themes/terminal_colors/jhvid.xcolors"
-!#include "/home/racoon/.themes/terminal_colors/sicpsnake.xcolors"
 !#include "/home/racoon/.themes/terminal_colors/thayer.xcolors"
-!#include "/home/racoon/.themes/terminal_colors/theywillknow.xcolors"
-!#include "/home/racoon/.themes/terminal_colors/euphrasia2.xcolors"
 !#include "/home/racoon/.themes/terminal_colors/zenburn.xcolors"
-!#include "/home/racoon/.themes/terminal_colors/tomorrownighteighties.xcolors"
-#include "/home/racoon/.themes/terminal_colors/rcn.xcolors"
-
+!#include "/home/racoon/.themes/terminal_colors/rcn.xcolors"
+#include "/home/racoon/.themes/terminal_colors/base16-default.dark.256.xresources"
