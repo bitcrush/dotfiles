@@ -44,6 +44,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'renamer.vim'
 Plugin 'chriskempson/base16-vim'
 "Plugin 'jnurmine/Zenburn'
+Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()               " required
