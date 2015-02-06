@@ -1,30 +1,7 @@
 " vim: ft=vim
 " rcns vimrc
 
-" tips
-" Capitalize the first character of all words -> :s/\<[a-z]/\u&/g
-" :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g
-
 " {{{1 settings
-" set 256 colors if supported by terminal
-if $TERM =~ "-256color"
-  set t_Co=256
-    if &diff
-        set background=dark
-        colorscheme peaksea
-    else
-        colorscheme zenburn
-    endif
-else
-  colorscheme default
-endif
-
-" set the window title in screen
-"if $STY != ""
-"  set t_ts=k
-"  set t_fs=\
-"endif
-
 set nocompatible		" Use Vim defaults instead of 100% vi compatibility
 "set t_Co=256			" support 256color terminals
 set encoding=utf-8		" UTF-8 by default
@@ -51,9 +28,51 @@ let g:EndComment=""
 
 let g:is_posix=1
 
+" vundle {{{1
+filetype off                    " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/vundle
+call vundle#begin()
+
+Plugin 'gmarik/vundle'          " let Vundle manage Vundle, required
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-fugitive'
+Plugin 'klen/python-mode'
+Plugin 'scrooloose/nerdtree'
+"Plugin 'bash-support.vim'
+Plugin 'renamer.vim'
+Plugin 'chriskempson/base16-vim'
+"Plugin 'jnurmine/Zenburn'
+
+" All of your Plugins must be added before the following line
+call vundle#end()               " required
+filetype plugin indent on       " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+
 " {{{1 look
+" set 256 colors if supported by terminal
+if $TERM =~ "-256color"
+  set t_Co=256
+    if &diff
+        set background=dark
+        colorscheme peaksea
+    else
+        colorscheme base16-default
+    endif
+else
+  colorscheme default
+endif
+
+" set the window title in screen
+"if $STY != ""
+"  set t_ts=k
+"  set t_fs=\
+"endif
+
 set showcmd			" display incomplete commands
-set showmode			" show current mode
+set noshowmode			" show current mode
 set showmatch			" show the matching bracket for the last ')'
 set ruler			" show the cursor position all the time
 set number			" show line numbers
@@ -167,9 +186,6 @@ function! TwiddleCase(str)
 endfunction
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
-" {{{1 commands
-command -range=% Sprunge :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us | xclip
-
 " {{{2 toggle spell check
 let b:myLang=0
 let g:myLangList=["nospell","de_de","en_us"]
@@ -226,6 +242,9 @@ if has('autocmd')
     
     autocmd BufWrite *.pl
         \ %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
+
+    " Airline Customization
+    "autocmd VimEnter * call AirlineInit()
 endif
 
 " {{{1 plugin options
@@ -244,3 +263,62 @@ let g:tex_flavor='latex'
 " {{{2 gist
 let g:gist_clip_command='xclip -selection clipboard'
 let g:gist_browser_command = 'chromium %URL% &'
+
+" {{{2 airline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+function! AirlineInit()
+  let g:airline_section_a = airline#section#create(['mode'])
+  let g:airline_section_b = airline#section#create_left(['%f'])
+  let g:airline_section_c = airline#section#create(['filetype'])
+  let g:airline_section_x = airline#section#create(['%P'])
+  let g:airline_section_y = airline#section#create(['ffenc'])
+  let g:airline_section_z = airline#section#create_right(['%l', '%c'])
+endfunction
+
+" {{{2 nerdtree
+map <F3> :NERDTreeToggle<CR>
+
+" {{{2 python-mode
+" Python-mode
+" Activate rope
+" Keys:
+" K             Show python docs
+" <Ctrl-Space>  Rope autocomplete
+" <Ctrl-c>g     Rope goto definition
+" <Ctrl-c>d     Rope show documentation
+" <Ctrl-c>f     Rope find occurrences
+" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
+" [[            Jump on previous class or function (normal, visual, operator modes)
+" ]]            Jump on next class or function (normal, visual, operator modes)
+" [M            Jump on previous class or method (normal, visual, operator modes)
+" ]M            Jump on next class or method (normal, visual, operator modes)
+let g:pymode_rope = 1
+
+" Documentation
+let g:pymode_doc = 1
+let g:pymode_doc_key = 'K'
+
+"Linting
+let g:pymode_lint = 1
+let g:pymode_lint_checker = "pyflakes,pep8"
+" Auto check on save
+let g:pymode_lint_write = 1
+
+" Support virtualenv
+let g:pymode_virtualenv = 1
+
+" Enable breakpoints plugin
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_key = '<leader>b'
+
+" syntax highlighting
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+" Don't autofold code
+let g:pymode_folding = 0
