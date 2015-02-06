@@ -1,8 +1,5 @@
 #!/bin/sh
-#
-# ~/.xinitrc
 
-export SDL_VIDEO_X11_DGAMOUSE="0"
 [[ -f ${HOME}/.Xresources ]] && xrdb -merge ${HOME}/.Xresources
 xset m 0 0 &
 xset r rate 200 30 &
@@ -21,8 +18,4 @@ wmname LG3D &
 compton --config ~/.compton.conf -b &
 dunst &
 
-#conky -c ${HOME}/files/scripts/conky/.conky_dwm | while read -r; do xsetroot -name "${REPLY}BOTTOM=blub"; done &
-#conky -c ${HOME}/files/scripts/conky/.conky_dwm | while read -r; do xsetroot -name "$REPLY"; done &
-
-#exec ssh-agent dwm
 exec ssh-agent i3 # -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
