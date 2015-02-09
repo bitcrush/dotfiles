@@ -40,9 +40,12 @@ URxvt*scrollTtyOutput:      False
 URxvt*scrollwithbuffer:     False
 URxvt*secondaryScroll:      True
 URxvt*skipScroll:           True
-URxvt*termName:             rxvt-unicode-256color
+!URxvt*termName:             rxvt-unicode-256color
+URxvt*termName:             rxvt-256color
 URxvt*urgentOnBell:         True
 URxvt*visualBell:           False
+URxvt.iso14755_52:          False
+URxvt.iso14755:             False
 
 ! perl extensions & options
 URxvt*perl-ext-common:      default,matcher,searchable-scrollback
