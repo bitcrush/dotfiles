@@ -30,30 +30,22 @@ let g:EndComment=""
 
 let g:is_posix=1
 
-" vundle {{{1
-filetype off                    " required
+" vim-plug {{{1
+call plug#begin('~/.vim/plugged')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle
-call vundle#begin()
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-fugitive'
+Plug 'klen/python-mode', { 'for': 'python' }
+"Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'bash-support.vim'
+Plug 'renamer.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+Plug 'vim-scripts/vimwiki'
 
-Plugin 'gmarik/vundle'          " let Vundle manage Vundle, required
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-fugitive'
-Plugin 'klen/python-mode'
-Plugin 'scrooloose/nerdtree'
-"Plugin 'bash-support.vim'
-Plugin 'renamer.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'mattn/gist-vim'
-Plugin 'mattn/webapi-vim'
-Plugin 'vim-scripts/vimwiki'
-
-" All of your Plugins must be added before the following line
-call vundle#end()               " required
-filetype plugin indent on       " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
+call plug#end()
 
 " {{{1 look
 " set 256 colors if supported by terminal
