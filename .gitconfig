@@ -39,7 +39,8 @@
         ci = commit
         st = status
         br = branch
-        hist = log --abbrev-commit --graph --date=short --max-count=20 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
+        hs = log --abbrev-commit --graph --date=short --max-count=20 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
+        hsa = log --abbrev-commit --graph --date=short --max-count=20 --all --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
         type = cat-file -t
         dump = cat-file -p
         alias = config --get-regexp ^alias\\.
