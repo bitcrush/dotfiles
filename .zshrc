@@ -10,7 +10,6 @@ eval `dircolors -b`
 # Exports
 typeset -U path
 path=($HOME/bin/ /usr/bin/core_perl/ /usr/bin/vendor_perl/ $path)
-test -n "$DISPLAY" && export TERM='rxvt-256color'
 export LC_ALL='en_US.utf8'
 export LANGUAGE='en_US.utf8'
 export LOCALE='en_US.utf8'
@@ -36,6 +35,7 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 # linux console colors
+# TODO: set to base16
 if [ "$TERM" = "linux" ]; then
     echo -en "\e]P0000000" #black
     echo -en "\e]P8505354" #darkgrey
@@ -54,6 +54,16 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]P7ccccc6" #lightgrey
     echo -en "\e]PFf8f8f2" #white
     clear # back to default input colours
+else
+    # set additional colors for base16-theme
+    printf_template="\033]4;%d;rgb:%s\033\\"
+    printf $printf_template 16 "dc/96/56"
+    printf $printf_template 17 "a1/69/46"
+    printf $printf_template 18 "28/28/28"
+    printf $printf_template 19 "38/38/38"
+    printf $printf_template 20 "b8/b8/b8"
+    printf $printf_template 21 "e8/e8/e8"
+    unset printf_template
 fi
 
 # source files {{{1
