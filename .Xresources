@@ -11,9 +11,6 @@ Xft.rgba:		rgba
 Xcursor.theme:		Neutral_Plus
 
 ! ---| colors |--- {{{1
-!#include "/home/racoon/.themes/terminal_colors/default.xcolors"
-!#include "/home/racoon/.themes/terminal_colors/thayer.xcolors"
-!#include "/home/racoon/.themes/terminal_colors/zenburn.xcolors"
 !#include "/home/racoon/.themes/terminal_colors/rcn.xcolors"
 #include "/home/racoon/.themes/terminal_colors/base16-default.dark.256.xresources"
 
@@ -40,8 +37,7 @@ URxvt*scrollTtyOutput:      False
 URxvt*scrollwithbuffer:     False
 URxvt*secondaryScroll:      True
 URxvt*skipScroll:           True
-!URxvt*termName:             rxvt-unicode-256color
-URxvt*termName:             rxvt-256color
+URxvt*termName:             rxvt-unicode-256color
 URxvt*urgentOnBell:         True
 URxvt*visualBell:           False
 URxvt.iso14755_52:          False
@@ -53,7 +49,7 @@ URxvt*url-launcher:         chromium
 URxvt*matcher.button:       1
 URxvt*matcher.pattern.0:    \\b(?:(?:https?|ftp):\/\/|mailto:)[\\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+ [\\w\-\@;\/?:&=%\$_+!*\x27()~]
 URxvt*matcher.pattern.1:    \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
-URxvt*matcher.pattern.2: \\bhttp:\/\/(www.youtube|youtube).com\/watch\\?v=([\\w-]*)
+URxvt*matcher.pattern.2:    \\bhttp:\/\/(www.youtube|youtube).com\/watch\\?v=([\\w-]*)
 
 ! ---| xcalc |--- {{{1
 xcalc*geometry:                         200x275
