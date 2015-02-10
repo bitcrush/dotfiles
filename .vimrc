@@ -21,6 +21,8 @@ set complete=.,t,i,b,w,k	" set matches for insert-mode completion
 set infercase			" completion recognizes capitalization
 set whichwrap=h,l,<,>,[,]	" allow jumping to their closing chars
 set clipboard+=unnamed		" use system clipboard
+set hidden                      " allows buffers to be hidden if a buffer is modified
+set confirm                     " confirm dropping unsaved buffers
 
 " default comment symbols
 let g:StartComment="#"
@@ -140,20 +142,26 @@ set directory=/tmp		" swap file directory
 set backupskip+=*.gpg		" don't save backups of *.gpg files
 
 " {{{1 keymapping
+let mapleader=","
+set pastetoggle=<F5>		" stop indenting when pasting with the mouse 
+inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
+
 " unmap annoying keys
 nnoremap q: <Nop>
 nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
-" quicker window navigation
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
 " quicker buffer navigation
-nnoremap <C-n> :next<CR>
-nnoremap <C-p> :prev<CR>
+nnoremap gt :bnext<CR>
+nnoremap gT :bprevious<CR>
+nnoremap <C-l> :bnext<CR>
+nnoremap <C-h> :bprevious<CR>
+
+" To open a new empty buffer
+nnoremap <C-n> :enew<CR>
+
+" Close the current buffer and move to the previous one
+map <leader>q :bp <BAR> bd #<CR><CR>
 
 " comment/uncomment a visual block
 vmap <C-c> :call CommentLines()<CR><CR>
@@ -161,9 +169,6 @@ vmap <C-c> :call CommentLines()<CR><CR>
 " vimdiff keybinds
 nmap <F7> [czz			" jump to previous diff code
 nmap <F8> ]czz			" jump to next diff code
-
-inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
-set pastetoggle=<F5>		" stop indenting when pasting with the mouse 
 
 " {{{1 functions
 function! CommentLines()
