@@ -31,6 +31,12 @@ let g:EndComment=""
 let g:is_posix=1
 
 " vim-plug {{{1
+
+" download vim-plug if nonexistent
+if empty(glob("~/.vim/autoload/plug.vim"))
+    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'bling/vim-airline'
@@ -41,32 +47,25 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "Plug 'bash-support.vim'
 Plug 'renamer.vim'
 Plug 'chriskempson/base16-vim'
-Plug 'mattn/gist-vim'
-Plug 'mattn/webapi-vim'
 Plug 'vim-scripts/vimwiki'
 
+if executable("curl")
+    Plug 'mattn/webapi-vim'     " dependency of gist-vim
+    Plug 'mattn/gist-vim'
+endif
+
+filetype plugin indent on                   " required!
 call plug#end()
 
 " {{{1 look
-" set 256 colors if supported by terminal
-if $TERM =~ "-256color"
-  set t_Co=256
-    if &diff
-        set background=dark
-        colorscheme peaksea
-    else
-        colorscheme base16-default
-    endif
+if &diff
+    colorscheme peachpuff
 else
-  colorscheme default
+    let base16colorspace=256        " Access colors present in 256 colorspace
+    colorscheme base16-rcn
 endif
 
-" set the window title in screen
-"if $STY != ""
-"  set t_ts=k
-"  set t_fs=\
-"endif
-
+set background=dark             " set background to dark or light
 set showcmd			" display incomplete commands
 set noshowmode			" show current mode
 set showmatch			" show the matching bracket for the last ')'
@@ -80,13 +79,12 @@ set wildmode=longest:full,full	" how big the list should be
 set shortmess=atI		" shorten message output in command line
 set report=0			" show a report when N lines were changed, 0=show all
 set previewheight=5		" height of preview window
-set vb				" set visual bell instead of audio bell
+set visualbell			" set visual bell instead of audio bell
 set t_vb=			" no argument means no flash for visual bell
 set splitbelow			" put new split windows below
 set cmdheight=1			" cmdprompt height
 set laststatus=2		" show status line
 set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|\ %{fugitive#statusline()}\ %=%3p%%
-
 
 if has('mouse')
   set mouse=a
