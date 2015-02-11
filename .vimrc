@@ -41,10 +41,10 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
-Plug 'klen/python-mode', { 'for': 'python' }
+"Plug 'klen/python-mode', { 'for': 'python' }
 "Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"Plug 'bash-support.vim'
+Plug 'bash-support.vim', { 'for': 'sh' }
 Plug 'renamer.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-scripts/vimwiki'
@@ -54,14 +54,14 @@ if executable("curl")
     Plug 'mattn/gist-vim'
 endif
 
-filetype plugin indent on                   " required!
+filetype plugin indent on	" use file type based plugins and indentation
 call plug#end()
 
 " {{{1 look
 if &diff
     colorscheme peachpuff
 else
-    let base16colorspace=256        " Access colors present in 256 colorspace
+    let base16colorspace=256    " Access colors present in 256 colorspace
     colorscheme base16-rcn
 endif
 
@@ -83,6 +83,7 @@ set visualbell			" set visual bell instead of audio bell
 set t_vb=			" no argument means no flash for visual bell
 set splitbelow			" put new split windows below
 set cmdheight=1			" cmdprompt height
+set history=50                  " keep 50 lines of command line history
 set laststatus=2		" show status line
 set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|\ %{fugitive#statusline()}\ %=%3p%%
 
@@ -95,7 +96,6 @@ endif
 "     set list listchars=tab:\→\ ,trail:·,nbsp:-
 " endif
 
-set history=50		" keep 50 lines of command line history
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
@@ -123,7 +123,6 @@ set noautoindent		" auto indents next new line
 "set cindent			" Automatic program indenting
 set cinkeys-=0#			" Comments don't fiddle with indenting
 set cino=(0			" Indent newlines after opening parenthesis
-filetype plugin indent on	" use file type based indentation
 
 " {{{1 backup
 set backup			" keep a backup file
@@ -319,3 +318,4 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Don't autofold code
 let g:pymode_folding = 0
+
