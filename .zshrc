@@ -147,6 +147,7 @@ alias startx="startx -nolisten tcp"
 #alias mailfetch="ssh rha fdm fetch && offlineimap -u basic -o"
 alias xev-slim="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
 alias pd="plowdown --skip-final --run-after ~/files/scripts/ariaplow.sh"
+alias vw='vim -c VimwikiIndex'
 alias gs='git status '
 alias ga='git add '
 alias gb='git branch '
