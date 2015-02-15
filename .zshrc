@@ -146,7 +146,6 @@ alias skype='xhost +local: && sudo -u skype /usr/bin/skype'
 alias startx="startx -nolisten tcp"
 #alias mailfetch="ssh rha fdm fetch && offlineimap -u basic -o"
 alias xev-slim="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
-alias pd="plowdown --skip-final --run-after ~/files/scripts/ariaplow.sh"
 alias vw='vim -c VimwikiIndex'
 alias gs='git status '
 alias ga='git add '
@@ -444,6 +443,12 @@ function tag2filename() {
     done
 }
 
+# pd {{{2
+function pd() {
+    LINKS=${1:-/tmp/list.txt}
+    plowdown --skip-final --run-after ~/files/scripts/ariaplow.sh "$LINKS"
+}
+
 # gt {{{2
 # google translation - usage example: gt de steamboat
 function gt() {
@@ -452,6 +457,10 @@ function gt() {
     res=$(wget -U "Mozilla/5.0" -qO - "http://translate.google.com/translate_a/t?client=t&text=${text}&sl=auto&tl=${to}" | sed 's/\[\[\[\"//' | cut -d \" -f 1);
     echo "${res}";
 }
+
+# rzmv {{{2
+# recursive translation of space characters to underscore
+function rzmv() { zmv '(**/)(*)' '$1${2// /_}' }
 
 # git_prompt {{{2
 function git_prompt_branch() {
