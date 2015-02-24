@@ -48,6 +48,7 @@ Plug 'bash-support.vim', { 'for': 'sh' }
 Plug 'renamer.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-scripts/vimwiki'
+Plug 'AndrewRadev/id3.vim'
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
@@ -261,7 +262,10 @@ let g:gist_clip_command='xclip -selection clipboard'
 let g:gist_browser_command = 'chromium %URL% &'
 
 " {{{2 airline
+let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
+let g:airline_mode_map = {'c': 'COMMAND', '^S': 'S-BLOCK', 'R': 'REPLACE', 's': 'SELECT', 'V': 'V-LINE', '^V': 'V-BLOCK', 'i': 'INSERT', '__': '------', 'S': 'S-LINE', 'v': 'VISUAL', 'n': 'NORMAL'}
+let g:airline_symbols = {'linenr': '', 'paste': 'PASTE', 'readonly': '', 'modified': '+', 'space': ' ', 'whitespace': '✹', 'branch': ''}
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
@@ -318,4 +322,13 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Don't autofold code
 let g:pymode_folding = 0
+
+" {{{2 vimwiki
+let wiki = {}
+let wiki.path = '~/vimwiki/'
+let wiki.template_path = '~/vimwiki/templates/'
+let wiki.template_default = 'default'
+let wiki.template_ext = '.html'
+let wiki.nested_syntaxes = {'python': 'python', 'bash': 'sh'}
+let g:vimwiki_list = [wiki]
 
