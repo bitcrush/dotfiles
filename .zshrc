@@ -107,10 +107,10 @@ bindkey "\e[A" history-search-backward
 bindkey "\e[B" history-search-forward
 #bindkey -M menuselect "\C-n" accept-and-menu-complete
 
-## file rename magic
+# file rename magic
 bindkey "^xp" copy-prev-shell-word
 
-#m# k Shift-tab Perform backwards menu completion
+# Shift-tab to perform backwards menu completion
 if [[ -n "$terminfo[kcbt]" ]]; then
     bindkey "$terminfo[kcbt]" reverse-menu-complete
 elif [[ -n "$terminfo[cbt]" ]]; then # required for GNU screen
@@ -128,6 +128,8 @@ alias lb="ls -A -s --block-size=1 --group-directories-first -F --color=auto"
 alias ll="ls --group-directories-first --color -l -F"
 alias rm="rm -I"
 alias mkdir="mkdir -pv"
+alias j="jobs -l"
+alias mnt="mount |column -t"
 alias dl="cd /home/racoon/files/downloads"
 alias fmusic="cd /mnt/music/music"
 alias fabs="cd /mnt/sdb3/cache/abs/local/"
@@ -340,8 +342,21 @@ function udevinfo () {
     udevadm info -a -p $DPATH
 }
 
+
 # mkcd {{{2
-function mkcd () { mkdir "$1" && cd "$1"; }
+# Create and CD into directory.
+function mkcd {
+    if [ $# -ne 1 ]; then
+        echo "usage: mkcd directory_name"
+    elif [ -d "${1}" ]; then
+        echo "(directory already existed)"
+        cd "$1"
+    elif [ -e "${1}" ]; then
+        echo "file exists"
+    else
+        mkdir "${1}" && cd "${1}"
+    fi
+}
 
 # psgrep {{{2
 function psgrep () { ps ax | grep $1 | grep -v grep; }
@@ -462,6 +477,109 @@ function gt() {
 # recursive translation of space characters to underscore
 function rzmv() { zmv '(**/)(*)' '$1${2// /_}' }
 
+# bam {{{2
+# backup with move
+function bam() {
+  for file; do
+    mv -v $file{,.bkp}
+  done
+}
+
+# bum {{{2
+# undo backup move
+function bum() {
+  for file; do
+    mv -v "$file" "${file%.bkp}"
+  done
+}
+
+# bac {{{2
+# backup with copy
+function bac() {
+  for file; do
+    cp -Rpv "$file" "$file~$(date -Ins)~"
+  done
+}
+
+# buc {{{2
+# undo backup copy
+function buc() {
+  for file; do
+    dest=${file%%\~*}
+    test -d "$dest" && mv -v "$dest" "$file.orig"
+    mv -v "$file" "$dest"
+  done
+}
+
+# ffind {{{2
+# Find a file with a pattern in name:
+function ffind() { find . -type f -iname '*'$*'*' -ls ; }
+
+# fiexec {{{2
+# Find a file with pattern $1 in name and Execute $2 on it:
+function fiexec() { find . -type f -iname '*'${1:-}'*' -exec ${2:-file} {} \;  ; }
+
+# fstr {{{2
+# Find a pattern in a set of files and highlight them:
+# (needs a recent version of egrep)
+function fstr()
+{
+    OPTIND=1
+    local case=""
+    local usage="fstr: find string in files.\nUsage: fstr [-i] \"pattern\" [\"filename pattern\"] "
+    while getopts :it opt
+    do
+        case "$opt" in
+        i) case="-i " ;;
+        *) echo "$usage"; return;;
+        esac
+    done
+    shift $(( $OPTIND - 1 ))
+    if [ "$#" -lt 1 ]; then
+        echo "$usage"
+        return;
+    fi
+    find . -type f -name "${2:-*}" -print0 | \
+    xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
+
+}
+
+# swapfiles {{{2
+# Swap 2 filenames around, if they exist
+function swapfiles()
+{
+    local TMPFILE=tmp.$$
+
+    [ $# -ne 2 ] && echo "swap: 2 arguments needed" && return 1
+    [ ! -e $1 ] && echo "swap: $1 does not exist" && return 1
+    [ ! -e $2 ] && echo "swap: $2 does not exist" && return 1
+
+    mv "$1" $TMPFILE
+    mv "$2" "$1"
+    mv $TMPFILE "$2"
+}
+
+# lowercase {{{2
+# move filenames to lowercase
+function lowercase()
+{
+    for file ; do
+        filename=${file##*/}
+        case "$filename" in
+        */*) dirname==${file%/*} ;;
+        *) dirname=.;;
+        esac
+        nf=$(echo $filename | tr A-Z a-z)
+        newname="${dirname}/${nf}"
+        if [ "$nf" != "$filename" ]; then
+            mv "$file" "$newname"
+            echo "lowercase: $file --> $newname"
+        else
+            echo "lowercase: $file not changed."
+        fi
+    done
+}
+
 # git_prompt {{{2
 function git_prompt_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -499,7 +617,7 @@ function git_prompt_status() {
 }
 
 # prompt {{{1
-setprompt() {
+function setprompt() {
     autoload -U colors zsh/terminfo
     colors
     setopt prompt_subst
