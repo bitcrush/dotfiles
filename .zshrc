@@ -207,25 +207,24 @@ zstyle :compinstall filename '${HOME}/.zshrc'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*'   force-list always
+zstyle ':completion:*:kill:*' force-list always
 zstyle ':completion:*:*:killall:*' menu yes select
-zstyle ':completion:*:killall:*'   force-list always
-zstyle ':completion:*:correct:*' insert-unambiguous true	# start menu completion only if it could find no unambiguous initial string
+zstyle ':completion:*:killall:*' force-list always
+# start menu completion only if it could find no unambiguous initial string
+zstyle ':completion:*:correct:*' insert-unambiguous true
 zstyle ':completion:*:man:*' menu yes select
-zstyle ':completion:*:history-words' menu yes 			# activate menu
-zstyle ':completion:*:*:cd:*:directory-stack' menu yes select 	# complete 'cd -<tab>' with menu
+# activate menu
+zstyle ':completion:*:history-words' menu yes
+# complete 'cd -<tab>' with menu
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 zstyle ':completion:*' menu select=5
-
 zstyle ':completion:*' completer _complete _prefix
 zstyle ':completion::prefix-1:*' completer _complete
 zstyle ':completion:incremental:*' completer _complete _correct
 zstyle ':completion:predict:*' completer _complete
- 
 zstyle ':completion:*:history-words' stop verbose
 zstyle ':completion:*:history-words' remove-all-dups yes
 zstyle ':completion:*:history-words' list false
- 
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
  
 zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
           ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ }
