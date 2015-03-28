@@ -1,0 +1,199 @@
+# vim:ft=muttrc:fdm=marker:
+
+#source /etc/Muttrc.gpg.dist
+source ~/.mutt/muttrc.theme
+source ~/.mutt/muttrc.local
+
+# {{{1 directories and external programs
+
+set header_cache        = ~/.mutt/cache/headers         # where to store headers
+#set message_cachedir    = ~/.mutt/cache/bodies          # where to store bodies
+set certificate_file    = ~/.mutt/certificates          # where to store certs
+set mailcap_path        = ~/.mutt/mailcap               # entrys for filetypes
+set tmpdir              = ~/.mutt/temp                  # where to keep temp files
+set sendmail            = "/usr/bin/msmtp"              # define smtp client
+set editor              = "/usr/bin/vim -f +star -c 'set nocin nohls noml tw=72 cc=73 fo=tcrq spell spl=de' '+/^$'"
+
+# {{{1 mail account settings
+
+set mbox_type           = Maildir
+set folder              = ~/mail
+set spoolfile           = ~/mail/$my_account/INBOX
+set postponed           = ~/mail/$my_account/Drafts
+set record              = ~/mail/$my_account/Sent
+set mask                = "!^\\.[^.]"
+mailboxes               `find ~/mail/ -type d -name cur -printf '%h\n' | grep -v Archive | tr "\n" " "`
+
+# {{{1 addresses & aliases
+
+set query_command       = "/usr/bin/pc_query -m '%s'"   # query owncloud contacts
+set alias_file          = ~/.mutt/muttrc.alias          # alias file for own identities
+set sort_alias          = alias                         # sort alias file by alias
+source $alias_file                                      # required for functionality
+
+# {{{1 header settings
+
+set envelope_from       = yes
+set encode_from         = yes
+set hidden_host         = yes
+set use_from            = yes
+set realname            = $my_realname
+set from                = $my_from
+#set text_flowed         = yes
+
+# {{{1 composing settings
+
+set fast_reply          = yes                           # skip to compose when replying
+set reply_to            = yes                           # reply to reply to: field
+set edit_headers        = yes                           # show headers when composing
+set include             = yes                           # include message in replies
+set forward_quote       = yes                           # include message in forwards
+set forward_format      = "Fwd: %s"                     # format for subject when forwarding
+set metoo               = no                            # remove my address from reply-to list
+set postpone            = ask-yes                       # postpone messages when not sent immediately
+set rfc2047_parameters  = yes                           # decode deprecated rfc2047 filenames
+
+# {{{1 options
+
+set charset             = utf-8
+set send_charset        = utf-8
+set allow_8bit          = no                            # 8bit isn't safe via daemon
+set implicit_autoview   = yes                           # lookup mailcap entries for viewing attachments
+set move                = no                            # move messages from spool to mbox
+set check_new           = yes                           # use auto checking for new mail
+set mail_check          = 0                             # time between checks for new mail in seconds
+set timeout             = 3                             # how long to wait until abort wait for input
+set mark_old            = no                            # don't use "O" markers for unread new messages
+set wait_key            = no                            # don't wait after using external programs
+set beep                = yes                           # beep on errors
+set beep_new            = yes                           # beep on new mail
+set maildir_trash       = no                            # move deleted mails to trash folder
+set quit                = ask-yes                       # wether or not to confirm quit
+set suspend             = no                            # don't suspend mutt with ^Z
+set thorough_search     = yes                           # strip headers and eval mimes before searching
+set sleep_time          = 0                             # speed up folders switch
+set quote_regexp        = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+
+# {{{1 enriched messages
+
+auto_view text/html                                     # view html automatically
+alternative_order text/plain text/enriched text/html    # but save it for last
+
+# {{{1 pgp
+
+set pgp_use_gpg_agent   = yes                           # use a possibly-running gpg-agent process
+set pgp_timeout         = 3600                          # number of seconds after which a cached passphrase will expire if not used
+set pgp_verify_sig      = yes                           # don't show pgp in pager
+set crypt_replyencrypt  = yes                           # automatically PGP or OpenSSL encrypt replies to messages which are encrypted
+
+# decode application/pgp
+set pgp_decode_command="gpg --pinentry-mode loopback --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+
+# verify a pgp/mime signature
+set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
+
+# decrypt a pgp/mime attachment
+set pgp_decrypt_command="gpg --pinentry-mode loopback --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+
+# create a pgp/mime signed attachment
+set pgp_sign_command="gpg --pinentry-mode loopback --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --detach-sign --textmode %?a?-u %a? %f"
+
+# create a application/pgp signed (old-style) message
+set pgp_clearsign_command="gpg --pinentry-mode loopback --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --textmode --clearsign %?a?-u %a? %f"
+
+# create a pgp/mime encrypted attachment
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+
+# create a pgp/mime encrypted and signed attachment
+set pgp_encrypt_sign_command="pgpewrap gpg --pinentry-mode loopback %?p?--passphrase-fd 0? --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+
+# import a key into the public key ring
+set pgp_import_command="gpg --no-verbose --import %f"
+
+# export a key from the public key ring
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+
+# verify a key
+set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
+
+# read in the public key ring
+set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --list-keys %r" 
+
+# read in the secret key ring
+set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --list-secret-keys %r" 
+
+# This version uses --status-fd messages
+set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
+
+# {{{1 binds
+
+bind index L            limit
+bind index gg           first-entry
+bind index G            last-entry
+bind index h            noop
+bind index j            next-entry
+bind index k            previous-entry
+bind index l            display-message
+bind index q            quit
+
+bind pager /            search
+bind pager H            display-toggle-weed
+bind pager <up>         previous-line
+bind pager <down>       next-line
+bind pager gg           top
+bind pager G            bottom
+bind pager h            exit
+bind pager j            next-line
+bind pager k            previous-line
+bind pager l            view-attachments
+bind pager q            exit
+
+bind index,pager R      list-reply
+bind index,pager ^r     group-reply
+bind index,pager D      delete-message
+bind browser l          select-entry
+bind attach  l          view-attach
+bind attach,browser h   exit
+bind compose d          detach-file
+
+# {{{1 macros
+
+macro index,pager d "s=$my_account/Trash\n\n" "move message to trash"
+macro index,pager c '<change-folder>?<toggle-mailboxes>' 'open a different folder'
+macro index,pager M '<save-message>?<toggle-mailboxes>' 'move a message to a mailbox'
+macro index,pager X "s=$my_account/Learn\n" "file as Spam"
+macro compose v '<edit-from>^Uidentity_<tab>' 'Select from'
+macro attach S "<save-entry><kill-line>$my_downloads<enter>y<enter>" 'save as ... to the "downloads"-folder'
+
+macro index 1 '<limit>~A<enter>'
+macro index 2 '<limit>~N<enter>'
+macro index 3 '<limit>(~f soundcloud | ~f mixcloud | ~f twitter | ~f myspace | ~f dropbox | ~f landr)<enter>'
+macro index 4 '<limit>(~f logwatch | ~f root)<enter>'
+
+macro index,pager <f1> "<change-folder>=$my_account/INBOX<enter>"
+macro index,pager <f2> "<change-folder>=$my_account/cwd<enter>"
+macro index,pager <f3> "<change-folder>=$my_account/list.<tab><tab>" 'open mailing list index'
+macro index,pager <f4> "<change-folder>=$my_account/Archive/<tab><tab>" 'open archived index'
+#macro index,pager <f5> <change-folder>=$my_account/<enter>
+#macro index,pager <f6> <change-folder>=$my_account/<enter>
+macro index,pager <f7> "<change-folder>=$my_account/Junk<enter>"
+macro index,pager <f8> "<change-folder>=$my_account/Trash<enter>"
+macro index,pager <f9> "<change-folder>=$my_account/Sent<enter>"
+macro index,pager <f10> "<change-folder>=$my_account/Drafts<enter>"
+#macro index,pager <f11> "<change-folder>=$my_account/Templates<enter>"
+macro index,pager <f12> "<shell-escape> offlineimap -q -o -u basic<return>" 'sync IMAP'
+
+# {{{1 hooks
+
+unhook *
+
+charset-hook us-ascii utf-8
+
+reply-hook . 'set from = $my_from realname = $my_realname'
+
+folder-hook . 'set sort = reverse-date-received from = $my_from realname = $my_realname index_format = $my_index; unset signature'
+
+folder-hook *[sS]ent*           'set index_format = $my_index_sent'
+folder-hook $my_account/cwd     'set sort = threads from = $my_from_cwd signature = $my_sig_cwd'
+folder-hook $my_account/list.*  'set sort = threads index_format = $my_index_list'
+
