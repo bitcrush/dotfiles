@@ -120,7 +120,7 @@ fi
 # aliases {{{1
 alias e="$EDITOR"
 alias l="$PAGER"
-alias m="mplayer -nolirc"
+alias m="mpv"
 alias p="pacman"
 alias s="sudo "
 alias ls="ls -A -h --group-directories-first -F --color=auto"
