@@ -189,11 +189,12 @@ unhook *
 
 charset-hook us-ascii utf-8
 
-reply-hook . 'set from = $my_from realname = $my_realname'
-
 folder-hook . 'set sort = reverse-date-received from = $my_from realname = $my_realname index_format = $my_index; unset signature'
 
 folder-hook *[sS]ent*           'set index_format = $my_index_sent'
 folder-hook $my_account/cwd     'set sort = threads from = $my_from_cwd signature = $my_sig_cwd'
 folder-hook $my_account/list.*  'set sort = threads index_format = $my_index_list'
+
+reply-hook . 'set from = $my_from realname = $my_realname'
+source ~/.mutt/muttrc.hooks
 
