@@ -207,10 +207,11 @@ if has('autocmd')
     au FileType vim let g:StartComment = "\""
     au BufWritePost ~/.vimrc source %
 
-    " filetype detection for gmsh files
+    " filetype detection for vimperator files
     augroup filetypedetect
-        au! BufRead,BufNewFile *.geo,*.GEO        setfiletype gmsh
+        au BufNewFile,BufRead *vimperatorrc*,*muttatorrc*,*.vimp    set filetype=vimperator
     augroup END
+
  
     " gpg encrypted files
     augroup encrypted
