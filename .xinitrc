@@ -18,4 +18,5 @@ wmname LG3D &
 compton --config ~/.compton.conf -b &
 dunst &
 
-exec ssh-agent i3 # -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
+#exec ssh-agent i3 # -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
+exec i3 # -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
