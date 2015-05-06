@@ -6,7 +6,7 @@
 # environment {{{1
 # Dircolors...
 eval `dircolors -b`
- 
+
 # Exports
 typeset -U path
 path=($HOME/bin/ /usr/bin/core_perl/ /usr/bin/vendor_perl/ $path)
@@ -342,14 +342,13 @@ function udevinfo () {
     udevadm info -a -p $DPATH
 }
 
-
 # mkcd {{{2
 # Create and CD into directory.
 function mkcd {
     if [ $# -ne 1 ]; then
         echo "usage: mkcd directory_name"
     elif [ -d "${1}" ]; then
-        echo "(directory already existed)"
+        echo "(directory already exists)"
         cd "$1"
     elif [ -e "${1}" ]; then
         echo "file exists"
@@ -364,8 +363,7 @@ function psgrep () { ps ax | grep $1 | grep -v grep; }
 # genpasswd {{{2
 function genpasswd() {
     local l=$1
-    [ "$l" == "" ] && l=20
-    tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
+    tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${1:-20} | xargs
 }
 
 # debug {{{2
@@ -580,6 +578,13 @@ function lowercase()
     done
 }
 
+# load ssh key with envoy
+function envoyssh()
+{
+    envoy -t ssh-agent -a ${1:-.ssh/id_rsa}
+    source <(envoy -p)
+}
+ 
 # git_prompt {{{2
 function git_prompt_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
