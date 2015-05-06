@@ -17,7 +17,7 @@ export LC_COLLATE='C'
 export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
-export BROWSER='chromium'
+export BROWSER='firefox'
 export HISTCONTROL='ignoredups'
 export MOZ_DISABLE_PANGO=1
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"

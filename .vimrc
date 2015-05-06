@@ -260,7 +260,7 @@ let g:tex_flavor='latex'
 
 " {{{2 gist
 let g:gist_clip_command='xclip -selection clipboard'
-let g:gist_browser_command = 'chromium %URL% &'
+let g:gist_browser_command = 'firefox %URL% &'
 
 " {{{2 airline
 let g:airline_theme = 'base16'

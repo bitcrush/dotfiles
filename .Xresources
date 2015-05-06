@@ -45,7 +45,7 @@ URxvt.iso14755:             False
 
 ! perl extensions & options
 URxvt*perl-ext-common:      default,matcher,searchable-scrollback
-URxvt*url-launcher:         chromium
+URxvt*url-launcher:         firefox
 URxvt*matcher.button:       1
 URxvt*matcher.pattern.0:    \\b(?:(?:https?|ftp):\/\/|mailto:)[\\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+ [\\w\-\@;\/?:&=%\$_+!*\x27()~]
 URxvt*matcher.pattern.1:    \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
