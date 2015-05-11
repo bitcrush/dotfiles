@@ -18,10 +18,6 @@ export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
 export BROWSER='firefox'
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
-export LIBVA_DRIVER_NAME="vdpau"
-export VDPAU_DRIVER="r600"
-export STEAM_FRAME_FORCE_CLOSE=1
 
 # zsh-history-substring-search
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'

@@ -1,5 +1,10 @@
 #!/bin/sh
 
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
+export LIBVA_DRIVER_NAME="vdpau"
+export VDPAU_DRIVER="r600"
+export STEAM_FRAME_FORCE_CLOSE=1
+
 [[ -f ${HOME}/.Xresources ]] && xrdb -merge ${HOME}/.Xresources
 xset m 0 0 &
 xset r rate 200 30 &
