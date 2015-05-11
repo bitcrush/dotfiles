@@ -10,20 +10,23 @@ eval `dircolors -b`
 # Exports
 typeset -U path
 path=($HOME/bin/ /usr/bin/core_perl/ /usr/bin/vendor_perl/ $path)
-export LC_ALL='en_US.utf8'
 export LANGUAGE='en_US.utf8'
 export LOCALE='en_US.utf8'
+export LC_ALL='en_US.utf8'
 export LC_COLLATE='C'
 export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
 export BROWSER='firefox'
-export HISTCONTROL='ignoredups'
-export MOZ_DISABLE_PANGO=1
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
 export LIBVA_DRIVER_NAME="vdpau"
 export VDPAU_DRIVER="r600"
 export STEAM_FRAME_FORCE_CLOSE=1
+
+# zsh-history-substring-search
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
+export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
 # color manpages without using most
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -69,6 +72,13 @@ fi
 # source files {{{1
 #source ~/.zsh/zle
 
+# antigen {{{1
+source ~/.zsh/antigen/antigen.zsh
+#antigen bundle robbyrussell/oh-my-zsh lib/
+#antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-history-substring-search
+antigen apply
+
 # system functions {{{1
 # load completion and user prompt
 autoload -U compinit promptinit
@@ -82,6 +92,7 @@ autoload zmv
 autoload -U zcalc
 
 #zmodload zsh/complist
+zmodload zsh/terminfo
 
 ## smart urls
 autoload -U url-quote-magic
@@ -103,8 +114,10 @@ bindkey "\e[4~" end-of-line
 bindkey "\e[3~" delete-char
 bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
-bindkey "\e[A" history-search-backward
-bindkey "\e[B" history-search-forward
+#bindkey "\e[A" history-search-backward
+#bindkey "\e[B" history-search-forward
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 #bindkey -M menuselect "\C-n" accept-and-menu-complete
 
 # file rename magic
@@ -138,7 +151,6 @@ alias grep='grep --color=auto -d skip'
 alias irssi="screen -D -R irssi irssi"
 alias wrk='screen -c $HOME/.config/scriptz/screen-wrk -D -R wrk'
 #alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
-alias newsbeuter='TERM=xterm newsbeuter'
 alias chm-d="find -type d -exec chmod 755 {} \;"
 alias chm-f="find -type f -exec chmod 644 {} \;"
 alias myip="curl icanhazip.com"
@@ -146,7 +158,6 @@ alias defrag="/opt/quake3/iodfengine.x86_64 +set fs_game defrag +disconnect"
 alias mkpw="makepasswd --chars=10 --string=123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ-_. --count=1"
 alias skype='xhost +local: && sudo -u skype /usr/bin/skype'
 alias startx="startx -nolisten tcp"
-#alias mailfetch="ssh rha fdm fetch && offlineimap -u basic -o"
 alias xev-slim="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
 alias vw='vim -c VimwikiIndex'
 alias gs='git status '
@@ -170,34 +181,31 @@ setopt append_history       # append history list to the history file (important
 setopt auto_cd              # try cd command if not executable
 setopt auto_menu            # use menu completion after 2nd TAB
 setopt auto_pushd           # automatically append dirs to the push/pop list
-#setopt cdablevars          # avoid the need for an explicit $
+unsetopt beep               # turn off beeps
+unsetopt clobber            # use >! and >>! instead of > and >> to create or truncate files
 setopt completeinword       # not just at the end
 setopt extendedglob         # weird & wacky pattern matching - yay zsh!
-#setopt extendedhistory     # puts timestamps in the history
+setopt extendedhistory      # puts timestamps in the history
 unsetopt flow_control       # if unset, output flow control via start/stop characters (usually assigned to ^S/^Q) is disabled
-setopt globdots             # no leading . in a filename required to be matched
+unsetopt globdots           # * shouldn't match dotfiles. ever.
 setopt hash_list_all        # whenever a command completion is attempted, make sure the entire command path is hashed first
 setopt histignorealldups    # remove duplicates from history
-setopt histignorespace      # remove history lines with leading space
+unsetopt histignorespace    # remove history lines with leading space
 setopt histreduceblanks     # remove superfluous blanks from history lines
 setopt histverify           # when using ! cmds, confirm first
-#setopt incappendhistory    # every zsh session appends to history file (without waiting til shell exits)
+unsetopt hup                # and don't kill them, either
+setopt incappendhistory     # every zsh session appends to history file (without waiting til shell exits)
 setopt interactivecomments  # escape commands so i can use them later
-unsetopt menu_complete      # do not autoselect the first completion entry
+unsetopt listtypes          # show types in completion
 setopt long_list_jobs       # list jobs in the long format by default
+unsetopt menu_complete      # do not autoselect the first completion entry
 setopt multios              # perform implicit tees or cats when multiple redirections are attempted
-setopt nobeep               # turn off beeps
-setopt noclobber            # use >! and >>! instead of > and >> to create or truncate files
-#setopt noglobdots          # * shouldn't match dotfiles. ever.
-setopt nohup                # and don't kill them, either
-setopt nolisttypes          # show types in completion
-setopt nonomatch            # try to avoid the 'zsh: no matches found...'
-#setopt nopromptcr          # don't add \n which overwrites cmds with no \n
+unsetopt nomatch            # try to avoid the 'zsh: no matches found...'
 setopt notify               # report the status of backgrounds jobs immediately
-setopt noshwordsplit        # use zsh style word splitting
 setopt pushd_minus          # switch + and - when used on directory stack number
 setopt pushdignoredups      # don't push duplicates onto the directory stack
 setopt sharehistory         # share history in realtime between shells and use timestamps
+unsetopt shwordsplit        # use zsh style word splitting
 setopt unset                # don't error out when unset parameters are used
 
 # completion {{{1
@@ -578,6 +586,7 @@ function lowercase()
     done
 }
 
+# envoyssh {{{2
 # load ssh key with envoy
 function envoyssh()
 {
