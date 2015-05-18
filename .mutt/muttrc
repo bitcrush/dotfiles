@@ -2,6 +2,7 @@
 
 #source /etc/Muttrc.gpg.dist
 source ~/.mutt/muttrc.theme
+source ~/.mutt/muttrc.colors.rcn
 source ~/.mutt/muttrc.local
 
 # {{{1 directories and external programs
