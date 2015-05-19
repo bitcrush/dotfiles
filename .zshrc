@@ -3,6 +3,14 @@
 # $HOME/.zshrc
 # vim: fdm=marker ts=4 sw=4
 
+# antigen {{{1
+source ~/.zsh/antigen/antigen.zsh
+#antigen bundle robbyrussell/oh-my-zsh lib/
+#antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-completions src/
+antigen bundle zsh-users/zsh-history-substring-search
+antigen apply
+
 # environment {{{1
 # Dircolors...
 eval `dircolors -b`
@@ -68,14 +76,6 @@ fi
 # source files {{{1
 #source ~/.zsh/zle
 source ~/.zsh/functions
-
-# antigen {{{1
-source ~/.zsh/antigen/antigen.zsh
-#antigen bundle robbyrussell/oh-my-zsh lib/
-#antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions src/
-antigen bundle zsh-users/zsh-history-substring-search
-antigen apply
 
 # system functions {{{1
 # load completion and user prompt
