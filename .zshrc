@@ -20,7 +20,7 @@ export VISUAL='vim'
 export BROWSER='firefox'
 
 # zsh-history-substring-search
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
@@ -73,6 +73,7 @@ source ~/.zsh/functions
 source ~/.zsh/antigen/antigen.zsh
 #antigen bundle robbyrussell/oh-my-zsh lib/
 #antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-completions src/
 antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
 
@@ -113,19 +114,25 @@ bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
 #bindkey "\e[A" history-search-backward
 #bindkey "\e[B" history-search-forward
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 #bindkey -M menuselect "\C-n" accept-and-menu-complete
+
+autoload up-line-or-beginning-search
+autoload down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "\e[A" up-line-or-beginning-search
+bindkey "\e[B" down-line-or-beginning-search
+bindkey -M vicmd 'k' up-line-or-beginning-search
+bindkey -M vicmd 'j' down-line-or-beginning-search
+bindkey "\e\e[A" history-substring-search-up
+bindkey "\e\e[B" history-substring-search-down
 
 # file rename magic
 bindkey "^xp" copy-prev-shell-word
 
 # Shift-tab to perform backwards menu completion
-if [[ -n "$terminfo[kcbt]" ]]; then
-    bindkey "$terminfo[kcbt]" reverse-menu-complete
-elif [[ -n "$terminfo[cbt]" ]]; then # required for GNU screen
-    bindkey "$terminfo[cbt]"  reverse-menu-complete
-fi
+[[ -n "$terminfo[kcbt]" ]]  &&  bindkey "$terminfo[kcbt]" reverse-menu-complete
+[[ -n "$terminfo[cbt]" ]]   &&  bindkey "$terminfo[cbt]"  reverse-menu-complete
 
 # aliases {{{1
 alias e="$EDITOR"
@@ -145,6 +152,7 @@ alias fmusic="cd /mnt/music/music"
 alias fabs="cd /mnt/sdb3/cache/abs/local/"
 alias fgit="cd /mnt/sdb3/cache/git/"
 alias grep='grep --color=auto -d skip'
+alias zrep='zgrep --color=auto -d skip'
 alias irssi="screen -D -R irssi irssi"
 alias wrk='screen -c $HOME/.config/scriptz/screen-wrk -D -R wrk'
 #alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
@@ -169,8 +177,8 @@ alias steamclean='find ~/.local/share/Steam/ \( -name "libgcc_s.so*" -o -name "l
 
 # history {{{1
 HISTFILE=~/.zsh/history
-HISTSIZE=3000
-SAVEHIST=3000
+HISTSIZE=10000
+SAVEHIST=10000
 
 # options {{{1
 setopt alwaystoend          # when complete from middle, move cursor
