@@ -195,7 +195,7 @@ unsetopt flow_control       # if unset, output flow control via start/stop chara
 unsetopt globdots           # * shouldn't match dotfiles. ever.
 setopt hash_list_all        # whenever a command completion is attempted, make sure the entire command path is hashed first
 setopt histignorealldups    # remove duplicates from history
-unsetopt histignorespace    # remove history lines with leading space
+setopt histignorespace      # remove history lines with leading space
 setopt histreduceblanks     # remove superfluous blanks from history lines
 setopt histverify           # when using ! cmds, confirm first
 unsetopt hup                # and don't kill them, either
