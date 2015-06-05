@@ -312,7 +312,7 @@ function lowercase()
 # load ssh key with envoy
 function envoyssh()
 {
-    envoy -t ssh-agent -a ${1:-.ssh/id_rsa}
+    envoy -t gpg-agent -a ${1:-.ssh/id_rsa}
     source <(envoy -p)
 }
  
