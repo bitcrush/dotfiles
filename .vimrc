@@ -92,16 +92,6 @@ if has('mouse')
   set mouse=a
 endif
 
-" highlighting tabs, trailing white space and non braking spaces
-" if &term !=# "linux"
-"     set list listchars=tab:\→\ ,trail:·,nbsp:-
-" endif
-
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
-
 " {{{1 scrolling
 set scroll=4			" number of lines to scroll with ^U/^D
 set scrolloff=3			" top/bottom cursor offset
@@ -327,6 +317,13 @@ let g:pymode_folding = 0
 " {{{2 vimwiki
 let wiki = {}
 let wiki.path = '~/vimwiki/'
+let wiki.path_html = '~/vimwiki_html/'
+let wiki.auto_export = 1
+let wiki.force = 1
+let wiki.syntax = 'markdown'
+let wiki.ext = '.wiki'
+let wiki.css_file = '~/vimwiki_html/style.css'
+let wiki.custom_wiki2html = '~/vimwiki/md2html/md2html.py'
 let wiki.template_path = '~/vimwiki/templates/'
 let wiki.template_default = 'default'
 let wiki.template_ext = '.html'
