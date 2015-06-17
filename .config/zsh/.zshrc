@@ -1,81 +1,29 @@
 #!/bin/zsh
 
-# $HOME/.zshrc
 # vim: fdm=marker ts=4 sw=4
 
+export BOOKMARKS_FILE="${ZDOTDIR}/bookmarks"
 # antigen {{{1
-source ~/.zsh/antigen/antigen.zsh
+source ${ZDOTDIR}/antigen/antigen.zsh
 #antigen bundle robbyrussell/oh-my-zsh lib/
 #antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle jocelynmallon/zshmarks
 antigen bundle zsh-users/zsh-completions src/
 antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
 
-# environment {{{1
-# Dircolors...
-eval `dircolors -b`
-
-# Exports
-typeset -U path
-path=($HOME/bin/ /usr/bin/core_perl/ /usr/bin/vendor_perl/ $path)
-export LANGUAGE='en_US.utf8'
-export LOCALE='en_US.utf8'
-export LC_ALL='en_US.utf8'
-export LC_COLLATE='C'
-export EDITOR='vim'
-export PAGER='less'
-export VISUAL='vim'
-export BROWSER='firefox'
+# zshmarks
+export BOOKMARKS_FILE="${ZDOTDIR}/bookmarks"
 
 # zsh-history-substring-search
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
-# color manpages without using most
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
-
-# linux console colors
-# TODO: set to base16
-if [ "$TERM" = "linux" ]; then
-    echo -en "\e]P0000000" #black
-    echo -en "\e]P8505354" #darkgrey
-    echo -en "\e]P1f92672" #darkred
-    echo -en "\e]P9ff5995" #red
-    echo -en "\e]P282b414" #darkgreen
-    echo -en "\e]PAb6e354" #green
-    echo -en "\e]P3fd971f" #brown
-    echo -en "\e]PBfeed6c" #yellow
-    echo -en "\e]P456c2d6" #darkblue
-    echo -en "\e]PC8cedff" #blue
-    echo -en "\e]P58c54fe" #darkmagenta
-    echo -en "\e]PD9e6ffe" #magenta
-    echo -en "\e]P6465457" #darkcyan
-    echo -en "\e]PE899ca1" #cyan
-    echo -en "\e]P7ccccc6" #lightgrey
-    echo -en "\e]PFf8f8f2" #white
-    clear # back to default input colours
-else
-    # set additional colors for base16-theme
-    printf_template="\033]4;%d;rgb:%s\033\\"
-    printf $printf_template 16 "dc/96/56"
-    printf $printf_template 17 "a1/69/46"
-    printf $printf_template 18 "28/28/28"
-    printf $printf_template 19 "38/38/38"
-    printf $printf_template 20 "b8/b8/b8"
-    printf $printf_template 21 "e8/e8/e8"
-    unset printf_template
-fi
 
 # source files {{{1
-#source ~/.zsh/zle
-source ~/.zsh/functions
+#source ${ZDOTDIR}/zle
+source ${ZDOTDIR}/functions
 
 # system functions {{{1
 # load completion and user prompt
@@ -148,10 +96,6 @@ alias rm="rm -I"
 alias mkdir="mkdir -pv"
 alias j="jobs -l"
 alias mnt="mount |column -t"
-alias dl="cd /home/racoon/files/downloads"
-alias fmusic="cd /mnt/music/music"
-alias fabs="cd /mnt/sdb3/cache/abs/local/"
-alias fgit="cd /mnt/sdb3/cache/git/"
 alias grep='grep --color=auto -d skip'
 alias zrep='zgrep --color=auto -d skip'
 alias irssi="screen -D -R irssi irssi"
@@ -177,7 +121,7 @@ alias gx='gitx --all'
 alias steamclean='find ~/.local/share/Steam/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
 
 # history {{{1
-HISTFILE=~/.zsh/history
+HISTFILE=${ZDOTDIR}/history
 HISTSIZE=10000
 SAVEHIST=10000
 
@@ -217,7 +161,7 @@ setopt unset                # don't error out when unset parameters are used
 # completion {{{1
 compctl -/ cd                       # type a dir's name to cd into it
 zstyle ':completion:*' menu select  # autocompletion with an arrow-key driven interface
-zstyle :compinstall filename '${HOME}/.zshrc'
+zstyle :compinstall filename '${ZDOTDIR}/.zshrc'
 
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
@@ -249,14 +193,14 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
  
 # Completion caching
 zstyle ':completion::complete:*' use-cache 1
-zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
+zstyle ':completion::complete:*' cache-path ${ZDOTDIR}/cache/$HOST
  
 # Expand partial paths
 zstyle ':completion:*' expand 'yes'
 zstyle ':completion:*' squeeze-slashes 'yes'
  
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' cache-path ${ZDOTDIR}/cache
  
 # Include non-hidden directories in globbed file completions for certain commands
 zstyle ':completion::complete:*' '\'
