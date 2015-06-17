@@ -314,14 +314,6 @@ function lowercase()
     done
 }
 
-# envoyssh {{{1
-# load ssh key with envoy
-function envoyssh()
-{
-    envoy -t gpg-agent -a ${1:-.ssh/id_rsa}
-    source <(envoy -p)
-}
- 
 # git_prompt {{{1
 function git_prompt_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
