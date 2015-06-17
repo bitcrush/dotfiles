@@ -241,7 +241,13 @@ function buc() {
 
 # ffind {{{1
 # Find a file with a pattern in name:
-function ffind() { find . -type f -iname '*'$*'*' -ls ; }
+function ffind()
+{
+    for arg in "$@"
+    do
+        find . -iname '*'${arg}'*' | grep -i --color $arg
+    done
+}
 
 # fiexec {{{1
 # Find a file with pattern $1 in name and Execute $2 on it:
