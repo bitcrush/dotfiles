@@ -1,8 +1,11 @@
 #!/bin/zsh
 
+#set -x
+
 # vim: fdm=marker ts=4 sw=4
 
 export BOOKMARKS_FILE="${ZDOTDIR}/bookmarks"
+
 # antigen {{{1
 source ${ZDOTDIR}/antigen/antigen.zsh
 #antigen bundle robbyrussell/oh-my-zsh lib/
@@ -20,10 +23,10 @@ export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
-
 # source files {{{1
 #source ${ZDOTDIR}/zle
 source ${ZDOTDIR}/functions
+source ${ZDOTDIR}/base16-default.dark.rcn.sh
 
 # system functions {{{1
 # load completion and user prompt
@@ -232,3 +235,4 @@ zstyle ':completion:*:manuals.*' insert-sections true
 # }}}
 
 setprompt
+

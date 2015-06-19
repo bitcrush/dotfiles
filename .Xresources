@@ -11,8 +11,11 @@ Xft.rgba:		rgba
 Xcursor.theme:		Neutral_Plus
 
 ! ---| colors |--- {{{1
-!#include "/home/racoon/.themes/terminal_colors/rcn.xcolors"
-#include "/home/racoon/.themes/terminal_colors/base16-default.dark.256.xresources"
+!#include "/home/racoon/.themes/terminal_colors/base16-default.dark.256.xresources"
+
+! colors are set via a shell script
+! only specify colors that use transparency here
+*.background: [60]#3a3a3a
 
 ! ---| urxvt |--- {{{1
 URxvt*depth:                32
