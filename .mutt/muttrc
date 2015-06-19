@@ -23,7 +23,13 @@ set spoolfile           = ~/.mail/$my_account/INBOX
 set postponed           = ~/.mail/$my_account/Drafts
 set record              = ~/.mail/$my_account/Sent
 set mask                = "!^\\.[^.]"
-mailboxes               `find ~/.mail/ -type d -name cur -printf '%h\n' | grep -v Archive | tr "\n" " "`
+#mailboxes               `find ~/.mail/ -type d -name cur -printf '%h\n' | grep -v Archive | tr "\n" " "`
+mailboxes               = ~/.mail/$my_account/INBOX
+mailboxes               = ~/.mail/$my_account/cwd
+mailboxes               = ~/.mail/$my_account/Junk
+mailboxes               = ~/.mail/$my_account/Lists/arch-announce
+mailboxes               = ~/.mail/$my_account/Lists/debian-announce
+mailboxes               = ~/.mail/$my_account/Lists/vboxadm
 
 # {{{1 addresses & aliases
 
@@ -176,7 +182,7 @@ macro compose v '<edit-from>^Uidentity_<tab>' 'Select from'
 macro attach S "<save-entry><kill-line>$my_downloads<enter>y<enter>" 'save as ... to the "downloads"-folder'
 
 macro index 1 '<limit>~A<enter>'
-macro index 2 '<limit>(~N|~F)<enter>'
+macro index 2 '<limit>(~N|~O|~F)<enter>'
 macro index 3 '<limit>(~f soundcloud | ~f mixcloud | ~f twitter | ~f myspace | ~f dropbox | ~f landr)<enter>'
 macro index 4 '<limit>(~f logwatch | ~f root)<enter>'
 
