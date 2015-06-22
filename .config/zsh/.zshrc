@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-#set -x
-
 # vim: fdm=marker ts=4 sw=4
 
 export BOOKMARKS_FILE="${ZDOTDIR}/bookmarks"
@@ -97,7 +95,7 @@ alias lb="ls -A -s --block-size=1 --group-directories-first -F --color=auto"
 alias ll="ls --group-directories-first --color -l -F"
 alias rm="rm -I"
 alias mkdir="mkdir -pv"
-alias j="jobs -l"
+alias j="jump"
 alias mnt="mount |column -t"
 alias grep='grep --color=auto -d skip'
 alias zrep='zgrep --color=auto -d skip'
