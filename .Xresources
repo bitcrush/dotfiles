@@ -22,7 +22,6 @@ URxvt*depth:                32
 URxvt*borderWidth:          0
 URxvt*buffered:             True
 URxvt*cursorBlink:          False
-URxvt*cursorColor:          #d8d8d8
 URxvt*font:                 xft:Terminess Powerline:style=regular:size=8
 URxvt*boldFont:             xft:Terminess Powerline:style=bold:size=8
 URxvt*italicFont:           xft:Terminess Powerline:style=italic:size=8
