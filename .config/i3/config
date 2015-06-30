@@ -1,0 +1,312 @@
+# i3 config file (v4)
+#
+# vim:filetype=i3 
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:FontAwesome, Terminus 8
+
+# new window default border
+new_window normal
+new_float 1pixel
+hide_edge_borders none
+workspace_auto_back_and_forth yes
+
+### VARIABLES ### {{{
+# set Mod-Key
+set $mod Mod4
+
+# vim key window navigation
+set $up k
+set $down j
+set $left h
+set $right l
+
+# colors - base16
+set $black      #181818
+set $red        #AB4642
+set $green      #A1B56C
+set $yellow     #F7CA88
+set $blue       #7CAFC2
+set $magenta    #BA8BAF
+set $cyan       #86C1B9
+set $white      #D8D8D8
+set $lblack     #585858
+set $lwhite     #F8F8F8
+set $gray       #383838
+
+# i3-gaps
+set $default_gaps_inner 0
+set $default_gaps_outer 0
+gaps inner $default_gaps_inner
+gaps outer $default_gaps_outer
+smart_gaps on
+smart_borders on
+
+# }}}
+
+### KEY BINDINGS ### {{{
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu2 (a program launcher)
+#bindsym $mod+d exec dmenu_run -fn '-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*' -l 9 -nb '#333333' -nf '#BDBDBD' -sb '#696969' -sf '#BDBDBD' -y 20 -x 2 -w 1676 -dim 0.5
+bindsym $mod+r exec rofi -show run
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+Control+h split h
+
+# split in vertical orientation
+bindsym $mod+Control+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# switch to workspace
+bindsym $mod+1 workspace $WS1
+bindsym $mod+2 workspace $WS2
+bindsym $mod+3 workspace $WS3
+bindsym $mod+4 workspace $WS4
+bindsym $mod+5 workspace $WS5
+bindsym $mod+6 workspace $WS6
+bindsym $mod+7 workspace $WS7
+bindsym $mod+8 workspace $WS8
+bindsym $mod+9 workspace $WS9
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4
+bindsym $mod+Shift+5 move container to workspace $WS5
+bindsym $mod+Shift+6 move container to workspace $WS6
+bindsym $mod+Shift+7 move container to workspace $WS7
+bindsym $mod+Shift+8 move container to workspace $WS8
+bindsym $mod+Shift+9 move container to workspace $WS9
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $mod+F11 exec "amixer -- sset DAC,0 1%- && amixer -- sset DAC,1 1%-"
+bindsym $mod+F12 exec "amixer -- sset DAC,0 1%+ && amixer -- sset DAC,1 1%+"
+
+
+# resize window (you can also use the mouse for that)
+mode $mode_resize {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym $left       resize shrink width 5 px or 5 ppt
+        bindsym $down       resize grow height 5 px or 5 ppt
+        bindsym $up         resize shrink height 5 px or 5 ppt
+        bindsym $right      resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+set $mode_resize 
+bindsym $mod+Ctrl+r mode "$mode_resize"
+
+# set gaps on the fly (requires i3-gaps patch)
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Ctrl+g mode "$mode_gaps"
+# }}}
+
+### BARS ### {{{
+bar {
+        id bar-0
+        position top
+        tray_output none
+        binding_mode_indicator no
+        status_command "$HOME/bin/i3-conky-bar"
+        colors {
+            background $black
+            statusline $white
+            separator $lblack
+    
+            # class             border      backgr.     text
+            focused_workspace   $lblack     $lblack     $white
+            active_workspace    $gray       $gray       $white
+            inactive_workspace  $gray       $gray       $white
+            urgent_workspace    $red        $red        $white
+    }
+}
+
+bar {
+        id bar-1
+        position bottom
+        workspace_buttons no
+        binding_mode_indicator yes
+        status_command "$HOME/bin/i3-conky-bar bottom"
+        colors {
+            background $black
+            statusline $white
+            separator $lblack
+            
+            # colors for binding mode indicator
+            # class             border      backgr.     text
+            urgent_workspace    $red        $red        $white
+        }
+}
+# }}}
+
+### WORKSPACES ### {{{
+set $WS1 1:
+set $WS2 2:
+set $WS3 3:
+set $WS4 4:
+set $WS5 5:
+set $WS6 6:misc
+set $WS7 7
+set $WS8 8
+set $WS9 9
+
+workspace $WS1 gaps inner 20
+workspace $WS1 gaps outer 0
+# }}}
+
+### WINDOW CONTROL ### {{{
+
+# floating windows
+floating_minimum_size -1 x -1
+floating_maximum_size -1 x -1
+
+# class                 border  backgr. text    indicator
+client.focused          $lblack $lblack $white  $lblack
+client.focused_inactive $gray   $gray   $white  $gray
+client.unfocused        $gray   $gray   $white  $gray
+client.urgent           $red    $red    $white  $red
+
+# force floating for all new windows
+for_window [class="^.*"] floating enable
+#for_window [class="^.*"] border pixel 0
+
+for_window [class="Chromium" window_role="(?i)browser"] floating disable
+for_window [class="Corebird"] floating disable
+for_window [class="Firefox" window_role="(?i)browser"] floating disable
+for_window [class="mpv"] border pixel 2
+for_window [class="Pcmanfm"] floating disable
+for_window [class="Steam" title="Steam"] floating disable
+for_window [class="Thunderbird" window_role="(?i)3pane"] floating disable
+for_window [class="URxvt"] border pixel 2
+for_window [class="URxvt"] floating disable
+for_window [class="VirtualBox"] floating disable
+for_window [class="jd-Main"] floating disable
+for_window [instance="libreoffice"] floating disable
+
+assign [class="Chromium"] $WS2
+assign [class="Corebird"] $WS2
+assign [class="Firefox"] $WS2
+assign [class="Corebird"] $WS2
+assign [class="jd-Main"] $WS3
+assign [class="Steam"] $WS5
+### }}}
+
+### AUTOSTART ### {{{
+exec --no-startup-id feh --bg-scale /mnt/sdb3/tmp/pix/wallpapers/1680x1050-dark_tranquillity_room.jpg
+#exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspace-term.json'"
+#exec --no-startup-id "i3-msg 'workspace 2; append_layout ~/.config/i3/workspace-www.json'"
+exec --no-startup-id dropbox
+exec --no-startup-id owncloud
+exec --no-startup-id keepassx -min -lock
+exec --no-startup-id firefox
+exec --no-startup-id corebird
+### }}}
