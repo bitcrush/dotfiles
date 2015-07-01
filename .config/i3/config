@@ -12,7 +12,7 @@
 font pango:FontAwesome, Terminus 8
 
 # new window default border
-new_window normal
+new_window 1pixel
 new_float 1pixel
 hide_edge_borders none
 workspace_auto_back_and_forth yes
@@ -62,7 +62,7 @@ bindsym $mod+Shift+q kill
 
 # start dmenu2 (a program launcher)
 #bindsym $mod+d exec dmenu_run -fn '-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*' -l 9 -nb '#333333' -nf '#BDBDBD' -sb '#696969' -sf '#BDBDBD' -y 20 -x 2 -w 1676 -dim 0.5
-bindsym $mod+r exec rofi -show run
+bindsym $mod+r exec --no-startup-id rofi -show run
 
 # change focus
 bindsym $mod+$left focus left
@@ -150,8 +150,8 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym $mod+F11 exec "amixer -- sset DAC,0 1%- && amixer -- sset DAC,1 1%-"
-bindsym $mod+F12 exec "amixer -- sset DAC,0 1%+ && amixer -- sset DAC,1 1%+"
+bindsym $mod+F11 exec --no-startup-id "amixer -- sset DAC,0 1%- && amixer -- sset DAC,1 1%-"
+bindsym $mod+F12 exec --no-startup-id "amixer -- sset DAC,0 1%+ && amixer -- sset DAC,1 1%+"
 
 
 # resize window (you can also use the mouse for that)
@@ -253,8 +253,8 @@ set $WS1 1:
 set $WS2 2:
 set $WS3 3:
 set $WS4 4:
-set $WS5 5:
-set $WS6 6:misc
+set $WS5 5:
+set $WS6 6:
 set $WS7 7
 set $WS8 8
 set $WS9 9
@@ -288,16 +288,16 @@ for_window [class="Steam" title="Steam"] floating disable
 for_window [class="Thunderbird" window_role="(?i)3pane"] floating disable
 for_window [class="URxvt"] border pixel 2
 for_window [class="URxvt"] floating disable
-for_window [class="VirtualBox"] floating disable
+for_window [class="VirtualBox" title="Oracle VM VirtualBox Manager"] floating disable
 for_window [class="jd-Main"] floating disable
 for_window [instance="libreoffice"] floating disable
 
 assign [class="Chromium"] $WS2
 assign [class="Corebird"] $WS2
 assign [class="Firefox"] $WS2
-assign [class="Corebird"] $WS2
 assign [class="jd-Main"] $WS3
 assign [class="Steam"] $WS5
+assign [class="VirtualBox"] $WS6
 ### }}}
 
 ### AUTOSTART ### {{{
