@@ -280,22 +280,22 @@ for_window [class="^.*"] floating enable
 #for_window [class="^.*"] border pixel 0
 
 for_window [class="Chromium" window_role="(?i)browser"] floating disable
-for_window [class="Corebird"] floating disable
+for_window [class="Corebird" title="^@.+$"] floating disable
 for_window [class="Firefox" window_role="(?i)browser"] floating disable
 for_window [class="mpv"] border pixel 2
 for_window [class="Pcmanfm"] floating disable
-for_window [class="Steam" title="Steam"] floating disable
+for_window [class="Steam" title="^Steam$"] floating disable
 for_window [class="Thunderbird" window_role="(?i)3pane"] floating disable
 for_window [class="URxvt"] border pixel 2
 for_window [class="URxvt"] floating disable
 for_window [class="VirtualBox" title="Oracle VM VirtualBox Manager"] floating disable
-for_window [class="jd-Main"] floating disable
+for_window [class="JDownloader" title="^JDownloader 2"] floating disable
 for_window [instance="libreoffice"] floating disable
 
 assign [class="Chromium"] $WS2
 assign [class="Corebird"] $WS2
 assign [class="Firefox"] $WS2
-assign [class="jd-Main"] $WS3
+assign [class="JDownloader"] $WS3
 assign [class="Steam"] $WS5
 assign [class="VirtualBox"] $WS6
 ### }}}
