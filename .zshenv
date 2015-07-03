@@ -9,6 +9,7 @@ eval `dircolors -b`
 # Exports
 typeset -U path
 path=($HOME/bin/ $path)
+export GPG_TTY=$(tty)
 export LANGUAGE='en_US.utf8'
 export LOCALE='en_US.utf8'
 export LC_ALL='en_US.utf8'
