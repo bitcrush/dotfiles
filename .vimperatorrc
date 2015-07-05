@@ -34,4 +34,4 @@ noremap h 3h
 noremap l 3l
 noremap <C-y> :tinyurl<CR>
 
-colorscheme base16-rcn.vimp
+colorscheme base16-rcn
