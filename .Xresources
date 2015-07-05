@@ -15,7 +15,8 @@ Xcursor.theme:		Neutral_Plus
 
 ! colors are set via a shell script
 ! only specify colors that use transparency here
-*.background: [60]#3a3a3a
+!*.background: [60]#3a3a3a
+*.background: #282828
 
 ! ---| urxvt |--- {{{1
 URxvt*depth:                32
