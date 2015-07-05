@@ -62,7 +62,7 @@ bindsym $mod+Shift+q kill
 
 # start dmenu2 (a program launcher)
 #bindsym $mod+d exec dmenu_run -fn '-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*' -l 9 -nb '#333333' -nf '#BDBDBD' -sb '#696969' -sf '#BDBDBD' -y 20 -x 2 -w 1676 -dim 0.5
-bindsym $mod+r exec --no-startup-id rofi -show run
+bindsym $mod+d exec --no-startup-id rofi -show run
 
 # change focus
 bindsym $mod+$left focus left
@@ -112,7 +112,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-bindsym $mod+d focus child
+bindsym $mod+c focus child
 
 # move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -261,6 +261,9 @@ set $WS9 9
 
 workspace $WS1 gaps inner 20
 workspace $WS1 gaps outer 0
+
+workspace $WS2 gaps inner 15
+workspace $WS2 gaps outer 0
 # }}}
 
 ### WINDOW CONTROL ### {{{
@@ -282,15 +285,18 @@ for_window [class="^.*"] floating enable
 for_window [class="Chromium" window_role="(?i)browser"] floating disable
 for_window [class="Corebird" title="^@.+$"] floating disable
 for_window [class="Firefox" window_role="(?i)browser"] floating disable
-for_window [class="mpv"] border pixel 2
 for_window [class="Pcmanfm"] floating disable
 for_window [class="Steam" title="^Steam$"] floating disable
 for_window [class="Thunderbird" window_role="(?i)3pane"] floating disable
-for_window [class="URxvt"] border pixel 2
 for_window [class="URxvt"] floating disable
 for_window [class="VirtualBox" title="Oracle VM VirtualBox Manager"] floating disable
 for_window [class="JDownloader" title="^JDownloader 2"] floating disable
 for_window [instance="libreoffice"] floating disable
+
+for_window [class="Corebird"] border pixel 2
+for_window [class="Firefox"] border pixel 2
+for_window [class="mpv"] border pixel 2
+for_window [class="URxvt"] border pixel 2
 
 assign [class="Chromium"] $WS2
 assign [class="Corebird"] $WS2
@@ -301,7 +307,7 @@ assign [class="VirtualBox"] $WS6
 ### }}}
 
 ### AUTOSTART ### {{{
-exec --no-startup-id feh --bg-scale /mnt/sdb3/tmp/pix/wallpapers/1680x1050-dark_tranquillity_room.jpg
+exec --no-startup-id feh --bg-center "/mnt/sdb3/tmp/pix/wallpapers/Colored Backgrounds/1920 x 1200/Background Purple.jpg"
 #exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspace-term.json'"
 #exec --no-startup-id "i3-msg 'workspace 2; append_layout ~/.config/i3/workspace-www.json'"
 exec --no-startup-id dropbox
