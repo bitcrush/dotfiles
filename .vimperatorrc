@@ -1,0 +1,37 @@
+" vim: ft=vimperator
+
+" source files
+source! ~/.config/vimperator/vimperatorrc.local
+
+" Options
+set toolbars=noaddons,nobookmarks,nomenu,nonavigation,tabs
+set status=input,location,bookmark,ssl,position
+set runtimepath=~/.config/vimperator/
+set history=10000
+set defsearch=google
+set visualbell
+set editor=vim
+set focuscontent
+set showstatuslinks=2
+set newtab=all
+set titlestring=
+set complete=slf
+set visualbell
+set scroll=16
+set scrollbars=false
+set maxitems=14
+
+" Mappings
+map q <Nop>
+map ZQ <Nop>
+map ZZ <Nop>
+map <C-q> <Nop>
+noremap <silent> q :tabprevious<CR>
+noremap <silent> w :tabnext<CR>
+noremap j 5j
+noremap k 5k
+noremap h 3h
+noremap l 3l
+noremap <C-y> :tinyurl<CR>
+
+colorscheme base16-rcn.vimp
