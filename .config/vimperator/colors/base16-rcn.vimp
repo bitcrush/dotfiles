@@ -1,0 +1,63 @@
+" ==Vimperator_Color_Scheme==
+"
+" name: rcn-base16
+
+" CmdLine/Statusline settings
+hi Normal                           color: #B8B8B8; background: #282828;
+hi StatusLine                       color: #B8B8B8; background: #282828; "font-size: 8pt;
+hi CmdLine                          background: #282828; color: #B8B8B8;
+hi CompDesc                         color: #BA8BAF; width: 50%; max-width: 50%;
+hi CompGroup:not(:first-of-type)    margin-top: 1em;
+hi CompIcon                         width: 16px; min-width: 16px; display: inline-block; margin-right: .5ex;
+hi CompItem                         color: #B8B8B8; background: #383838;
+hi CompItem[selected]               color: #F8F8F8; background: #585858;
+hi CompMsg                          font-style: italic; margin-left: 16px;
+hi CompResult                       width: 45%; overflow: hidden; font-size: 10pt; font-family: DejaVu Sans Mono; font-weight: normal;
+hi CompTitle                        color: #B8B8B8; background: #181818;
+hi CompTitle>*                      border-bottom: 1px solid #585858; padding: 1px 0.5ex;
+hi Filter                           font-weight: bold; color: #B8B8B8;
+
+" Hints
+hi Hint                             font-family: DejaVu Sans Mono; font-size: 8px; font-weight: bold; color: #E8E8E8; background-color: #AB4642; border-color: #181818; border-width: 1px; border-style: solid; padding: 0px 5px 0px 5px;
+hi Hint::after                      content: attr(number);
+hi HintActive                       background: #F7CA88; color: #AB4642;
+hi HintElem                         color: #BA8BAF;
+hi HintImage                        opacity: .5;
+
+" Misc
+hi Bell                             border: none; background-color: #282828;
+hi ContentSeparator                 border-top: 1px solid gray; display: -moz-box;
+hi Disabled                         color: #AB4642;
+hi Enabled                          color: #A1B56C;
+hi ErrorMsg                         color: #E8E8E8; background: #AB4642; font-weight: bold;
+hi FrameIndicator                   background-color: #282828; opacity: 0.5; z-index: 999; position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+hi Function                         color: #A1B56C; background: #282828;
+hi Indicator                        color: #7CAFC2;
+hi InfoMsg                          color: #B8B8B8; background: #282828;
+hi Keyword                          color: #AB4642;
+hi LineNr                           color: #B8B8B8; background: #282828;
+hi Mapping                          color: #BA8BAF;
+hi Message                          white-space: normal; min-width: 100%; padding-left: 2em; text-indent: -2em; display: block;
+hi ModeMsg                          color: #282828; background: #A1B56C;
+hi MoreMsg                          color: #B8B8B8; background: #282828;
+hi NonText                          color: #7CAFC2; min-height: 16px; padding-left: 2px;
+hi Null                             color: #7CAFC2;
+hi Number                           color: #A16946; background: #282828
+hi Object                           color: #A16946;
+hi Preview                          color: #B8B8B8;
+hi PromptText                       color: #BA8BAF; background: #282828;
+hi Question                         color: #E8E8E8; background: #282828; font-weight: bold;
+hi String                           color: #282828; background: #B8B8B8;
+hi Tag                              color: #282828; background: #B8B8B8;
+hi Title                            color: #BA8BAF; background: #282828; font-weight: bold;
+hi URL                              text-decoration: none; color: #7CAFC2; background: inherit;
+hi URL:hover                        text-decoration: underline; cursor: pointer;
+hi WarningMsg                       color: #AB4642; background: #282828;
+
+" Statusline SSL settings (requires Plugin)
+" since plugins are loaded after this file is sourced the following settings are defined in the plugin js itself
+"hi StatusLineBroken                color: #F7CA88; background: #282828;
+"hi StatusLineSecure                color: #A1B56C; background: #282828;
+"hi StatusLineExtended              color: #86C1B9; background: #282828;
+"hi StatusLineWeak                  color: #F7CA88; background: #282828;
+
