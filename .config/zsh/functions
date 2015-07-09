@@ -383,3 +383,41 @@ function setprompt() {
     RPS1='${PR_MAGENTA}« ${PR_YELLOW}[${PR_NO_COLOR}%?${PR_YELLOW}]${PR_NO_COLOR}$(git_prompt_branch)$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX'
 }
  
+# fzf {{{1
+if [[ $- =~ i ]]; then
+    # Paste the selected entry from locate output into the command line
+    function fzf-locate-widget() {
+        local selected
+        if selected=$(locate / | fzf -q "$LBUFFER"); then
+            LBUFFER=$selected
+        fi
+        zle redisplay
+    }
+    zle -N fzf-locate-widget
+
+    # Change to bookmarked folder
+    function fzf-bookmarks() {
+        #TODO: add bookmark description
+        local dest_dir=$(cat $ZDOTDIR/bookmarks | fzf)
+        if [[ -n $dest_dir ]]; then
+            cd "$dest_dir"
+        fi
+        zle redisplay
+        zle reset-prompt
+    }
+    zle -N fzf-bookmarks
+
+    # Paste the selected command from history into the command line
+    function fzf-history() {
+        local selected restore_no_bang_hist
+        if selected=( $(fc -l 1 | $(__fzfcmd) -e +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r -q "$LBUFFER") ); then
+            num=$selected[1]
+            if [ -n "$num" ]; then
+                zle vi-fetch-history -n $num
+            fi
+        fi
+        zle redisplay
+    }
+    zle -N fzf-history
+fi
+

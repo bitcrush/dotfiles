@@ -2,19 +2,13 @@
 
 # vim: fdm=marker ts=4 sw=4
 
-export BOOKMARKS_FILE="${ZDOTDIR}/bookmarks"
-
 # antigen {{{1
 source ${ZDOTDIR}/antigen/antigen.zsh
 #antigen bundle robbyrussell/oh-my-zsh lib/
 #antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle jocelynmallon/zshmarks
 antigen bundle zsh-users/zsh-completions src/
 antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
-
-# zshmarks
-export BOOKMARKS_FILE="${ZDOTDIR}/bookmarks"
 
 # zsh-history-substring-search
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
@@ -25,6 +19,9 @@ export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 #source ${ZDOTDIR}/zle
 source ${ZDOTDIR}/functions
 source ${ZDOTDIR}/base16-default.dark.rcn.sh
+
+# TODO: customize fzf bindings
+source /etc/profile.d/fzf.zsh
 
 # system functions {{{1
 # load completion and user prompt
@@ -38,20 +35,19 @@ autoload zmv
 # math
 autoload -U zcalc
 
-#zmodload zsh/complist
+zmodload zsh/complist
 zmodload zsh/terminfo
 
 ## smart urls
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
-#zle-line-init zle-keymap-select {
+#function zle-line-init zle-keymap-select {
 #    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
 #    RPS2=$RPS1
 #    zle reset-prompt
 #}
-#zle -N zle-line-init
-#zle -N zle-keymap-select
+#zle -N zle-line-init zle-keymap-select
 
 # keybinds {{{1
 bindkey "\e[1~" beginning-of-line
@@ -61,9 +57,6 @@ bindkey "\e[4~" end-of-line
 bindkey "\e[3~" delete-char
 bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
-#bindkey "\e[A" history-search-backward
-#bindkey "\e[B" history-search-forward
-#bindkey -M menuselect "\C-n" accept-and-menu-complete
 
 autoload up-line-or-beginning-search
 autoload down-line-or-beginning-search
@@ -73,11 +66,18 @@ bindkey "\e[A" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
-bindkey "\e\e[A" history-substring-search-up
-bindkey "\e\e[B" history-substring-search-down
 
 # file rename magic
 bindkey "^xp" copy-prev-shell-word
+
+# Paste the selected entry from locate output into the command line
+bindkey '\ei' fzf-locate-widget
+
+# Paste the selected entry from locate output into the command line
+bindkey '\eb' fzf-bookmarks
+
+# Paste the selected command from history into the command line
+bindkey '^R' fzf-history
 
 # Shift-tab to perform backwards menu completion
 [[ -n "$terminfo[kcbt]" ]]  &&  bindkey "$terminfo[kcbt]" reverse-menu-complete
@@ -95,13 +95,10 @@ alias lb="ls -A -s --block-size=1 --group-directories-first -F --color=auto"
 alias ll="ls --group-directories-first --color -l -F"
 alias rm="rm -I"
 alias mkdir="mkdir -pv"
-alias j="jump"
 alias mnt="mount |column -t"
 alias grep='grep --color=auto -d skip'
 alias zrep='zgrep --color=auto -d skip'
-alias irssi="screen -D -R irssi irssi"
 alias wrk='screen -c $HOME/.config/scriptz/screen-wrk -D -R wrk'
-#alias rrtorrent='ssh -t tha screen -D -R rtorrent rtorrent'
 alias chm-d="find -type d -exec chmod 755 {} \;"
 alias chm-f="find -type f -exec chmod 644 {} \;"
 alias myip="curl icanhazip.com"
@@ -158,6 +155,9 @@ setopt pushdignoredups      # don't push duplicates onto the directory stack
 setopt sharehistory         # share history in realtime between shells and use timestamps
 unsetopt shwordsplit        # use zsh style word splitting
 setopt unset                # don't error out when unset parameters are used
+
+# Disable CTRL-s and CTRL-q
+[[ $- =~ i ]] && stty -ixoff -ixon
 
 # completion {{{1
 compctl -/ cd                       # type a dir's name to cd into it

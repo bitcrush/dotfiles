@@ -19,6 +19,11 @@ export PAGER='less'
 export VISUAL='vim'
 export BROWSER='firefox'
 
+# fzf
+export FZF_DEFAULT_COMMAND="find -type f"
+export FZF_DEFAULT_OPTS="--extended --cycle"
+export FZF_TMUX_HEIGHT=12
+
 # color manpages without using most
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'

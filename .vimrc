@@ -49,6 +49,8 @@ Plug 'renamer.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-scripts/vimwiki'
 Plug 'AndrewRadev/id3.vim'
+Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'junegunn/fzf', { 'do': 'yes \| ./install' }
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
@@ -60,7 +62,7 @@ call plug#end()
 
 " {{{1 look
 if &diff
-    colorscheme peachpuff
+    colorscheme zenburn-rcn
 else
     let base16colorspace=256    " Access colors present in 256 colorspace
     colorscheme base16-rcn
@@ -143,6 +145,12 @@ nnoremap <C-n> :enew<CR>
 " Close the current buffer and move to the previous one
 map <leader>q :bp <BAR> bd #<CR><CR>
 
+" fuzzy search edited files history
+map <silent> <leader>h y:call fzf#run({ 'source': v:oldfiles, 'sink' : 'e ', 'options' : '-m', 'down' : '12', })<CR>
+
+" fuzzy search lines in all open buffers
+nnoremap <silent> <Leader>l y:call fzf#run({ 'source': <sid>buffer_lines(), 'sink': function('<sid>line_handler'), 'options': '--extended --nth=3..', 'down': '12', })<CR>
+
 " comment/uncomment a visual block
 vmap <C-c> :call CommentLines()<CR><CR>
 
@@ -150,7 +158,14 @@ vmap <C-c> :call CommentLines()<CR><CR>
 nmap <F7> [czz			" jump to previous diff code
 nmap <F8> ]czz			" jump to next diff code
 
+" convert to lowercase, uppercase, camelcase in visual mode
+vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+
+" invoke fzf
+nnoremap <silent> <Leader><Leader> :FZF -m<CR>
+
 " {{{1 functions
+" comment/uncomment a visual block
 function! CommentLines()
   try
     execute ":s@^".g:StartComment."@\@g"
@@ -161,6 +176,7 @@ function! CommentLines()
   endtry
 endfunction
 
+" cycle through lowercase/uppercase/camelcase in visual mode
 function! TwiddleCase(str)
   if a:str ==# toupper(a:str)
     let result = tolower(a:str)
@@ -171,7 +187,22 @@ function! TwiddleCase(str)
   endif
   return result
 endfunction
-vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+
+" fuzzy search lines in all open buffers
+function! s:line_handler(l)
+  let keys = split(a:l, ':\t')
+  exec 'buf' keys[0]
+  exec keys[1]
+  normal! ^zz
+endfunction
+
+function! s:buffer_lines()
+  let res = []
+  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
+  endfor
+  return res
+endfunction
 
 " {{{2 toggle spell check
 let b:myLang=0
@@ -236,18 +267,6 @@ if has('autocmd')
 endif
 
 " {{{1 plugin options
-" {{{2 latex suite
-
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-
 " {{{2 gist
 let g:gist_clip_command='xclip -selection clipboard'
 let g:gist_browser_command = 'firefox %URL% &'
@@ -330,3 +349,10 @@ let wiki.template_ext = '.html'
 let wiki.nested_syntaxes = {'python': 'python', 'bash': 'sh'}
 let g:vimwiki_list = [wiki]
 
+" {{{2 fzf
+let g:fzf_height = 12
+let g:fzf_action = {
+  \ 'ctrl-e': 'e',
+  \ 'ctrl-t': 'tabedit',
+  \ 'ctrl-h':  'vertical topleft split',
+  \ 'ctrl-l':  'vertical botright split' }
