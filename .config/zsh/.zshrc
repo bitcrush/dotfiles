@@ -73,8 +73,8 @@ bindkey "^xp" copy-prev-shell-word
 # Paste the selected entry from locate output into the command line
 bindkey '\ei' fzf-locate-widget
 
-# Paste the selected entry from locate output into the command line
-bindkey '\eb' fzf-bookmarks
+# Quick cd to bookmarked directory
+bindkey '\eb' fzf-cd-bookmark
 
 # Paste the selected command from history into the command line
 bindkey '^R' fzf-history
@@ -117,6 +117,7 @@ alias go='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias steamclean='find ~/.local/share/Steam/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
+alias bookmark='fzf-add-bookmark '
 
 # history {{{1
 HISTFILE=${ZDOTDIR}/history

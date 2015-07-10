@@ -388,24 +388,63 @@ if [[ $- =~ i ]]; then
     # Paste the selected entry from locate output into the command line
     function fzf-locate-widget() {
         local selected
-        if selected=$(locate / | fzf -q "$LBUFFER"); then
+        if selected=$(locate / | $(__fzfcmd) -q "$LBUFFER"); then
             LBUFFER=$selected
         fi
         zle redisplay
     }
     zle -N fzf-locate-widget
 
+    # Add current path to bookmarks file
+    function fzf-add-bookmark() {
+        bmark_file=${ZDOTDIR}/bookmarks
+        bmark_path="$PWD"
+        bmark_id="$1"
+        #TODO: delete bookmarks by ID
+        if  [[ $(grep -P "${bmark_path}\|.+" $bmark_file) ]] || \
+            [[ $(grep -P "$(realpath $bmark_path)\|.+" $bmark_file) ]]
+        then
+            echo "This path is already bookmarked." && return 1
+        elif [[ -z "$bmark_id" ]]; then
+            echo "Please specify an ID for your bookmark." && return 1
+        #TODO: ID already used
+        elif (( ${#bmark_id} > 20 )); then
+            echo "Please choose an ID with a length <= 20." && return 1
+        elif [[ ! $(grep -E '^[A-Za-z0-1][A-Za-z0-9_-.]+[A-Za-z0-1]$' <<<$bmark_id) ]]; then
+            echo "Invalid ID given. Valid characters are: A-Z a-z 0-9 _ - ."
+            echo "In addition make sure not to start or end your ID with anything other than letters or numbers."
+            return 1
+        else
+            echo "${bmark_path}|$bmark_id" >> $bmark_file
+        fi
+    }
+    zle -N fzf-add-bookmark
+
     # Change to bookmarked folder
-    function fzf-bookmarks() {
-        #TODO: add bookmark description
-        local dest_dir=$(cat $ZDOTDIR/bookmarks | fzf)
+    function fzf-cd-bookmark() {
+        padchar=" "
+        pad=$(printf '%0.1s' "$padchar"{1..33})
+        padlength=22
+
+        dest_dir=$(
+            while read line; do
+                bmark_id="${line//*|}"
+                bmark_path="${line%%|*}"
+                printf '%s' "$bmark_id"
+                printf '%*.*s' 0 $((padlength - ${#bmark_id} )) "$pad"
+                printf '%s\n' "$bmark_path"
+                bmark_path=${bmark_path:1}
+            done <${ZDOTDIR}/bookmarks | $(__fzfcmd) -d12 -e)
+
+        dest_dir=$(echo $dest_dir | sed -e 's/^\w*\ *//g')
         if [[ -n $dest_dir ]]; then
             cd "$dest_dir"
         fi
+
         zle redisplay
         zle reset-prompt
     }
-    zle -N fzf-bookmarks
+    zle -N fzf-cd-bookmark
 
     # Paste the selected command from history into the command line
     function fzf-history() {
