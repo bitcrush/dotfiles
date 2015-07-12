@@ -383,6 +383,48 @@ function setprompt() {
     RPS1='${PR_MAGENTA}« ${PR_YELLOW}[${PR_NO_COLOR}%?${PR_YELLOW}]${PR_NO_COLOR}$(git_prompt_branch)$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX'
 }
  
+# bookmark {{{1
+# Add current path to bookmarks file
+function bookmark() {
+
+    ZDOTDIR="$HOME/.config/zsh"
+    bmark_file=${ZDOTDIR}/bookmarks
+    bmark_file=${ZDOTDIR}/bookmarks
+    bmark_path="$PWD"
+    del=0; [[ "$1" == "-d" ]] && shift && del=1
+    bmark_id="$1"
+    [[ -z $bmark_id ]] && echo "usage: $0 [-d] ID" && return
+    [[ ! -e $bmark_file ]] && touch $bmark_file
+
+    # delete bookmarks by ID
+    if [[ $del == 1 ]]; then
+        if [[ $(grep -E "\|${bmark_id}$" $bmark_file) ]] ; then
+            #TODO: proper expression
+            sed -i "/|${bmark_id}$/d" $bmark_file && return
+        else
+            echo "Cannot find bookmark with given ID."; return 1
+        fi
+    fi
+
+    # check if directory is already bookmarked
+    while read -r line; do
+        grep -qE "$(realpath $bmark_path)" <<<$(realpath ${line%%|*}) && \
+        echo "Path or respective symlink is already bookmarked with ID \"${line##*|}\"." && \
+        return 1
+    done <$ZDOTDIR/bookmarks
+
+    if (( ${#bmark_id} > 20 )); then
+        echo "Please choose an ID with a length <= 20."; return 1
+    elif [[ $(grep -E "\|${bmark_id}$" $bmark_file) ]]; then
+        echo "ID already in use. Please choose another name."; return 1
+    elif [[ ! $(grep -E '^[A-Za-z0-9_.][A-Za-z0-9_-.]*$' <<<$bmark_id) ]]; then
+        echo "Invalid ID given. Valid characters are: A-Z a-z 0-9 _ - ."
+        echo "In addition make sure not to start your ID with a hyphen."
+        return 1
+    else
+        echo "${bmark_path}|$bmark_id" >> $bmark_file
+    fi
+}
 # fzf {{{1
 if [[ $- =~ i ]]; then
     # Paste the selected entry from locate output into the command line
@@ -394,31 +436,6 @@ if [[ $- =~ i ]]; then
         zle redisplay
     }
     zle -N fzf-locate-widget
-
-    # Add current path to bookmarks file
-    function fzf-add-bookmark() {
-        bmark_file=${ZDOTDIR}/bookmarks
-        bmark_path="$PWD"
-        bmark_id="$1"
-        #TODO: delete bookmarks by ID
-        if  [[ $(grep -P "${bmark_path}\|.+" $bmark_file) ]] || \
-            [[ $(grep -P "$(realpath $bmark_path)\|.+" $bmark_file) ]]
-        then
-            echo "This path is already bookmarked." && return 1
-        elif [[ -z "$bmark_id" ]]; then
-            echo "Please specify an ID for your bookmark." && return 1
-        #TODO: ID already used
-        elif (( ${#bmark_id} > 20 )); then
-            echo "Please choose an ID with a length <= 20." && return 1
-        elif [[ ! $(grep -E '^[A-Za-z0-1][A-Za-z0-9_-.]+[A-Za-z0-1]$' <<<$bmark_id) ]]; then
-            echo "Invalid ID given. Valid characters are: A-Z a-z 0-9 _ - ."
-            echo "In addition make sure not to start or end your ID with anything other than letters or numbers."
-            return 1
-        else
-            echo "${bmark_path}|$bmark_id" >> $bmark_file
-        fi
-    }
-    zle -N fzf-add-bookmark
 
     # Change to bookmarked folder
     function fzf-cd-bookmark() {
