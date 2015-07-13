@@ -25,11 +25,7 @@ set hidden                      " allows buffers to be hidden if a buffer is mod
 set confirm                     " confirm dropping unsaved buffers
 set synmaxcol=1000              " maximum line length for syntax highlighting
 
-" default comment symbols
-let g:StartComment="#"
-let g:EndComment=""
-
-let g:is_posix=1
+let g:is_posix=1                "syntax highlight shell scripts as per POSIX, not the original Bourne shell
 
 " vim-plug {{{1
 
@@ -42,6 +38,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 "Plug 'klen/python-mode', { 'for': 'python' }
 "Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -161,9 +158,6 @@ map <silent> <leader>h y:call fzf#run({ 'source': v:oldfiles, 'sink' : 'e ', 'op
 " fuzzy search lines in all open buffers
 nnoremap <silent> <Leader>l y:call fzf#run({ 'source': <sid>buffer_lines(), 'sink': function('<sid>line_handler'), 'options': '--extended --nth=3..', 'down': '12', })<CR>
 
-" comment/uncomment a visual block
-vmap <C-c> :call CommentLines()<CR><CR>
-
 " vimdiff keybinds
 nmap <F7> [czz			" jump to previous diff code
 nmap <F8> ]czz			" jump to next diff code
@@ -174,18 +168,11 @@ vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 " invoke fzf
 nnoremap <silent> <Leader><Leader> :FZF -m<CR>
 
-" {{{1 functions
-" comment/uncomment a visual block
-function! CommentLines()
-  try
-    execute ":s@^".g:StartComment."@\@g"
-    execute ":s@".g:EndComment."$@@g"
-  catch
-    execute ":s@^@".g:StartComment."@g"
-    execute ":s@$@".g:EndComment."@g"
-  endtry
-endfunction
+" vim-commentary
+vmap gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
 
+" {{{1 functions
 " cycle through lowercase/uppercase/camelcase in visual mode
 function! TwiddleCase(str)
   if a:str ==# toupper(a:str)
@@ -234,8 +221,7 @@ imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 " {{{1 autocommands
 
 if has('autocmd')
-    " vim itself
-    au FileType vim let g:StartComment = "\""
+    " source vimrc right after saving the buffer
     au BufWritePost ~/.vimrc source %
 
     " filetype detection for vimperator files
