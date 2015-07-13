@@ -123,7 +123,7 @@ set backupskip+=*.gpg		" don't save backups of *.gpg files
 
 " {{{1 keymapping
 let mapleader=","
-set pastetoggle=<F5>		" stop indenting when pasting with the mouse 
+set pastetoggle=<F5>		" stop indenting when pasting with the mouse
 inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
 
 " unmap annoying keys
@@ -229,7 +229,7 @@ if has('autocmd')
         au BufNewFile,BufRead *vimperatorrc*,*muttatorrc*,*.vimp    set filetype=vimperator
     augroup END
 
- 
+
     " gpg encrypted files
     augroup encrypted
 	au!
@@ -254,7 +254,18 @@ if has('autocmd')
     	  \ silent u |
     	  \ setlocal nobin
     augroup END
-    
+
+    augroup vimrc
+        autocmd!
+
+        " Automatic rename of tmux window
+        if exists('$TMUX') && !exists('$NORENAME')
+            au BufEnter * call system('tmux rename-window '.expand('%:t:S'))
+            au VimLeave * call system('tmux set-window automatic-rename on')
+        endif
+
+    augroup END
+
     autocmd BufWrite *.pl
         \ %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
 
