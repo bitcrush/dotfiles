@@ -8,7 +8,7 @@ set encoding=utf-8		" UTF-8 by default
 set backspace=indent,eol,start	" more powerful backspacing
 set shell=/bin/sh		" default shell
 set esckeys			" allow usage of curs keys within insert mode
-set joinspaces			" insert two spaces after a period with every joining of lines
+set nojoinspaces		" don't insert two spaces after a period with every joining of lines
 set nowrap			" don't wrap lines
 set foldenable			" enable folding
 set foldmethod=marker		" how folds are recognized
@@ -23,6 +23,7 @@ set whichwrap=h,l,<,>,[,]	" allow jumping to their closing chars
 set clipboard+=unnamed		" use system clipboard
 set hidden                      " allows buffers to be hidden if a buffer is modified
 set confirm                     " confirm dropping unsaved buffers
+set synmaxcol=1000              " maximum line length for syntax highlighting
 
 " default comment symbols
 let g:StartComment="#"
@@ -141,6 +142,15 @@ nnoremap <C-h> :bprevious<CR>
 
 " To open a new empty buffer
 nnoremap <C-n> :enew<CR>
+
+" Make Y behave like other capitals
+nnoremap Y y$
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
 
 " Close the current buffer and move to the previous one
 map <leader>q :bp <BAR> bd #<CR><CR>
