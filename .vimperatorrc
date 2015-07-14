@@ -22,10 +22,14 @@ set scrollbars=false
 set maxitems=14
 
 " Mappings
+let mapleader = ","
+
+" unbind
 map q <Nop>
 map ZQ <Nop>
 map ZZ <Nop>
 map <C-q> <Nop>
+
 noremap <silent> q :tabprevious<CR>
 noremap <silent> w :tabnext<CR>
 noremap j 5j
@@ -33,5 +37,6 @@ noremap k 5k
 noremap h 3h
 noremap l 3l
 noremap <C-y> :tinyurl<CR>
+noremap <Leader>n :nohlsearch<CR>
 
 colorscheme base16-rcn
