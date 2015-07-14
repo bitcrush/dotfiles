@@ -26,7 +26,8 @@ hi HintImage                        opacity: .5;
 
 " Misc
 hi Bell                             border: none; background-color: #282828;
-hi ContentSeparator                 border-top: 1px solid gray; display: -moz-box;
+hi Boolean                          color: #AB4642;
+hi ContentSeparator                 border-top: 1px solid #585858; display: -moz-box;
 hi Disabled                         color: #AB4642;
 hi Enabled                          color: #A1B56C;
 hi ErrorMsg                         color: #E8E8E8; background: #AB4642; font-weight: bold;
@@ -45,6 +46,7 @@ hi Null                             color: #7CAFC2;
 hi Number                           color: #A16946; background: #282828
 hi Object                           color: #A16946;
 hi Preview                          color: #B8B8B8;
+hi Prompt                           background: url("chrome://liberator/skin/prompt.png"); width: 22px; background-position: center; background-repeat: no-repeat;
 hi PromptText                       color: #BA8BAF; background: #282828;
 hi Question                         color: #E8E8E8; background: #282828; font-weight: bold;
 hi String                           color: #282828; background: #B8B8B8;
