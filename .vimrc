@@ -2,30 +2,31 @@
 " rcns vimrc
 
 " {{{1 settings
-set nocompatible		" Use Vim defaults instead of 100% vi compatibility
-"set t_Co=256			" support 256color terminals
-set encoding=utf-8		" UTF-8 by default
-set backspace=indent,eol,start	" more powerful backspacing
-set shell=/bin/sh		" default shell
-set esckeys			" allow usage of curs keys within insert mode
-set nojoinspaces		" don't insert two spaces after a period with every joining of lines
-set nowrap			" don't wrap lines
-set foldenable			" enable folding
-set foldmethod=marker		" how folds are recognized
-set formatoptions=tcqn1		" vi compatible formatting
-set matchtime=2			" tenths of second to hilight matching parent
-set modeline			" allow the last line to be a modeline
-set modelines=5			" how many modelines can be used
-set selection=inclusive		" selection method
-set complete=.,t,i,b,w,k	" set matches for insert-mode completion
-set infercase			" completion recognizes capitalization
-set whichwrap=h,l,<,>,[,]	" allow jumping to their closing chars
-set clipboard+=unnamed		" use system clipboard
+set nocompatible                " Use Vim defaults instead of 100% vi compatibility
+"set t_Co=256                   " support 256color terminals
+set encoding=utf-8              " UTF-8 by default
+set backspace=indent,eol,start  " more powerful backspacing
+set shell=/bin/sh               " default shell
+set esckeys                     " allow usage of curs keys within insert mode
+set nojoinspaces                " don't insert two spaces after a period with every joining of lines
+set nowrap                      " don't wrap lines
+set foldenable                  " enable folding
+set foldmethod=marker           " how folds are recognized
+set formatoptions=tcqn1         " vi compatible formatting
+set matchtime=2                 " tenths of second to hilight matching parent
+set modeline                    " allow the last line to be a modeline
+set modelines=5                 " how many modelines can be used
+set selection=inclusive         " selection method
+set complete=.,t,i,b,w,k        " set matches for insert-mode completion
+set infercase                   " completion recognizes capitalization
+set whichwrap=h,l,<,>,[,]       " allow jumping to their closing chars
+set clipboard+=unnamed          " use system clipboard
 set hidden                      " allows buffers to be hidden if a buffer is modified
 set confirm                     " confirm dropping unsaved buffers
 set synmaxcol=1000              " maximum line length for syntax highlighting
+set lazyredraw                  " don't redraw while executing macros
 
-let g:is_posix=1                "syntax highlight shell scripts as per POSIX, not the original Bourne shell
+let g:is_posix=1                " syntax highlight shell scripts as per POSIX, not the original Bourne shell
 
 " vim-plug {{{1
 
@@ -55,7 +56,7 @@ if executable("curl")
     Plug 'mattn/gist-vim'
 endif
 
-filetype plugin indent on	" use file type based plugins and indentation
+filetype plugin indent on       " use file type based plugins and indentation
 call plug#end()
 
 " {{{1 look
@@ -67,25 +68,26 @@ else
 endif
 
 set background=dark             " set background to dark or light
-set showcmd			" display incomplete commands
-set noshowmode			" show current mode
-set showmatch			" show the matching bracket for the last ')'
-set ruler			" show the cursor position all the time
-set number			" show line numbers
-set numberwidth=2		" width of line number column
-set cursorline			" highlight the current line
-set wildmenu			" completion on the command line shows a menu
-set wildchar=<TAB>		" the char used for "expansion" on the command line
-set wildmode=longest:full,full	" how big the list should be
-set shortmess=atI		" shorten message output in command line
-set report=0			" show a report when N lines were changed, 0=show all
-set previewheight=5		" height of preview window
-set visualbell			" set visual bell instead of audio bell
-set t_vb=			" no argument means no flash for visual bell
-set splitbelow			" put new split windows below
-set cmdheight=1			" cmdprompt height
-set history=50                  " keep 50 lines of command line history
-set laststatus=2		" show status line
+set showcmd                     " display incomplete commands
+set noshowmode                  " show current mode
+set showmatch                   " show the matching bracket for the last ')'
+set ruler                       " show the cursor position all the time
+set number                      " show line numbers
+set numberwidth=2               " width of line number column
+set cursorline                  " highlight the current line
+set wildmenu                    " completion on the command line shows a menu
+set wildchar=<TAB>              " the char used for "expansion" on the command line
+set wildmode=longest:full,full  " how big the list should be
+set shortmess=atI               " shorten message output in command line
+set report=0                    " show a report when N lines were changed, 0=show all
+set previewheight=5             " height of preview window
+set visualbell                  " set visual bell instead of audio bell
+set t_vb=                       " no argument means no flash for visual bell
+set splitbelow                  " put new split windows below
+set cmdheight=1                 " cmdprompt height
+set history=500                 " keep 500 lines of command line history
+set foldcolumn=1                " add left margin to display fold state
+set laststatus=2                " show status line
 set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|\ %{fugitive#statusline()}\ %=%3p%%
 
 if has('mouse')
@@ -93,37 +95,37 @@ if has('mouse')
 endif
 
 " {{{1 scrolling
-set scroll=4			" number of lines to scroll with ^U/^D
-set scrolloff=3			" top/bottom cursor offset
-set sidescrolloff=3		" left/right cursor offset
+set scroll=4                    " number of lines to scroll with ^U/^D
+set scrolloff=3                 " top/bottom cursor offset
+set sidescrolloff=3             " left/right cursor offset
 
 " {{{1 search
-set incsearch			" do incremental searching
-set ignorecase			" case-insensitive search
-set smartcase			" search: use case if any caps used
-set magic			" Use some magic in search patterns?  Certainly!
+set incsearch                   " do incremental searching
+set ignorecase                  " case-insensitive search
+set smartcase                   " search: use case if any caps used
+set magic                       " Use some magic in search patterns?  Certainly!
 
 " {{{1 indenting
-set expandtab			" insert spaces instead of tab chars
-set tabstop=8			" a n-space tab width
-set softtabstop=4		" counts n spaces when DELETE or BACKSPACE is used
-set shiftwidth=4		" allows the use of < and > for VISUAL indenting
-set shiftround			" shift to certain columns, not just n spaces
-set noautoindent		" auto indents next new line
-"set copyindent			" autoindent uses the same chars as prev
-"set cindent			" Automatic program indenting
-set cinkeys-=0#			" Comments don't fiddle with indenting
-set cino=(0			" Indent newlines after opening parenthesis
+set expandtab                   " insert spaces instead of tab chars
+set tabstop=4                   " a n-space tab width
+set softtabstop=4               " counts n spaces when DELETE or BACKSPACE is used
+set shiftwidth=4                " allows the use of < and > for VISUAL indenting
+set shiftround                  " shift to certain columns, not just n spaces
+set noautoindent                " auto indents next new line
+"set copyindent                 " autoindent uses the same chars as prev
+"set cindent                    " Automatic program indenting
+set cinkeys-=0#                 " Comments don't fiddle with indenting
+set cino=(0                     " Indent newlines after opening parenthesis
 
 " {{{1 backup
-set backup			" keep a backup file
-set backupdir=/tmp		" backup dir
-set directory=/tmp		" swap file directory
-set backupskip+=*.gpg		" don't save backups of *.gpg files
+set backup                      " keep a backup file
+set backupdir=/tmp              " backup dir
+set directory=/tmp              " swap file directory
+set backupskip+=*.gpg           " don't save backups of *.gpg files
 
 " {{{1 keymapping
 let mapleader=","
-set pastetoggle=<F5>		" stop indenting when pasting with the mouse
+set pastetoggle=<F5>            " stop indenting when pasting with the mouse 
 inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
 
 " unmap annoying keys
@@ -152,18 +154,27 @@ inoremap <C-k> <C-o>k
 " Close the current buffer and move to the previous one
 map <leader>q :bp <BAR> bd #<CR><CR>
 
+" turn highlighting of last search results off
+map <leader>n :noh<CR>
+
 " fuzzy search edited files history
-map <silent> <leader>h y:call fzf#run({ 'source': v:oldfiles, 'sink' : 'e ', 'options' : '-m', 'down' : '12', })<CR>
+map <silent> <C-r>y:call fzf#run({ 'source': v:oldfiles, 'sink' : 'e ', 'options' : '-m', 'down' : '12', })<CR>
 
 " fuzzy search lines in all open buffers
 nnoremap <silent> <Leader>l y:call fzf#run({ 'source': <sid>buffer_lines(), 'sink': function('<sid>line_handler'), 'options': '--extended --nth=3..', 'down': '12', })<CR>
 
 " vimdiff keybinds
-nmap <F7> [czz			" jump to previous diff code
-nmap <F8> ]czz			" jump to next diff code
+nmap <F7> [czz                  " jump to previous diff code
+nmap <F8> ]czz                  " jump to next diff code
 
 " convert to lowercase, uppercase, camelcase in visual mode
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+
+" Opens a new buffer with the current buffer's path
+map <leader>be :edit <c-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " invoke fzf
 nnoremap <silent> <Leader><Leader> :FZF -m<CR>
