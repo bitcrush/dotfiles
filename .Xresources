@@ -1,14 +1,14 @@
 ! $HOME/.Xresources
 
-!Xft.dpi:		96
-Xft.antialias:		True
-Xft.autohint:		False
-Xft.hinting:		True
-Xft.hintstyle:		hintslight
-Xft.rgba:		rgba
-!Xft.lcdfilter:		lcddefault
+Xft.dpi:            96
+Xft.antialias:      True
+Xft.autohint:       False
+Xft.hinting:        True
+Xft.hintstyle:      hintfull
+Xft.lcdfilter:      lcddefault
+Xft.rgba:           rgb
 
-Xcursor.theme:		Neutral_Plus
+Xcursor.theme:      Neutral_Plus
 
 ! ---| colors |--- {{{1
 !#include "/home/racoon/.themes/terminal_colors/base16-default.dark.256.xresources"
