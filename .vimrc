@@ -86,7 +86,7 @@ set t_vb=                       " no argument means no flash for visual bell
 set splitbelow                  " put new split windows below
 set cmdheight=1                 " cmdprompt height
 set history=500                 " keep 500 lines of command line history
-set foldcolumn=1                " add left margin to display fold state
+set foldcolumn=0                " add left margin to display fold state
 set laststatus=2                " show status line
 set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|\ %{fugitive#statusline()}\ %=%3p%%
 
@@ -125,7 +125,7 @@ set backupskip+=*.gpg           " don't save backups of *.gpg files
 
 " {{{1 keymapping
 let mapleader=","
-set pastetoggle=<F5>            " stop indenting when pasting with the mouse 
+set pastetoggle=<F5>            " stop indenting when pasting with the mouse
 inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
 
 " unmap annoying keys
@@ -232,9 +232,6 @@ imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 " {{{1 autocommands
 
 if has('autocmd')
-    " source vimrc right after saving the buffer
-    au BufWritePost ~/.vimrc source %
-
     " filetype detection for vimperator files
     augroup filetypedetect
         au BufNewFile,BufRead *vimperatorrc*,*muttatorrc*,*.vimp    set filetype=vimperator
@@ -243,31 +240,31 @@ if has('autocmd')
 
     " gpg encrypted files
     augroup encrypted
-	au!
-    	" Disable swap files, and set binary file format before reading the file
-    	autocmd BufReadPre,FileReadPre *.gpg
-    	  \ setlocal viminfo=
-    	  \ setlocal noswapfile bin
-    	" Decrypt the contents after reading the file, reset binary file format
-    	" and run any BufReadPost autocmds matching the file name without the .gpg
-    	" extension
-    	autocmd BufReadPost,FileReadPost *.gpg
-    	  \ execute "'[,']!gpg --decrypt --default-recipient-self" |
-    	  \ setlocal nobin |
-    	  \ execute "doautocmd BufReadPost " . expand("%:r")
-    	" Set binary file format and encrypt the contents before writing the file
-    	autocmd BufWritePre,FileWritePre *.gpg
-    	  \ setlocal bin |
-    	  \ '[,']!gpg --encrypt --default-recipient-self
-    	" After writing the file, do an :undo to revert the encryption in the
-    	" buffer, and reset binary file format
-    	autocmd BufWritePost,FileWritePost *.gpg
-    	  \ silent u |
-    	  \ setlocal nobin
+        au!
+        " Disable swap files, and set binary file format before reading the file
+        au BufReadPre,FileReadPre *.gpg
+          \ setlocal viminfo=
+          \ setlocal noswapfile bin
+        " Decrypt the contents after reading the file, reset binary file format
+        " and run any BufReadPost aus matching the file name without the .gpg
+        " extension
+        au BufReadPost,FileReadPost *.gpg
+          \ execute "'[,']!gpg --decrypt --default-recipient-self" |
+          \ setlocal nobin |
+          \ execute "doau BufReadPost " . expand("%:r")
+        " Set binary file format and encrypt the contents before writing the file
+        au BufWritePre,FileWritePre *.gpg
+          \ setlocal bin |
+          \ '[,']!gpg --encrypt --default-recipient-self
+        " After writing the file, do an :undo to revert the encryption in the
+        " buffer, and reset binary file format
+        au BufWritePost,FileWritePost *.gpg
+          \ silent u |
+          \ setlocal nobin
     augroup END
 
     augroup vimrc
-        autocmd!
+        au!
 
         " Automatic rename of tmux window
         if exists('$TMUX') && !exists('$NORENAME')
@@ -275,13 +272,16 @@ if has('autocmd')
             au VimLeave * call system('tmux set-window automatic-rename on')
         endif
 
+        " Source vimrc right after saving the buffer
+        au BufWritePost ~/.vimrc source %
+
     augroup END
 
-    autocmd BufWrite *.pl
+    au BufWrite *.pl
         \ %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
 
     " Airline Customization
-    "autocmd VimEnter * call AirlineInit()
+    "au VimEnter * call AirlineInit()
 endif
 
 " {{{1 plugin options
