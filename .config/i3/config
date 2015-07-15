@@ -1,6 +1,6 @@
 # i3 config file (v4)
 #
-# vim:filetype=i3 
+# vim:filetype=i3
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 #
@@ -154,6 +154,8 @@ bindsym $mod+F11 exec --no-startup-id "amixer -- sset DAC,0 1%- && amixer -- sse
 bindsym $mod+F12 exec --no-startup-id "amixer -- sset DAC,0 1%+ && amixer -- sset DAC,1 1%+"
 
 
+# modes (Enter/ESC returns to default mode)
+
 # resize window (you can also use the mouse for that)
 mode $mode_resize {
         # These bindings trigger as soon as you enter the resize mode
@@ -162,13 +164,25 @@ mode $mode_resize {
         bindsym $up         resize shrink height 5 px or 5 ppt
         bindsym $right      resize grow width 5 px or 5 ppt
 
-        # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
 
 set $mode_resize 
 bindsym $mod+Ctrl+r mode "$mode_resize"
+
+# power management
+mode "$mode_power" {
+        bindsym s exec --no-startup-id systemctl suspend, mode "default"
+        bindsym r exec --no-startup-id systemctl reboot, mode "default"
+        bindsym p exec --no-startup-id systemctl poweroff, mode "default"
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+set $mode_power    (s)uspend | (r)eboot | (p)oweroff
+bindsym $mod+Ctrl+p mode "$mode_power"
 
 # set gaps on the fly (requires i3-gaps patch)
 mode "$mode_gaps" {
@@ -204,7 +218,7 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
-set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps Gaps: (o)uter, (i)nner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
 set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Ctrl+g mode "$mode_gaps"
@@ -216,12 +230,13 @@ bar {
         position top
         tray_output none
         binding_mode_indicator no
-        status_command "$HOME/bin/i3-conky-bar"
+        # status_command "$HOME/bin/i3-conky-bar"
+        status_command python ~/.config/i3/bar-0.py
         colors {
             background $black
             statusline $white
             separator $lblack
-    
+
             # class             border      backgr.     text
             focused_workspace   $lblack     $lblack     $white
             active_workspace    $gray       $gray       $white
@@ -235,12 +250,13 @@ bar {
         position bottom
         workspace_buttons no
         binding_mode_indicator yes
-        status_command "$HOME/bin/i3-conky-bar bottom"
+        # status_command "$HOME/bin/i3-conky-bar bottom"
+        status_command python ~/.config/i3/bar-1.py
         colors {
             background $black
             statusline $white
             separator $lblack
-            
+
             # colors for binding mode indicator
             # class             border      backgr.     text
             urgent_workspace    $red        $red        $white
