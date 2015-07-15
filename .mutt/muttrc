@@ -13,7 +13,7 @@ set certificate_file    = ~/.mutt/certificates          # where to store certs
 set mailcap_path        = ~/.mutt/mailcap               # entrys for filetypes
 set tmpdir              = ~/.mutt/temp                  # where to keep temp files
 set sendmail            = "/usr/bin/msmtp"              # define smtp client
-set editor              = "/usr/bin/vim -f +star -c 'set nocin nohls noml tw=72 cc=73 fo=tcrq spell spl=de' '+/^$'"
+set editor              = "/usr/bin/vim -f +star -c 'set wrap lbr nocin nohls noml tw=78 cc=79 fo=tcrq spell spl=de' '+/^$'"
 
 # {{{1 mail account settings
 
