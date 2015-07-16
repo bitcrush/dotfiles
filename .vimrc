@@ -3,8 +3,9 @@
 
 " {{{1 settings
 set nocompatible                " Use Vim defaults instead of 100% vi compatibility
-"set t_Co=256                   " support 256color terminals
+set t_Co=256                    " support 256color terminals
 set encoding=utf-8              " UTF-8 by default
+set fileformats=unix,dos,mac    " end-of-line (<EOL>) formats
 set backspace=indent,eol,start  " more powerful backspacing
 set shell=/bin/sh               " default shell
 set esckeys                     " allow usage of curs keys within insert mode
@@ -13,22 +14,21 @@ set nowrap                      " don't wrap lines
 set foldenable                  " enable folding
 set foldmethod=marker           " how folds are recognized
 set formatoptions=tcqn1         " vi compatible formatting
-set matchtime=2                 " tenths of second to hilight matching parent
+set matchtime=3                 " tenths of second to hilight matching parent
 set modeline                    " allow the last line to be a modeline
 set modelines=5                 " how many modelines can be used
 set selection=inclusive         " selection method
-set complete=.,t,i,b,w,k        " set matches for insert-mode completion
-set infercase                   " completion recognizes capitalization
 set whichwrap=h,l,<,>,[,]       " allow jumping to their closing chars
 set clipboard+=unnamed          " use system clipboard
 set hidden                      " allows buffers to be hidden if a buffer is modified
 set confirm                     " confirm dropping unsaved buffers
 set synmaxcol=1000              " maximum line length for syntax highlighting
+set textwidth=0                 " don't automatically break lines
 set lazyredraw                  " don't redraw while executing macros
 
 let g:is_posix=1                " syntax highlight shell scripts as per POSIX, not the original Bourne shell
 
-" vim-plug {{{1
+" {{{1 vim-plug
 
 " download vim-plug if nonexistent
 if empty(glob("~/.vim/autoload/plug.vim"))
@@ -58,6 +58,11 @@ endif
 
 filetype plugin indent on       " use file type based plugins and indentation
 call plug#end()
+
+" {{{1 vimrc.local config
+if filereadable($HOME . '/vim/vimrc.local')
+    source $HOME/vim/vimrc.local
+endif
 
 " {{{1 look
 if &diff
@@ -99,15 +104,16 @@ set scroll=4                    " number of lines to scroll with ^U/^D
 set scrolloff=3                 " top/bottom cursor offset
 set sidescrolloff=3             " left/right cursor offset
 
-" {{{1 search
-set incsearch                   " do incremental searching
-set ignorecase                  " case-insensitive search
-set smartcase                   " search: use case if any caps used
-set magic                       " Use some magic in search patterns?  Certainly!
+" {{{1 completion
+" set complete=.,t,i,b,w,k
+set complete=.,w,b,u,t          " set matches for insert-mode completion
+set completeopt=longest,menuone,preview
+set infercase                   " completion recognizes capitalization
 
 " {{{1 indenting
 set expandtab                   " insert spaces instead of tab chars
-set tabstop=4                   " a n-space tab width
+set smarttab                    " <Tab> in front of a line inserts blanks according to shiftwidth
+set tabstop=8                   " a n-space tab width
 set softtabstop=4               " counts n spaces when DELETE or BACKSPACE is used
 set shiftwidth=4                " allows the use of < and > for VISUAL indenting
 set shiftround                  " shift to certain columns, not just n spaces
@@ -117,11 +123,18 @@ set noautoindent                " auto indents next new line
 set cinkeys-=0#                 " Comments don't fiddle with indenting
 set cino=(0                     " Indent newlines after opening parenthesis
 
+" {{{1 search
+set incsearch                   " do incremental searching
+set ignorecase                  " case-insensitive search
+set smartcase                   " search: use case if any caps used
+set magic                       " Use some magic in search patterns?  Certainly!
+
 " {{{1 backup
 set backup                      " keep a backup file
 set backupdir=/tmp              " backup dir
-set directory=/tmp              " swap file directory
 set backupskip+=*.gpg           " don't save backups of *.gpg files
+set noswapfile                  " don't create swap files
+set directory=/tmp              " swap file directory
 
 " {{{1 keymapping
 let mapleader=","
@@ -133,6 +146,16 @@ nnoremap q: <Nop>
 nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
+" auto center
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+nnoremap <silent> g# g#zz
+nnoremap <silent> <C-o> <C-o>zz
+nnoremap <silent> <C-i> <C-i>zz
+
 " quicker buffer navigation
 nnoremap gt :bnext<CR>
 nnoremap gT :bprevious<CR>
@@ -141,6 +164,9 @@ nnoremap <C-h> :bprevious<CR>
 
 " To open a new empty buffer
 nnoremap <C-n> :enew<CR>
+
+" Close the current buffer
+map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " Make Y behave like other capitals
 nnoremap Y y$
@@ -151,14 +177,14 @@ inoremap <C-l> <C-o>a
 inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 
-" Close the current buffer and move to the previous one
-map <leader>q :bp <BAR> bd #<CR><CR>
-
 " turn highlighting of last search results off
 map <leader>n :noh<CR>
 
+" resync syntax highlighting
+nnoremap <leader>r :syntax sync fromstart<cr>:redraw!<cr>
+
 " fuzzy search edited files history
-map <silent> <C-r>y:call fzf#run({ 'source': v:oldfiles, 'sink' : 'e ', 'options' : '-m', 'down' : '12', })<CR>
+map <silent> <leader>h y:call fzf#run({ 'source': v:oldfiles, 'sink' : 'e ', 'options' : '-m', 'down' : '12', })<CR>
 
 " fuzzy search lines in all open buffers
 nnoremap <silent> <Leader>l y:call fzf#run({ 'source': <sid>buffer_lines(), 'sink': function('<sid>line_handler'), 'options': '--extended --nth=3..', 'down': '12', })<CR>
@@ -232,11 +258,18 @@ imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 " {{{1 autocommands
 
 if has('autocmd')
-    " filetype detection for vimperator files
-    augroup filetypedetect
-        au BufNewFile,BufRead *vimperatorrc*,*muttatorrc*,*.vimp    set filetype=vimperator
-    augroup END
+    " filetype detection for specific filetypes
+    augroup FileTypeAware
+        au!
+        au BufNewFile,BufFilePre,BufRead *vimperatorrc*,*muttatorrc*,*.vimp    setfiletype vimperator
+        au BufNewFile,BufFilePre,BufRead *.md,*.mkd    setfiletype markdown
 
+        " Update 'changed' line on perl files before saving
+        au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
+
+        " Remove all trailing whitespace before saving certain files
+        au FileType c,cpp,java,python,lua,vim,html,css au BufWritePre <buffer> :%s/\s\+$//e
+    augroup END
 
     " gpg encrypted files
     augroup encrypted
@@ -263,22 +296,29 @@ if has('autocmd')
           \ setlocal nobin
     augroup END
 
-    augroup vimrc
+    " Return to the same line when reopening a file
+    augroup line_return
         au!
+        au BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \     execute 'normal! g`"zvzz' |
+            \ endif
+    augroup END
 
-        " Automatic rename of tmux window
+    " Automatic renaming of tmux window
+    augroup tmux
+        au!
         if exists('$TMUX') && !exists('$NORENAME')
             au BufEnter * call system('tmux rename-window '.expand('%:t:S'))
             au VimLeave * call system('tmux set-window automatic-rename on')
         endif
-
-        " Source vimrc right after saving the buffer
-        au BufWritePost ~/.vimrc source %
-
     augroup END
 
-    au BufWrite *.pl
-        \ %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
+    " Source vimrc right after saving the buffer
+    augroup vimrc
+        au!
+        au BufWritePost ~/.vimrc source %
+    augroup END
 
     " Airline Customization
     "au VimEnter * call AirlineInit()
@@ -358,7 +398,7 @@ let wiki.path_html = '~/vimwiki_html/'
 let wiki.auto_export = 1
 let wiki.force = 1
 let wiki.syntax = 'markdown'
-let wiki.ext = '.wiki'
+let wiki.ext = '.md'
 let wiki.css_file = '~/vimwiki_html/style.css'
 let wiki.custom_wiki2html = '~/vimwiki/md2html/md2html.py'
 let wiki.template_path = '~/vimwiki/templates/'
