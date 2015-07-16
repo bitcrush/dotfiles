@@ -128,7 +128,7 @@ rofi.modi:                          run,window,ssh
 rofi.width:                         1680
 rofi.lines:                         9
 rofi.columns:                       2
-rofi.font:                          Terminess Powerline 12
+rofi.font:                          Terminess Powerline 14
 rofi.location:                      1
 rofi.padding:                       5
 rofi.bw:                            1
