@@ -1,0 +1,66 @@
+# zathurarc
+
+# base16-rcn colors {{{
+set default-fg                  "#282828" #01
+set default-bg                  "#181818" #00
+
+set statusbar-fg                "#585858" #03
+set statusbar-bg                "#181818" #00
+
+set inputbar-fg                 "#B8B8B8" #04
+set inputbar-bg                 "#282828" #01
+
+set notification-error-fg       "#181818" #00
+set notification-error-bg       "#AB4642" #08
+
+set notification-warning-fg     "#181818" #00
+set notification-warning-bg     "#AB4642" #08
+
+set highlight-color             "#F7CA88" #0A
+set highlight-active-color      "#7CAFC2" #0D
+
+set completion-highlight-fg     "#383838" #02
+set completion-highlight-bg     "#BA8BAF" #0E
+
+set completion-fg               "#BA8BAF" #0E
+set completion-bg               "#383838" #02
+
+set notification-fg             "#181818" #00
+set notification-bg             "#A1B56C" #0B
+
+set recolor-lightcolor          "#282828" #01
+set recolor-darkcolor           "#E8E8E8" #06
+set recolor                     "true"
+
+# setting recolor-keep true will keep any color your pdf has.
+# if it is false, it'll just be black and white
+set recolor-keephue             "true"
+# }}}
+
+# settings {{{
+set font "Terminus 12"
+set height 1024
+set width 768
+set adjust_open width
+set incremental-search false
+set page-cache-size 45
+set pages-per-row 1
+set statusbar-basename true
+set window-title-basename true
+# }}}
+
+# key bindings {{{
+map ,q quit
+
+# scrolling
+map <C-d> scroll half-down
+map <C-u> scroll half-up
+map <PageUp> navigate previous
+map <PageDown> navigate next
+
+# zooming
+map <C-i> zoom in
+map <C-o> zoom out
+map + zoom in
+map - zoom out
+# }}}
