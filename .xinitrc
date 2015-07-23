@@ -31,7 +31,8 @@ autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
 # set default mixer levels
-(amixer -- sset DAC,0 -32dB && amixer -- sset DAC,1 -32dB) > /dev/null &&
+(amixer -- sset DAC,0 -18dB && amixer -- sset DAC,1 -18dB) > /dev/null &&
+amixer -- sset Master 75% > /dev/null &&
 
 sleep 5 &&
 
