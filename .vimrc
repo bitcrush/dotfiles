@@ -16,7 +16,7 @@ set foldmethod=marker           " how folds are recognized
 set formatoptions=tcqn1         " vi compatible formatting
 set matchtime=3                 " tenths of second to hilight matching parent
 set modeline                    " allow the last line to be a modeline
-set modelines=5                 " how many modelines can be used
+set modelines=2                 " how many modelines can be used
 set selection=inclusive         " selection method
 set whichwrap=h,l,<,>,[,]       " allow jumping to their closing chars
 set clipboard+=unnamed          " use system clipboard
