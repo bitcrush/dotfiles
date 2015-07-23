@@ -4,7 +4,7 @@
 set default-fg                  "#282828" #01
 set default-bg                  "#181818" #00
 
-set statusbar-fg                "#585858" #03
+set statusbar-fg                "#BA8BAF" #0E
 set statusbar-bg                "#181818" #00
 
 set inputbar-fg                 "#B8B8B8" #04
@@ -28,19 +28,16 @@ set completion-bg               "#383838" #02
 set notification-fg             "#181818" #00
 set notification-bg             "#A1B56C" #0B
 
-set recolor-lightcolor          "#282828" #01
-set recolor-darkcolor           "#E8E8E8" #06
-set recolor                     "true"
-
 # setting recolor-keep true will keep any color your pdf has.
 # if it is false, it'll just be black and white
+set recolor                     "false"
 set recolor-keephue             "true"
+set recolor-lightcolor          "#282828" #01
+set recolor-darkcolor           "#E8E8E8" #06
 # }}}
 
 # settings {{{
 set font "Terminus 12"
-set height 1024
-set width 768
 set adjust_open width
 set incremental-search false
 set page-cache-size 45
