@@ -1,0 +1,7 @@
+# $XDG_CONFIG_HOME/feh/keys
+
+# unbind default keys
+save_filelist
+save_image
+jump_random
+toggle_fullscreen f
