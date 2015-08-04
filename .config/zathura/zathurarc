@@ -38,7 +38,7 @@ set recolor-darkcolor           "#E8E8E8" #06
 
 # settings {{{
 set font "Terminus 12"
-set adjust_open width
+set adjust-open width
 set incremental-search false
 set page-cache-size 45
 set pages-per-row 1
