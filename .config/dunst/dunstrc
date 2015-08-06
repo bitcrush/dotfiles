@@ -19,7 +19,7 @@
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     # Markup is allowed
-    format = "<span foreground="#ba8baf">%a</span>\n<b>%s</b>\n%b"
+    format = "<span foreground="#ba8baf">%a</span>\n<b>%s %p</b>\n%b"
     # format = "<i>%a</i>\n<b>%s</b>\n%b"
 
     # Sort messages by urgency
@@ -60,7 +60,7 @@
     # right side of the screen.  Y is measured from the top and down respectevly.
     # The width can be negative. In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-15+30"
+    geometry = "400-15+30"
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
@@ -164,12 +164,12 @@
     # Otherwise the '#' and following  would be interpreted as a comment.
     background = "#282828"
     foreground = "#b8b8b8"
-    timeout = 10
+    timeout = 20
 
 [urgency_normal]
     background = "#282828"
     foreground = "#b8b8b8"
-    timeout = 10
+    timeout = 30
 
 [urgency_critical]
     background = "#ab4642"
@@ -228,3 +228,4 @@
 #    summary = *twitter.com*
 #    urgency = normal
 #
+# vim: ft=cfg
