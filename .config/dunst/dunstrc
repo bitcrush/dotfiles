@@ -19,7 +19,7 @@
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     # Markup is allowed
-    format = "<b>%s</b>\n%b"
+    format = "<span foreground="#ba8baf">%a</span>\n<b>%s</b>\n%b"
     # format = "<i>%a</i>\n<b>%s</b>\n%b"
 
     # Sort messages by urgency
@@ -64,7 +64,7 @@
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
-    transparency = 10
+    transparency = 0
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -90,6 +90,12 @@
     # timeout as if it would normally do.
     sticky_history = yes
 
+    # Maximum amount of notifications kept in history
+    history_length = 20
+
+    # Display indicators for URLs (U) and actions (A).
+    show_indicators = yes
+
     # The height of a single line. If the height is smaller than the font height,
     # it will get raised to the font height.
     # This adds empty space above and under the text.
@@ -111,7 +117,7 @@
     #  * foreground: use the same color as the foreground
     #  * frame: use the same color as the frame.
     #  * anything else will be interpreted as a X color
-    separator_color = #cccccc
+    separator_color = frame
 
     # print a notification on startup
     # This is mainly for error detection, since dbus (re-)starts dunst
@@ -119,14 +125,20 @@
     startup_notification = false
 
     # dmenu path
-    dmenu = /usr/bin/dmenu -p dunst:
+    dmenu = /usr/bin/rofi -dmenu -p dunst:
 
     # browser for opening urls in context menu
     browser = /usr/bin/firefox -new-tab
 
+    # Align icons left/right/off
+    icon_position = off
+
+    # Paths to default icons.
+    icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+
 [frame]
-    width = 2
-    color = "#d6d6d6"
+    width = 1
+    color = "#d8d8d8"
 
 [shortcuts]
     # shortcuts are specified as [modifier+][modifier+]...key
@@ -151,17 +163,17 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the '#' and following  would be interpreted as a comment.
     background = "#282828"
-    foreground = "#d8d8d8"
+    foreground = "#b8b8b8"
     timeout = 10
 
 [urgency_normal]
-    background = "#333333"
-    foreground = "#d6d6d6"
+    background = "#282828"
+    foreground = "#b8b8b8"
     timeout = 10
 
 [urgency_critical]
-    background = "#900000"
-    foreground = "#ffffff"
+    background = "#ab4642"
+    foreground = "#e8e8e8"
     timeout = 0
 
 
