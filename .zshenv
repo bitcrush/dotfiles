@@ -1,7 +1,8 @@
 #!/bin/zsh
 
-# location of zsh config files
+# location of zsh/antigen config files
 ZDOTDIR=${HOME}/.config/zsh
+ADOTDIR=${ZDOTDIR}/antigen
 
 # Dircolors...
 eval `dircolors -b`

@@ -3,7 +3,7 @@
 # vim: fdm=marker ts=4 sw=4
 
 # antigen {{{1
-source ${ZDOTDIR}/antigen/antigen.zsh
+source ${ADOTDIR}/antigen.zsh
 #antigen bundle robbyrussell/oh-my-zsh lib/
 #antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions src/
