@@ -4,6 +4,9 @@
 ZDOTDIR=${HOME}/.config/zsh
 ADOTDIR=${ZDOTDIR}/antigen
 
+# set space between right prompt and terminal margin
+ZLE_RPROMPT_INDENT=0
+
 # Dircolors...
 eval `dircolors -b`
 
