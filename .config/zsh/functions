@@ -389,7 +389,6 @@ function bookmark() {
 
     ZDOTDIR="$HOME/.config/zsh"
     bmark_file=${ZDOTDIR}/bookmarks
-    bmark_file=${ZDOTDIR}/bookmarks
     bmark_path="$PWD"
     del=0; [[ "$1" == "-d" ]] && shift && del=1
     bmark_id="$1"
@@ -411,7 +410,7 @@ function bookmark() {
         grep -qE "$(realpath $bmark_path)" <<<$(realpath ${line%%|*}) && \
         echo "Path or respective symlink is already bookmarked with ID \"${line##*|}\"." && \
         return 1
-    done <$ZDOTDIR/bookmarks
+    done <${ZDOTDIR}/bookmarks
 
     if (( ${#bmark_id} > 20 )); then
         echo "Please choose an ID with a length <= 20."; return 1
