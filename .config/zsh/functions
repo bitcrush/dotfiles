@@ -365,7 +365,6 @@ function setprompt() {
     PR_USER="%n"
 
     ZSH_THEME_GIT_PROMPT_PREFIX="${PR_RED}"
-    #ZSH_THEME_GIT_PROMPT_PREFIX="${PR_BLUE}git:${PR_RED}"
     ZSH_THEME_GIT_PROMPT_SUFFIX="${PR_NO_COLOR}"
     ZSH_THEME_GIT_PROMPT_DIRTY="${PR_BLUE} ${PR_YELLOW}*${PR_NO_COLOR}"
     ZSH_THEME_GIT_PROMPT_CLEAN="${PR_BLUE}"
@@ -377,10 +376,24 @@ function setprompt() {
     ZSH_THEME_GIT_PROMPT_UNMERGED="${PR_YELLOW} ═"
     ZSH_THEME_GIT_PROMPT_UNTRACKED="${PR_CYAN} -"
 
-    #VIMODE="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+    function zle-keymap-select zle-line-init zle-line-finish {
+        zle reset-prompt
+        zle -R
+    }
+
+    zle -N zle-line-init
+    zle -N zle-line-finish
+    zle -N zle-keymap-select
+    zle -N edit-command-line
+
+    MODE_INDICATOR="<«"
+
+    function vi_mode_prompt_info() {
+        echo "${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}"
+    }
 
     PROMPT=$'${PR_GREEN}${PR_USER}${PR_NO_COLOR} ${PR_WHITE}%~${PR_NO_COLOR} ${PR_MAGENTA}%(!.#.») ${PR_NO_COLOR} '
-    RPS1='${PR_MAGENTA}« ${PR_YELLOW}[${PR_NO_COLOR}%?${PR_YELLOW}]${PR_NO_COLOR}$(git_prompt_branch)$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX'
+    RPS1='${PR_CYAN}$(vi_mode_prompt_info)${PR_MAGENTA}« ${PR_YELLOW}[${PR_NO_COLOR}%?${PR_YELLOW}]${PR_NO_COLOR}$(git_prompt_branch)$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX'
 }
  
 # bookmark {{{1
