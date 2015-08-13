@@ -160,8 +160,16 @@ setopt unset                # don't error out when unset parameters are used
 [[ $- =~ i ]] && stty -ixoff -ixon
 
 # completion {{{1
-compctl -/ cd                       # type a dir's name to cd into it
-zstyle ':completion:*' menu select  # autocompletion with an arrow-key driven interface
+
+# type a dir's name to cd into it
+compctl -/ cd
+
+# autocompletion with an arrow-key driven interface
+zstyle ':completion:*' menu select
+
+# persistent rehash to find new executables after installing
+zstyle ':completion:*' rehash true
+
 zstyle :compinstall filename '${ZDOTDIR}/.zshrc'
 
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
