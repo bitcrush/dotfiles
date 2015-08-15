@@ -47,13 +47,6 @@ zmodload zsh/terminfo
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
-#function zle-line-init zle-keymap-select {
-#    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-#    RPS2=$RPS1
-#    zle reset-prompt
-#}
-#zle -N zle-line-init zle-keymap-select
-
 # keybinds {{{1
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[7~" beginning-of-line
@@ -166,83 +159,118 @@ setopt unset                # don't error out when unset parameters are used
 
 # completion {{{1
 
-# type a dir's name to cd into it
-compctl -/ cd
-
 # autocompletion with an arrow-key driven interface
 zstyle ':completion:*' menu select
+
+# provide verbose completion information
+zstyle ':completion:*' verbose true
 
 # persistent rehash to find new executables after installing
 zstyle ':completion:*' rehash true
 
-zstyle :compinstall filename '${ZDOTDIR}/.zshrc'
-
+# activate color-completion
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+# match uppercase from lowercase
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# expansion options
+# allow one error for every three characters typed in approximate completer
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
+
+# ignore completion functions for commands you don't have:
+zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
+
+# activate menu completion for kill/killall
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
 zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*' force-list always
+
+# on processes completion complete all user processes
+zstyle ':completion:*:processes' command 'ps -au$USER'
+
+# provide more processes in completion of programs like killall:
+zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
+
 # start menu completion only if it could find no unambiguous initial string
 zstyle ':completion:*:correct:*' insert-unambiguous true
-zstyle ':completion:*:man:*' menu yes select
+zstyle ':completion:*:corrections' format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
+zstyle ':completion:*:correct:*' original true
+
 # activate menu
 zstyle ':completion:*:history-words' menu yes
-# complete 'cd -<tab>' with menu
-zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
-zstyle ':completion:*' menu select=5
-zstyle ':completion:*' completer _complete _prefix
-zstyle ':completion::prefix-1:*' completer _complete
-zstyle ':completion:incremental:*' completer _complete _correct
-zstyle ':completion:predict:*' completer _complete
-zstyle ':completion:*:history-words' stop verbose
+
+# ignore duplicate entries
 zstyle ':completion:*:history-words' remove-all-dups yes
-zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' stop yes 
+
+# automatically complete 'cd -<tab>' and 'cd -<ctrl-d>' with menu
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
  
-zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
-          ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ }
-          ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
-          ${${${(M)${(s:# :)${(zj:# :)${(Lf)"$([[ -f ~/.ssh/config ]] && <~/.ssh/config)"}%%\#*}}##host(|name) *}#host(|name) }/\*}
-          )'
- 
-# Completion caching
-zstyle ':completion::complete:*' use-cache 1
+# completion caching
+zstyle ':completion:*' use-cache yes
 zstyle ':completion::complete:*' cache-path ${ZDOTDIR}/cache/$HOST
  
-# Expand partial paths
+# expand partial paths
 zstyle ':completion:*' expand 'yes'
 zstyle ':completion:*' squeeze-slashes 'yes'
+
+# insert all expansions for expand completer
+zstyle ':completion:*:expand:*' tag-order all-expansions
+zstyle ':completion:*:history-words' list false
  
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ${ZDOTDIR}/cache
- 
-# Include non-hidden directories in globbed file completions for certain commands
+# offer indexes before parameters in subscripts
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# ignore completion functions
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+# include non-hidden directories in globbed file completions for certain commands
 zstyle ':completion::complete:*' '\'
  
 # tag-order 'globbed-files directories' all-files
 zstyle ':completion::complete:*:tar:directories' file-patterns '*~.*(-/)'
  
-# Don't complete backup files as executables
+# don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
+
+# recent (as of Dec 2007) zsh versions are able to provide descriptions
+# for commands (read: 1st word in the line) that it will list for the user
+# to choose from. The following disables that, because it's not exactly fast.
 zstyle ':completion:*:-command-:*:' verbose false
  
-# Separate matches into groups
+# separate matches into groups
 zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*' group-name ''
  
-# Describe each match group.
-zstyle ':completion:*:descriptions' format "%B---- %d%b"
- 
-# Messages/warnings format
+# format on completion
+zstyle ':completion:*:descriptions' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+
+# messages/warnings format
 zstyle ':completion:*:messages' format '%B%U---- %d%u%b'
-zstyle ':completion:*:warnings' format '%B%U---- no match for: %d%u%b'
+zstyle ':completion:*:warnings' format $'%{\e[0;33m%}No matches for:%{\e[0m%} %d'
  
-# Describe options in full
+# describe options in full
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d'
  
 # complete manual by their section
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections true
+zstyle ':completion:*:man:*' menu yes select
+
+# if there are more than 5 options allow selecting from a menu
+zstyle ':completion:*' menu select=5
+
+# ssh/scp host and login completion
+zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
+          ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ }
+          ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
+          ${${${(M)${(s:# :)${(zj:# :)${(Lf)"$([[ -f ~/.ssh/config ]] && <~/.ssh/config)"}%%\#*}}##host(|name) *}#host(|name) }/\*}
+          )'
 # }}}
 
 setprompt
