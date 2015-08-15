@@ -3,9 +3,10 @@
 # vim: fdm=marker ts=4 sw=4
 
 # antigen {{{1
+antigen_url="https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh"
+[[ -f ${ADOTDIR}/antigen.zsh ]] || curl -L "$antigen_url" -o ${ADOTDIR}/antigen.zsh
 source ${ADOTDIR}/antigen.zsh
-#antigen bundle robbyrussell/oh-my-zsh lib/
-#antigen bundle zsh-users/zsh-syntax-highlighting
+
 antigen bundle zsh-users/zsh-completions src/
 antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
@@ -16,12 +17,16 @@ export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
 # source files {{{1
-#source ${ZDOTDIR}/zle
-source ${ZDOTDIR}/functions
-source ${ZDOTDIR}/base16-default.dark.rcn.sh
-
+zsh_files[1]="${ZDOTDIR}/zle"
+zsh_files[2]="${ZDOTDIR}/functions"
+zsh_files[3]="${ZDOTDIR}/zshrc.local"
+zsh_files[4]="${ZDOTDIR}/base16-default.dark.rcn.sh"
 # TODO: customize fzf bindings
-source /etc/profile.d/fzf.zsh
+zsh_files[5]="/etc/profile.d/fzf.zsh"
+
+for zsh_file in ${zsh_files[@]}; do
+    [[ -f $zsh_file ]] && source $zsh_file
+done
 
 # system functions {{{1
 # load completion and user prompt
