@@ -16,7 +16,7 @@ export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
 # source files {{{1
 zsh_files[1]="${ZDOTDIR}/functions"
-zsh_files[2]="${ZDOTDIR}/zshrc.local"
+zsh_files[2]="${ZDOTDIR}/.zshrc.local"
 zsh_files[3]="${ZDOTDIR}/base16-default.dark.rcn.sh"
 # TODO: customize fzf bindings
 zsh_files[4]="/etc/profile.d/fzf.zsh"
@@ -69,39 +69,26 @@ zmodload zsh/terminfo
 [[ -n "$terminfo[cbt]" ]]   &&  bindkey "$terminfo[cbt]"  reverse-menu-complete
 
 # aliases {{{1
-alias e="$EDITOR"
-alias l="$PAGER"
-alias m="mpv"
-alias p="pacman"
-alias y="yaourt"
+alias e="${EDITOR:-vi}"
+alias l="${PAGER:-less}"
 alias s="sudo "
 alias ls="ls -A -h --group-directories-first -F --color=auto"
 alias lb="ls -A -s --block-size=1 --group-directories-first -F --color=auto"
 alias ll="ls --group-directories-first --color -l -F"
 alias rm="rm -I"
 alias mkdir="mkdir -pv"
-alias mnt="mount |column -t"
+alias mnt="mount | column -t"
 alias grep='grep --color=auto -d skip'
 alias zrep='zgrep --color=auto -d skip'
-alias wrk='screen -c $HOME/.config/scriptz/screen-wrk -D -R wrk'
 alias chm-d="find -type d -exec chmod 755 {} \;"
 alias chm-f="find -type f -exec chmod 644 {} \;"
 alias myip="curl icanhazip.com"
-alias defrag="/opt/quake3/iodfengine.x86_64 +set fs_game defrag +disconnect"
-alias mkpw="makepasswd --chars=10 --string=123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ-_. --count=1"
-alias skype='xhost +local: && sudo -u skype /usr/bin/skype'
-alias startx="startx -nolisten tcp"
-alias xev-slim="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
-alias vw='vim -c VimwikiIndex'
-alias gs='git status '
-alias ga='git add '
-alias gb='git branch '
+alias gs='git status'
+alias ga='git add'
+alias gb='git branch'
 alias gc='git commit'
 alias gd='git diff'
-alias go='git checkout '
-alias gk='gitk --all&'
-alias gx='gitx --all'
-alias steamclean='find ~/.local/share/Steam/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
+alias go='git checkout'
 
 # history {{{1
 HISTFILE=${ZDOTDIR}/history
