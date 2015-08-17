@@ -1,10 +1,8 @@
 #!/bin/zsh
 
-# vim: fdm=marker ts=4 sw=4
-
 # antigen {{{1
 antigen_url="https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh"
-[[ -f ${ADOTDIR}/antigen.zsh ]] || ( mkdir $ADOTDIR && curl -L "$antigen_url" -o ${ADOTDIR}/antigen.zsh )
+[[ -r ${ADOTDIR}/antigen.zsh ]] || ( mkdir $ADOTDIR && curl -L "$antigen_url" -o ${ADOTDIR}/antigen.zsh )
 source ${ADOTDIR}/antigen.zsh
 
 antigen bundle zsh-users/zsh-completions src/
@@ -17,35 +15,15 @@ export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
 # source files {{{1
-zsh_files[1]="${ZDOTDIR}/zle"
-zsh_files[2]="${ZDOTDIR}/functions"
-zsh_files[3]="${ZDOTDIR}/zshrc.local"
-zsh_files[4]="${ZDOTDIR}/base16-default.dark.rcn.sh"
+zsh_files[1]="${ZDOTDIR}/functions"
+zsh_files[2]="${ZDOTDIR}/zshrc.local"
+zsh_files[3]="${ZDOTDIR}/base16-default.dark.rcn.sh"
 # TODO: customize fzf bindings
-zsh_files[5]="/etc/profile.d/fzf.zsh"
+zsh_files[4]="/etc/profile.d/fzf.zsh"
 
 for zsh_file in ${zsh_files[@]}; do
     [[ -f $zsh_file ]] && source $zsh_file
 done
-
-# system functions {{{1
-# load completion and user prompt
-autoload -U compinit promptinit
-compinit
-promptinit
-
-# load renaming function
-autoload zmv
-
-# math
-autoload -U zcalc
-
-zmodload zsh/complist
-zmodload zsh/terminfo
-
-## smart urls
-autoload -U url-quote-magic
-zle -N self-insert url-quote-magic
 
 # keybinds {{{1
 bindkey "\e[1~" beginning-of-line
@@ -56,6 +34,7 @@ bindkey "\e[3~" delete-char
 bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
 
+# proper incremental history line search
 autoload up-line-or-beginning-search
 autoload down-line-or-beginning-search
 zle -N up-line-or-beginning-search
@@ -76,6 +55,9 @@ bindkey '\eb' fzf-cd-bookmark
 
 # Paste the selected command from history into the command line
 bindkey '^R' fzf-history
+
+# load interface to the terminfo database
+zmodload zsh/terminfo
 
 # Shift-tab to perform backwards menu completion
 [[ -n "$terminfo[kcbt]" ]]  &&  bindkey "$terminfo[kcbt]" reverse-menu-complete
@@ -158,6 +140,11 @@ setopt unset                # don't error out when unset parameters are used
 [[ $- =~ i ]] && stty -ixoff -ixon
 
 # completion {{{1
+# load completion
+autoload -U compinit && compinit
+
+# load completion listing extensions
+zmodload zsh/complist
 
 # autocompletion with an arrow-key driven interface
 zstyle ':completion:*' menu select
@@ -273,5 +260,10 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
           )'
 # }}}
 
-setprompt
+# load renaming function
+autoload zmv
 
+# load user prompt
+( autoload -U promptinit && promptinit ) && setprompt
+
+# vim: fdm=marker ts=4 sw=4
