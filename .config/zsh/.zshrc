@@ -44,6 +44,11 @@ bindkey "\e[B" down-line-or-beginning-search
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
 
+# Edit the current command line in $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
+
 # file rename magic
 bindkey "^xp" copy-prev-shell-word
 
