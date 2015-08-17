@@ -4,7 +4,7 @@
 
 # antigen {{{1
 antigen_url="https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh"
-[[ -f ${ADOTDIR}/antigen.zsh ]] || curl -L "$antigen_url" -o ${ADOTDIR}/antigen.zsh
+[[ -f ${ADOTDIR}/antigen.zsh ]] || ( mkdir $ADOTDIR && curl -L "$antigen_url" -o ${ADOTDIR}/antigen.zsh )
 source ${ADOTDIR}/antigen.zsh
 
 antigen bundle zsh-users/zsh-completions src/
