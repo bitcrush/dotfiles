@@ -40,27 +40,6 @@ zle -N edit-command-line
 # load interface to the terminfo database
 zmodload zsh/terminfo
 
-# Make sure the terminal is in application mode, when zle is
-# active. Only then are the values from $terminfo valid.
-if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-    function zle-smkx () {
-        emulate -L zsh
-        printf '%s' ${terminfo[smkx]}
-    }
-    function zle-rmkx () {
-        emulate -L zsh
-        printf '%s' ${terminfo[rmkx]}
-    }
-    function zle-line-init () {
-        zle-smkx
-    }
-    function zle-line-finish () {
-        zle-rmkx
-    }
-    zle -N zle-line-init
-    zle -N zle-line-finish
-fi
-
 # create array of key names
 typeset -A key
 key=(
@@ -82,6 +61,8 @@ key=(
 [[ -n "${key[End]}"      ]] && bindkey  "${key[End]}"       end-of-line
 [[ -n "${key[Insert]}"   ]] && bindkey  "${key[Insert]}"    edit-command-line
 [[ -n "${key[Delete]}"   ]] && bindkey  "${key[Delete]}"    delete-char
+[[ -n "${key[Up]}"       ]] && bindkey  "${key[Up]}"        history-substring-search-up
+[[ -n "${key[Down]}"     ]] && bindkey  "${key[Down]}"      history-substring-search-down
 [[ -n "${key[Left]}"     ]] && bindkey  "${key[Left]}"      backward-char
 [[ -n "${key[Right]}"    ]] && bindkey  "${key[Right]}"     forward-char
 [[ -n "${key[PageUp]}"   ]] && bindkey  "${key[PageUp]}"    beginning-of-history
