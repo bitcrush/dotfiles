@@ -88,9 +88,10 @@ key=(
 [[ -n "${key[PageDown]}" ]] && bindkey  "${key[PageDown]}"  end-of-history
 [[ -n "${key[BackTab]}"  ]] && bindkey  "${key[BackTab]}"   reverse-menu-complete
 
-# TODO: make this work with terminfo
 bindkey "\e[A" up-line-or-beginning-search
+bindkey "\eOA" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
+bindkey "\eOB" down-line-or-beginning-search
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
 
