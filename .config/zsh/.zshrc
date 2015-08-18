@@ -7,6 +7,7 @@ source ${ADOTDIR}/antigen.zsh
 
 antigen bundle zsh-users/zsh-completions src/
 antigen bundle zsh-users/zsh-history-substring-search
+antigen theme bitcrush/minimal minimal
 antigen apply
 
 # zsh-history-substring-search
@@ -26,47 +27,86 @@ for zsh_file in ${zsh_files[@]}; do
 done
 
 # keybinds {{{1
-bindkey "\e[1~" beginning-of-line
-bindkey "\e[7~" beginning-of-line
-bindkey "\e[8~" end-of-line
-bindkey "\e[4~" end-of-line
-bindkey "\e[3~" delete-char
-bindkey "\e[5~" beginning-of-history
-bindkey "\e[6~" end-of-history
-
 # proper incremental history line search
 autoload up-line-or-beginning-search
 autoload down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
+
+# Edit the current command line in $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+
+# load interface to the terminfo database
+zmodload zsh/terminfo
+
+# Make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+    function zle-smkx () {
+        emulate -L zsh
+        printf '%s' ${terminfo[smkx]}
+    }
+    function zle-rmkx () {
+        emulate -L zsh
+        printf '%s' ${terminfo[rmkx]}
+    }
+    function zle-line-init () {
+        zle-smkx
+    }
+    function zle-line-finish () {
+        zle-rmkx
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
+fi
+
+# create array of key names
+typeset -A key
+key=(
+    Home     "${terminfo[khome]}"
+    End      "${terminfo[kend]}"
+    Insert   "${terminfo[kich1]}"
+    Delete   "${terminfo[kdch1]}"
+    Up       "${terminfo[kcuu1]}"
+    Down     "${terminfo[kcud1]}"
+    Left     "${terminfo[kcub1]}"
+    Right    "${terminfo[kcuf1]}"
+    PageUp   "${terminfo[kpp]}"
+    PageDown "${terminfo[knp]}"
+    BackTab  "${terminfo[kcbt]}"
+)
+
+# bind keys
+[[ -n "${key[Home]}"     ]] && bindkey  "${key[Home]}"      beginning-of-line
+[[ -n "${key[End]}"      ]] && bindkey  "${key[End]}"       end-of-line
+[[ -n "${key[Insert]}"   ]] && bindkey  "${key[Insert]}"    edit-command-line
+[[ -n "${key[Delete]}"   ]] && bindkey  "${key[Delete]}"    delete-char
+[[ -n "${key[Left]}"     ]] && bindkey  "${key[Left]}"      backward-char
+[[ -n "${key[Right]}"    ]] && bindkey  "${key[Right]}"     forward-char
+[[ -n "${key[PageUp]}"   ]] && bindkey  "${key[PageUp]}"    beginning-of-history
+[[ -n "${key[PageDown]}" ]] && bindkey  "${key[PageDown]}"  end-of-history
+[[ -n "${key[BackTab]}"  ]] && bindkey  "${key[BackTab]}"   reverse-menu-complete
+
+# TODO: make this work with terminfo
 bindkey "\e[A" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
 
-# Edit the current command line in $EDITOR
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
-
 # file rename magic
 bindkey "^xp" copy-prev-shell-word
 
-# Paste the selected entry from locate output into the command line
-bindkey '\ei' fzf-locate-widget
+if has fzf; then
+    # Paste the selected entry from locate output into the command line
+    bindkey '\ei' fzf-locate-widget
 
-# Quick cd to bookmarked directory
-bindkey '\eb' fzf-cd-bookmark
+    # Quick cd to bookmarked directory
+    bindkey '\eb' fzf-cd-bookmark
 
-# Paste the selected command from history into the command line
-bindkey '^R' fzf-history
-
-# load interface to the terminfo database
-zmodload zsh/terminfo
-
-# Shift-tab to perform backwards menu completion
-[[ -n "$terminfo[kcbt]" ]]  &&  bindkey "$terminfo[kcbt]" reverse-menu-complete
-[[ -n "$terminfo[cbt]" ]]   &&  bindkey "$terminfo[cbt]"  reverse-menu-complete
+    # Paste the selected command from history into the command line
+    bindkey '^R' fzf-history
+fi
 
 # aliases {{{1
 alias e="${EDITOR:-vi}"
@@ -184,15 +224,15 @@ zstyle ':completion:*:history-words' menu yes
 
 # ignore duplicate entries
 zstyle ':completion:*:history-words' remove-all-dups yes
-zstyle ':completion:*:history-words' stop yes 
+zstyle ':completion:*:history-words' stop yes
 
 # automatically complete 'cd -<tab>' and 'cd -<ctrl-d>' with menu
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
- 
+
 # completion caching
 zstyle ':completion:*' use-cache yes
 zstyle ':completion::complete:*' cache-path ${ZDOTDIR}/cache/$HOST
- 
+
 # expand partial paths
 zstyle ':completion:*' expand 'yes'
 zstyle ':completion:*' squeeze-slashes 'yes'
@@ -200,7 +240,7 @@ zstyle ':completion:*' squeeze-slashes 'yes'
 # insert all expansions for expand completer
 zstyle ':completion:*:expand:*' tag-order all-expansions
 zstyle ':completion:*:history-words' list false
- 
+
 # offer indexes before parameters in subscripts
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
@@ -209,10 +249,10 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 
 # include non-hidden directories in globbed file completions for certain commands
 zstyle ':completion::complete:*' '\'
- 
+
 # tag-order 'globbed-files directories' all-files
 zstyle ':completion::complete:*:tar:directories' file-patterns '*~.*(-/)'
- 
+
 # don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
 
@@ -220,22 +260,22 @@ zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
 # for commands (read: 1st word in the line) that it will list for the user
 # to choose from. The following disables that, because it's not exactly fast.
 zstyle ':completion:*:-command-:*:' verbose false
- 
+
 # separate matches into groups
 zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*' group-name ''
- 
+
 # format on completion
 zstyle ':completion:*:descriptions' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
 
 # messages/warnings format
 zstyle ':completion:*:messages' format '%B%U---- %d%u%b'
 zstyle ':completion:*:warnings' format $'%{\e[0;33m%}No matches for:%{\e[0m%} %d'
- 
+
 # describe options in full
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d'
- 
+
 # complete manual by their section
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections true
@@ -254,8 +294,5 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
 
 # load renaming function
 autoload zmv
-
-# load user prompt
-( autoload -U promptinit && promptinit ) && setprompt
 
 # vim: fdm=marker ts=4 sw=4

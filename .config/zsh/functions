@@ -3,6 +3,16 @@
 # $HOME/.zsh/functions
 # vim: fdm=marker ts=4 sw=4
 
+# has {{{1
+# simple has function to use in conditions
+has() {
+    if hash $1 2> /dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # extract {{{1
 function extract() {
     local old_dirs current_dirs lower
@@ -314,92 +324,10 @@ function lowercase()
     done
 }
 
-# git_prompt {{{1
-function git_prompt_branch() {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    echo "$ZSH_THEME_GIT_PROMPT_PREFIX ${ref#refs/heads/}"
-}
-
-function git_prompt_status() {
-    INDEX=$(git status --porcelain 2> /dev/null)
-    STATUS=""
-    if $(echo "$INDEX" | grep '^?? ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_UNTRACKED$STATUS"
-    fi
-    if $(echo "$INDEX" | grep '^A ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
-    elif $(echo "$INDEX" | grep '^M ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
-    fi
-    if $(echo "$INDEX" | grep '^ M ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-    elif $(echo "$INDEX" | grep '^AM ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-    elif $(echo "$INDEX" | grep '^ T ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-    fi
-    if $(echo "$INDEX" | grep '^R ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_RENAMED$STATUS"
-    fi
-    if $(echo "$INDEX" | grep '^ D ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
-    fi
-    if $(echo "$INDEX" | grep '^UU ' &> /dev/null); then
-        STATUS="$ZSH_THEME_GIT_PROMPT_UNMERGED$STATUS"
-    fi
-    echo $STATUS
-}
-
-# prompt {{{1
-function setprompt() {
-    autoload -U colors zsh/terminfo
-    colors
-    setopt prompt_subst
- 
-    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-        eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-        eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-    done
-
-    PR_NO_COLOR="%{$terminfo[sgr0]%}"
-    PR_USER="%n"
-
-    ZSH_THEME_GIT_PROMPT_PREFIX="${PR_RED}"
-    ZSH_THEME_GIT_PROMPT_SUFFIX="${PR_NO_COLOR}"
-    ZSH_THEME_GIT_PROMPT_DIRTY="${PR_BLUE} ${PR_YELLOW}*${PR_NO_COLOR}"
-    ZSH_THEME_GIT_PROMPT_CLEAN="${PR_BLUE}"
- 
-    ZSH_THEME_GIT_PROMPT_ADDED="${PR_GREEN} +"
-    ZSH_THEME_GIT_PROMPT_MODIFIED="${PR_BLUE} M"
-    ZSH_THEME_GIT_PROMPT_DELETED="${PR_RED} D"
-    ZSH_THEME_GIT_PROMPT_RENAMED="${PR_MAGENTA} R"
-    ZSH_THEME_GIT_PROMPT_UNMERGED="${PR_YELLOW} ═"
-    ZSH_THEME_GIT_PROMPT_UNTRACKED="${PR_CYAN} -"
-
-    function zle-keymap-select zle-line-init zle-line-finish {
-        zle reset-prompt
-        zle -R
-    }
-
-    zle -N zle-line-init
-    zle -N zle-line-finish
-    zle -N zle-keymap-select
-
-    MODE_INDICATOR="<«"
-
-    function vi_mode_prompt_info() {
-        echo "${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}"
-    }
-
-    PROMPT=$'${PR_GREEN}${PR_USER}${PR_NO_COLOR} ${PR_WHITE}%~${PR_NO_COLOR} ${PR_MAGENTA}%(!.#.») ${PR_NO_COLOR} '
-    RPS1='${PR_CYAN}$(vi_mode_prompt_info)${PR_MAGENTA}« ${PR_YELLOW}[${PR_NO_COLOR}%?${PR_YELLOW}]${PR_NO_COLOR}$(git_prompt_branch)$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX'
-}
- 
 # bookmark {{{1
 # Add current path to bookmarks file
 function bookmark() {
 
-    ZDOTDIR="$HOME/.config/zsh"
     bmark_file=${ZDOTDIR}/bookmarks
     bmark_path="$PWD"
     del=0; [[ "$1" == "-d" ]] && shift && del=1
@@ -437,7 +365,7 @@ function bookmark() {
     fi
 }
 # fzf {{{1
-if [[ $- =~ i ]]; then
+if [[ $- =~ i ]] && has fzf ; then
     # Paste the selected entry from locate output into the command line
     function fzf-locate-widget() {
         local selected
