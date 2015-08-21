@@ -33,6 +33,7 @@
 # }}}
 
 [alias]
+        dt = difftool
         ba = branch -a
         cb = checkout -b
         co = checkout
@@ -66,3 +67,6 @@
 
 [push]
         default = simple
+
+[difftool]
+        prompt = false
