@@ -73,8 +73,12 @@ bindkey "\e[A" up-line-or-beginning-search
 bindkey "\eOA" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
 bindkey "\eOB" down-line-or-beginning-search
-bindkey -M vicmd 'k' up-line-or-beginning-search
-bindkey -M vicmd 'j' down-line-or-beginning-search
+bindkey "^K" history-substring-search-up
+bindkey "^J" history-substring-search-down
+bindkey -M vicmd "^K" history-substring-search-up
+bindkey -M vicmd "^J" history-substring-search-down
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
 
 # file rename magic
 bindkey "^xp" copy-prev-shell-word
