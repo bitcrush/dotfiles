@@ -65,12 +65,13 @@ if filereadable($HOME . '/vim/vimrc.local')
 endif
 
 " {{{1 look
-if &diff
-    colorscheme zenburn-rcn
-else
-    let base16colorspace=256    " Access colors present in 256 colorspace
-    colorscheme base16-rcn
-endif
+let base16colorspace=256        " Access colors present in 256 colorspace
+
+try
+    colorscheme base16-rcn      " look for custom colorscheme
+catch /^Vim\%((\a\+)\)\=:E185/
+    colorscheme base16-default  " fallback to default colorscheme
+endtry
 
 set background=dark             " set background to dark or light
 set showcmd                     " display incomplete commands
