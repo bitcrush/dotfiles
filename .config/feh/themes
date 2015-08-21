@@ -4,6 +4,6 @@
 feh --no-fehbg\
 --scale-down\
 --auto-zoom\
---geometry 640x480\
+--geometry 960x640\
 --image-bg black
 # --keep-zoom-vp
