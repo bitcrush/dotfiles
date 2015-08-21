@@ -25,6 +25,7 @@ set confirm                     " confirm dropping unsaved buffers
 set synmaxcol=1000              " maximum line length for syntax highlighting
 set textwidth=0                 " don't automatically break lines
 set lazyredraw                  " don't redraw while executing macros
+set viminfo+=n~/.vim/viminfo    " location of the viminfo file
 
 let g:is_posix=1                " syntax highlight shell scripts as per POSIX, not the original Bourne shell
 
