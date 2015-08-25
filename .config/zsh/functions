@@ -5,12 +5,47 @@
 
 # has {{{1
 # simple has function to use in conditions
-has() {
+function has() {
     if hash $1 2> /dev/null; then
         return 0
     else
         return 1
     fi
+}
+
+# os_detect {{{1
+# try to detect the running operating system
+function os_detect(){
+    arch=$(uname -m)
+    kernel=$(uname -r)
+
+    if [ "$OSTYPE" =~ "linux" ]; then
+        if [ -f /etc/lsb-release ]; then
+            os=$(lsb_release -s -d)
+        elif [ -f /etc/debian_version ]; then
+            os="Debian $(cat /etc/debian_version)"
+        elif [ -f /etc/redhat-release ]; then
+            os=`cat /etc/redhat-release`
+        elif [ -f /etc/arch-release ]; then
+            os="Arch Linux"
+        else
+            os="$(uname -s) $(uname -r)"
+        fi
+    elif [ "$OSTYPE" =~ "darwin" ]; then
+        # Mac OSX
+    elif [ "$OSTYPE" =~ "cygwin" ]; then
+        # POSIX compatibility layer and Linux environment emulation for Windows
+    elif [ "$OSTYPE" =~ "msys" ]; then
+        # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+    elif [ "$OSTYPE" =~ "win32" ]; then
+        # I'm not sure this can happen.
+    elif [ "$OSTYPE" =~ "freebsd" ]; then
+        # ...
+    else
+        # Unknown.
+    fi
+
+    printf '%s\n' $os
 }
 
 # extract {{{1
