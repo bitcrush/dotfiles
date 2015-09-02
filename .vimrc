@@ -139,7 +139,7 @@ set noswapfile                  " don't create swap files
 set directory=/tmp              " swap file directory
 
 " {{{1 keymapping
-let mapleader=","
+let mapleader="\<Space>"
 set pastetoggle=<F5>            " stop indenting when pasting with the mouse
 inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
 
@@ -401,7 +401,7 @@ let wiki.auto_export = 1
 let wiki.force = 1
 let wiki.syntax = 'markdown'
 let wiki.ext = '.md'
-let wiki.css_file = '~/vimwiki_html/style.css'
+let wiki.css_file = '~/vimwiki_html/style.md2html.css'
 let wiki.custom_wiki2html = '~/vimwiki/md2html/md2html.py'
 let wiki.template_path = '~/vimwiki/templates/'
 let wiki.template_default = 'default'
