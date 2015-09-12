@@ -105,7 +105,7 @@ alias rm="rm -I"
 alias mkdir="mkdir -pv"
 alias mnt="mount | column -t"
 alias grep='grep --color=auto -d skip'
-alias zrep='zgrep --color=auto -d skip'
+alias zgrep='zgrep --color=auto -d skip'
 alias chm-d="find -type d -exec chmod 755 {} \;"
 alias chm-f="find -type f -exec chmod 644 {} \;"
 alias myip="curl icanhazip.com"
