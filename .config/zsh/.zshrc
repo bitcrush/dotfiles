@@ -69,14 +69,15 @@ key=(
 [[ -n "${key[PageDown]}" ]] && bindkey  "${key[PageDown]}"  end-of-history
 [[ -n "${key[BackTab]}"  ]] && bindkey  "${key[BackTab]}"   reverse-menu-complete
 
+# command line history
 bindkey "\e[A" up-line-or-beginning-search
 bindkey "\eOA" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
 bindkey "\eOB" down-line-or-beginning-search
-bindkey "^K" history-substring-search-up
-bindkey "^J" history-substring-search-down
-bindkey -M vicmd "^K" history-substring-search-up
-bindkey -M vicmd "^J" history-substring-search-down
+bindkey "^P" history-substring-search-up
+bindkey "^N" history-substring-search-down
+bindkey -M vicmd "^P" history-substring-search-up
+bindkey -M vicmd "^N" history-substring-search-down
 bindkey -M vicmd "k" up-line-or-beginning-search
 bindkey -M vicmd "j" down-line-or-beginning-search
 
