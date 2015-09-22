@@ -354,7 +354,7 @@ function bookmark() {
 
     # delete bookmarks by ID
     if [[ $del == 1 ]]; then
-        if [[ $(grep -E "\|${bmark_id}$" $bmark_file) ]] ; then
+        if grep -E "\|${bmark_id}$" $bmark_file ; then
             #TODO: proper expression
             sed -i "/|${bmark_id}$/d" $bmark_file && return
         else
@@ -371,9 +371,9 @@ function bookmark() {
 
     if (( ${#bmark_id} > 20 )); then
         echo "Please choose an ID with a length <= 20."; return 1
-    elif [[ $(grep -E "\|${bmark_id}$" $bmark_file) ]]; then
+    elif grep -qE "\|${bmark_id}$" $bmark_file ; then
         echo "ID already in use. Please choose another name."; return 1
-    elif [[ ! $(grep -E '^[A-Za-z0-9_.][A-Za-z0-9_-.]*$' <<<$bmark_id) ]]; then
+    elif ! grep -E '^[A-Za-z0-9_.][A-Za-z0-9_-.]*$' <<<$bmark_id ; then
         echo "Invalid ID given. Valid characters are: A-Z a-z 0-9 _ - ."
         echo "In addition make sure not to start your ID with a hyphen."
         return 1
