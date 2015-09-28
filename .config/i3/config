@@ -58,6 +58,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# save a screenshot
+bindsym $mod+Print exec scrot '%Y-%m-%d_$wx$h_scrot.png'
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -313,7 +316,7 @@ for_window [instance="libreoffice"] floating disable
 for_window [class="Corebird"] border pixel 2
 for_window [class="Firefox"] border pixel 2
 for_window [class="mpv"] border pixel 2
-for_window [class="URxvt"] border pixel 2
+for_window [class="URxvt"] border pixel 3
 
 assign [class="Chromium"] $WS2
 assign [class="Corebird"] $WS2
@@ -325,11 +328,8 @@ assign [class="VirtualBox"] $WS6
 
 ### AUTOSTART ### {{{
 exec --no-startup-id feh --no-fehbg --bg-center "/mnt/sdb3/tmp/pix/wallpapers/Colored Backgrounds/1920 x 1200/Background Purple.jpg"
-#exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspace-term.json'"
-#exec --no-startup-id "i3-msg 'workspace 2; append_layout ~/.config/i3/workspace-www.json'"
-exec --no-startup-id dropbox
-exec --no-startup-id owncloud
-exec --no-startup-id keepassx -min -lock
+# exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspace-term.json'"
+# exec --no-startup-id "i3-msg 'workspace 2; append_layout ~/.config/i3/workspace-www.json'"
 exec --no-startup-id firefox
 exec --no-startup-id corebird
 ### }}}
