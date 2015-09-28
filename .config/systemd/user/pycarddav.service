@@ -1,0 +1,8 @@
+[Unit]
+Description=Sync ownCloud contacts with pyCardDAV
+After=network.target network-online.target dbus.socket
+RefuseManualStart=no
+RefuseManualStop=yes
+
+[Service]
+ExecStart=/usr/bin/pycardsyncer

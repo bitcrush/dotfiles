@@ -1,0 +1,8 @@
+[Unit]
+Description=Get remote IP address
+After=network.target network-online.target
+RefuseManualStart=no
+RefuseManualStop=yes
+
+[Service]
+ExecStart=/usr/bin/bash -c '/usr/bin/curl -s funsociety.net > /tmp/myip'

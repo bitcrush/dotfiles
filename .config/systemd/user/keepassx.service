@@ -1,0 +1,12 @@
+[Unit]
+Description=KeePassX
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/keepassx -min -lock
+KillMode=process
+RemainAfterExit=true
+
+[Install]
+WantedBy=graphical.target

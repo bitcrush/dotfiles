@@ -1,0 +1,13 @@
+[Unit]
+Description=Get remote IP address
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=false
+OnBootSec=1min
+OnUnitActiveSec=10min
+Unit=getip.service
+
+[Install]
+WantedBy=timers.target

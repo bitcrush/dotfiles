@@ -1,0 +1,14 @@
+[Unit]
+Description=ownCloud Desktop Client
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/owncloud
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+

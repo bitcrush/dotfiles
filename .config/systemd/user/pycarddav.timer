@@ -1,0 +1,13 @@
+[Unit]
+Description=Sync ownCloud contacts with pyCardDAV
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=false
+OnBootSec=5min
+OnUnitActiveSec=1h
+Unit=pycarddav.service
+
+[Install]
+WantedBy=timers.target
