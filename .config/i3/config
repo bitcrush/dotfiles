@@ -153,8 +153,10 @@ bindsym $mod+Shift+9 move container to workspace $WS9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -167,10 +169,14 @@ bindsym $mod+F12 exec --no-startup-id "amixer -- sset DAC,0 1%+ && amixer -- sse
 # resize window (you can also use the mouse for that)
 mode $mode_resize {
         # These bindings trigger as soon as you enter the resize mode
-        bindsym $left       resize shrink width 5 px or 5 ppt
-        bindsym $down       resize grow height 5 px or 5 ppt
-        bindsym $up         resize shrink height 5 px or 5 ppt
-        bindsym $right      resize grow width 5 px or 5 ppt
+        bindsym $left           resize shrink width 5 px or 5 ppt
+        bindsym $down           resize grow height 5 px or 5 ppt
+        bindsym $up             resize shrink height 5 px or 5 ppt
+        bindsym $right          resize grow width 5 px or 5 ppt
+        bindsym Shift+$left     resize shrink width 1 px or 1 ppt
+        bindsym Shift+$down     resize grow height 1 px or 1 ppt
+        bindsym Shift+$up       resize shrink height 1 px or 1 ppt
+        bindsym Shift+$right    resize grow width 1 px or 1 ppt
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
