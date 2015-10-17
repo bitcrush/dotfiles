@@ -1,4 +1,3 @@
-" vim: ft=vim
 " rcns vimrc
 
 " {{{1 settings
@@ -115,7 +114,7 @@ set infercase                   " completion recognizes capitalization
 " {{{1 indenting
 set expandtab                   " insert spaces instead of tab chars
 set smarttab                    " <Tab> in front of a line inserts blanks according to shiftwidth
-set tabstop=8                   " a n-space tab width
+set tabstop=4                   " a n-space tab width
 set softtabstop=4               " counts n spaces when DELETE or BACKSPACE is used
 set shiftwidth=4                " allows the use of < and > for VISUAL indenting
 set shiftround                  " shift to certain columns, not just n spaces
@@ -260,11 +259,19 @@ imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 " {{{1 autocommands
 
 if has('autocmd')
-    " filetype detection for specific filetypes
+    " custom settings for specific filetypes
     augroup FileTypeAware
         au!
-        au BufNewFile,BufFilePre,BufRead *vimperatorrc*,*muttatorrc*,*.vimp    setfiletype vimperator
-        au BufNewFile,BufFilePre,BufRead *.md,*.mkd    setfiletype markdown
+        " Clear highlighting
+        au VimEnter * highlight clear SignColumn
+
+        " language/filetype specific settings
+        au BufEnter *vimperatorrc*,*muttatorrc*,*.vimp setlocal filetype=vimperator
+        au BufEnter *.md,*.mkd setlocal filetype=markdown
+        au BufEnter *.zsh-theme setlocal filetype=zsh
+        au FileType gitconfig setlocal commentstring=#\ %s
+        au FileType tmux setlocal commentstring=#\ %s
+        au FileType xdefaults setlocal commentstring=!\ %s
 
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
@@ -345,7 +352,7 @@ function! AirlineInit()
   let g:airline_section_c = airline#section#create(['filetype'])
   let g:airline_section_x = airline#section#create(['%P'])
   let g:airline_section_y = airline#section#create(['ffenc'])
-  let g:airline_section_z = airline#section#create_right(['%l', '%c'])
+  let g:airline_section_z = airline#section#create_right(['%c'])
 endfunction
 
 " {{{2 nerdtree
