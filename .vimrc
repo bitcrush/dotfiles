@@ -173,6 +173,16 @@ nnoremap q: <Nop>
 nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
+" Move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+
 " Auto center
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -197,12 +207,6 @@ map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " Make Y behave like other capitals
 nnoremap Y y$
-
-" Movement in insert mode
-inoremap <C-h> <C-o>h
-inoremap <C-l> <C-o>a
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
 
 " Turn highlighting of last search results off
 map <leader>n :noh<CR>
