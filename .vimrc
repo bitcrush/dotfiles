@@ -1,4 +1,3 @@
-" vim: ft=vim
 " rcns vimrc
 
 " {{{1 settings
@@ -115,7 +114,7 @@ set infercase                   " completion recognizes capitalization
 " {{{1 indenting
 set expandtab                   " insert spaces instead of tab chars
 set smarttab                    " <Tab> in front of a line inserts blanks according to shiftwidth
-set tabstop=8                   " a n-space tab width
+set tabstop=4                   " a n-space tab width
 set softtabstop=4               " counts n spaces when DELETE or BACKSPACE is used
 set shiftwidth=4                " allows the use of < and > for VISUAL indenting
 set shiftround                  " shift to certain columns, not just n spaces
@@ -139,16 +138,52 @@ set noswapfile                  " don't create swap files
 set directory=/tmp              " swap file directory
 
 " {{{1 keymapping
-let mapleader="\<Space>"
-set pastetoggle=<F5>            " stop indenting when pasting with the mouse
-inoremap <F6> <C-R>=strftime('%a %d.%m.%Y %H:%M')<CR><CR>
 
-" unmap annoying keys
+let mapleader="\<Space>"
+
+nnoremap <F1> <Nop>
+
+" Toggle spell checking
+nmap <silent> <F2> :call ToggleSpell()<CR>
+imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
+
+" NERDTree
+map <silent> <F3> :NERDTreeToggle<CR>
+
+" Toggle relative number mode
+map <silent> <F4> y:call ToggleNumber()<CR>
+
+" Stop indenting when pasting with the mouse
+set pastetoggle=<F5>
+
+nnoremap <F6> <Nop>
+
+" Jump to previous/next diff code
+nmap <F7> [czz
+nmap <F8> ]czz
+
+nnoremap <F9> <Nop>
+nnoremap <F10> <Nop>
+nnoremap <F11> <Nop>
+nnoremap <F12> <Nop>
+
+
+" Unmap annoying keys
 nnoremap q: <Nop>
 nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
-" auto center
+" Move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+
+" Auto center
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
@@ -158,7 +193,7 @@ nnoremap <silent> g# g#zz
 nnoremap <silent> <C-o> <C-o>zz
 nnoremap <silent> <C-i> <C-i>zz
 
-" quicker buffer navigation
+" Quicker buffer navigation
 nnoremap gt :bnext<CR>
 nnoremap gT :bprevious<CR>
 nnoremap <C-l> :bnext<CR>
@@ -173,29 +208,19 @@ map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 " Make Y behave like other capitals
 nnoremap Y y$
 
-" Movement in insert mode
-inoremap <C-h> <C-o>h
-inoremap <C-l> <C-o>a
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-
-" turn highlighting of last search results off
+" Turn highlighting of last search results off
 map <leader>n :noh<CR>
 
-" resync syntax highlighting
+" Resync syntax highlighting
 nnoremap <leader>r :syntax sync fromstart<cr>:redraw!<cr>
 
-" fuzzy search edited files history
+" Fuzzy search edited files history
 map <silent> <leader>h y:call fzf#run({ 'source': v:oldfiles, 'sink' : 'e ', 'options' : '-m', 'down' : '12', })<CR>
 
-" fuzzy search lines in all open buffers
+" Fuzzy search lines in all open buffers
 nnoremap <silent> <Leader>l y:call fzf#run({ 'source': <sid>buffer_lines(), 'sink': function('<sid>line_handler'), 'options': '--extended --nth=3..', 'down': '12', })<CR>
 
-" vimdiff keybinds
-nmap <F7> [czz                  " jump to previous diff code
-nmap <F8> ]czz                  " jump to next diff code
-
-" convert to lowercase, uppercase, camelcase in visual mode
+" Convert to lowercase, uppercase, camelcase in visual mode
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Opens a new buffer with the current buffer's path
@@ -204,7 +229,7 @@ map <leader>be :edit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" invoke fzf
+" Invoke fzf
 nnoremap <silent> <Leader><Leader> :FZF -m<CR>
 
 " vim-commentary
@@ -214,33 +239,43 @@ nmap gcc <Plug>CommentaryLine
 " {{{1 functions
 " cycle through lowercase/uppercase/camelcase in visual mode
 function! TwiddleCase(str)
-  if a:str ==# toupper(a:str)
-    let result = tolower(a:str)
-  elseif a:str ==# tolower(a:str)
-    let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
-  else
-    let result = toupper(a:str)
-  endif
-  return result
+	if a:str ==# toupper(a:str)
+		let result = tolower(a:str)
+	elseif a:str ==# tolower(a:str)
+		let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+	else
+		let result = toupper(a:str)
+	endif
+	return result
 endfunction
+
+" toggle between number and relativenumber
+function! ToggleNumber()
+	if(&relativenumber == 1)
+		set norelativenumber
+		set number
+	else
+		set relativenumber
+	endif
+endfunc
 
 " fuzzy search lines in all open buffers
 function! s:line_handler(l)
-  let keys = split(a:l, ':\t')
-  exec 'buf' keys[0]
-  exec keys[1]
-  normal! ^zz
+	let keys = split(a:l, ':\t')
+	exec 'buf' keys[0]
+	exec keys[1]
+	normal! ^zz
 endfunction
 
 function! s:buffer_lines()
-  let res = []
-  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
-    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
-  endfor
-  return res
+	let res = []
+	for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
+		call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
+	endfor
+	return res
 endfunction
 
-" {{{2 toggle spell check
+" toggle spell check
 let b:myLang=0
 let g:myLangList=["nospell","de_de","en_us"]
 function! ToggleSpell()
@@ -254,17 +289,22 @@ function! ToggleSpell()
   echo "spell checking language:" g:myLangList[b:myLang]
 endfunction
 
-nmap <silent> <F2> :call ToggleSpell()<CR>
-imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
-
 " {{{1 autocommands
 
 if has('autocmd')
-    " filetype detection for specific filetypes
+    " custom settings for specific filetypes
     augroup FileTypeAware
         au!
-        au BufNewFile,BufFilePre,BufRead *vimperatorrc*,*muttatorrc*,*.vimp    setfiletype vimperator
-        au BufNewFile,BufFilePre,BufRead *.md,*.mkd    setfiletype markdown
+        " Clear highlighting
+        au VimEnter * highlight clear SignColumn
+
+        " language/filetype specific settings
+        au BufEnter *vimperatorrc*,*muttatorrc*,*.vimp setlocal filetype=vimperator
+        au BufEnter *.md,*.mkd setlocal filetype=markdown
+        au BufEnter *.zsh-theme setlocal filetype=zsh
+        au FileType gitconfig setlocal commentstring=#\ %s
+        au FileType tmux setlocal commentstring=#\ %s
+        au FileType xdefaults setlocal commentstring=!\ %s
 
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
@@ -345,11 +385,8 @@ function! AirlineInit()
   let g:airline_section_c = airline#section#create(['filetype'])
   let g:airline_section_x = airline#section#create(['%P'])
   let g:airline_section_y = airline#section#create(['ffenc'])
-  let g:airline_section_z = airline#section#create_right(['%l', '%c'])
+  let g:airline_section_z = airline#section#create_right(['%c'])
 endfunction
-
-" {{{2 nerdtree
-map <F3> :NERDTreeToggle<CR>
 
 " {{{2 python-mode
 " Python-mode
