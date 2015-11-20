@@ -19,10 +19,6 @@ xset r rate 200 30 &
 # turn on screensaver
 xset s on &
 
-# hash in powerline fonts path
-xset +fp /usr/share/fonts/local
-xset fp rehash
-
 # enable numlock
 numlockx on &
 
@@ -32,7 +28,7 @@ autocutsel -selection PRIMARY -fork &
 
 # set default mixer levels
 (amixer -- sset DAC,0 -18dB && amixer -- sset DAC,1 -18dB) > /dev/null &&
-amixer -- sset Master 75% > /dev/null &&
+amixer -- sset Master 50% > /dev/null &&
 
 sleep 5 &&
 
@@ -45,6 +41,9 @@ compton -b &
 
 # start notification daemon
 dunst &
+
+# start the automatic screen locker
+xautolock -time 15 -locker "if ! pidof physlock > /dev/null; then physlock -ms; fi" -detectsleep -secure &
 
 # run the window manager
 exec i3 # -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
