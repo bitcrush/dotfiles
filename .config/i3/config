@@ -1,7 +1,5 @@
 # i3 config file (v4)
 #
-# vim:filetype=i3
-#
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 #
 # This config file uses keycodes (bindsym) and was written for the QWERTY
@@ -64,6 +62,9 @@ bindsym $mod+Print exec scrot '%Y-%m-%d_$wx$h_scrot.png'
 
 # kill focused window
 bindsym $mod+Shift+q kill
+
+# jump between last and current workspace
+bindsym $mod+Escape workspace back_and_forth
 
 # start dmenu2 (a program launcher)
 #bindsym $mod+d exec dmenu_run -fn '-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*' -l 9 -nb '#333333' -nf '#BDBDBD' -sb '#696969' -sf '#BDBDBD' -y 20 -x 2 -w 1676 -dim 0.5
@@ -343,3 +344,5 @@ exec --no-startup-id feh --no-fehbg --bg-center "/mnt/sdb3/tmp/pix/wallpapers/Co
 exec --no-startup-id firefox
 exec --no-startup-id corebird
 ### }}}
+
+# vim:filetype=i3
