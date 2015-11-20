@@ -31,8 +31,9 @@ let g:is_posix=1                " syntax highlight shell scripts as per POSIX, n
 " {{{1 vim-plug
 
 " download vim-plug if nonexistent
-if empty(glob("~/.vim/autoload/plug.vim"))
-    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -49,7 +50,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'vim-scripts/vimwiki'
 Plug 'AndrewRadev/id3.vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'junegunn/fzf', { 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --noupdate-rc' }
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
@@ -300,7 +301,7 @@ if has('autocmd')
 
         " language/filetype specific settings
         au BufEnter *vimperatorrc*,*muttatorrc*,*.vimp setlocal filetype=vimperator
-        au BufEnter *.md,*.mkd setlocal filetype=markdown
+        " au BufEnter *.md,*.mkd setlocal filetype=markdown
         au BufEnter *.zsh-theme setlocal filetype=zsh
         au FileType gitconfig setlocal commentstring=#\ %s
         au FileType tmux setlocal commentstring=#\ %s
