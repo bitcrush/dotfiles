@@ -32,7 +32,7 @@ let g:is_posix=1                " syntax highlight shell scripts as per POSIX, n
 
 " download vim-plug if nonexistent
 if empty(glob('~/.vim/autoload/plug.vim'))
-    silent '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall
 endif
 
