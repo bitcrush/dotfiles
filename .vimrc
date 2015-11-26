@@ -206,6 +206,9 @@ nnoremap <C-n> :enew<CR>
 " Close the current buffer
 map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
+" Align paragraphs when writing E-Mails
+nnoremap <leader>g vipgq
+
 " Make Y behave like other capitals
 nnoremap Y y$
 
