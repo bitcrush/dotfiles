@@ -47,7 +47,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'bash-support.vim', { 'for': 'sh' }
 Plug 'renamer.vim'
 Plug 'chriskempson/base16-vim'
-Plug 'vim-scripts/vimwiki'
+Plug 'vimwiki/vimwiki'
 Plug 'AndrewRadev/id3.vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --noupdate-rc' }
