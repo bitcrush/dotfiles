@@ -1,8 +1,8 @@
 #!/bin/zsh
 
-# location of zsh/antigen config files
+# location of zsh/zplug config files
 ZDOTDIR=${HOME}/.config/zsh
-ADOTDIR=${ZDOTDIR}/antigen
+ZPLUG_HOME=${ZDOTDIR}/zplug
 
 # set space between right prompt and terminal margin (V>=5.0.5)
 [[ ! $TTY =~ tty ]] && ZLE_RPROMPT_INDENT=0

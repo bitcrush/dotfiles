@@ -1,14 +1,14 @@
 #!/bin/zsh
 
-# antigen {{{1
-antigen_url="https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh"
-[[ -r ${ADOTDIR}/antigen.zsh ]] || ( mkdir $ADOTDIR && curl -L "$antigen_url" -o ${ADOTDIR}/antigen.zsh )
-source ${ADOTDIR}/antigen.zsh
+# zplug {{{1
+zplug_url="https://git.io/zplug"
+[[ -r ${ZPLUG_HOME}/zplug ]] || ( curl -fLo ${ZPLUG_HOME}/zplug --create-dirs "$zplug_url")
+source ${ZPLUG_HOME}/zplug
 
-antigen bundle zsh-users/zsh-completions src/
-antigen bundle zsh-users/zsh-history-substring-search
-antigen theme bitcrush/minimal minimal
-antigen apply
+# zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "bitcrush/minimal"
+zplug load
 
 # zsh-history-substring-search
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
