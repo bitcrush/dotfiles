@@ -5,15 +5,20 @@ zplug_url="https://git.io/zplug"
 [[ -r ${ZPLUG_HOME}/zplug ]] || ( curl -fLo ${ZPLUG_HOME}/zplug --create-dirs "$zplug_url")
 source ${ZPLUG_HOME}/zplug
 
-# zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-completions", as:command
 zplug "zsh-users/zsh-history-substring-search"
 zplug "bitcrush/minimal"
+
+# install plugins if there are any that haven't been installed yet
+if ! zplug check; then zplug install; fi
+
+# source plugins and add commands to $PATH
 zplug load
 
 # zsh-history-substring-search
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
-export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
+HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
 # source files {{{1
 zsh_files[1]="${ZDOTDIR}/functions"
