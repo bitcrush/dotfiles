@@ -164,8 +164,8 @@ setopt unset                # don't error out when unset parameters are used
 [[ $- =~ i ]] && stty -ixoff -ixon
 
 # completion {{{1
-# load completion
-autoload -U compinit && compinit
+# load completion (already done by zplug)
+# autoload -U compinit && compinit
 
 # load completion listing extensions
 zmodload zsh/complist
