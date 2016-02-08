@@ -22,10 +22,9 @@ HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
 # source files {{{1
 zsh_files[1]="${ZDOTDIR}/functions"
-zsh_files[2]="${ZDOTDIR}/.zshrc.local"
-zsh_files[3]="${ZDOTDIR}/base16-default.dark.rcn.sh"
+zsh_files[2]="${ZDOTDIR}/base16-default.dark.rcn.sh"
 # TODO: customize fzf bindings
-zsh_files[4]="/etc/profile.d/fzf.zsh"
+zsh_files[3]="/etc/profile.d/fzf.zsh"
 
 for zsh_file in ${zsh_files[@]}; do
     [[ -f $zsh_file ]] && source $zsh_file
@@ -282,6 +281,9 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
           ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
           ${${${(M)${(s:# :)${(zj:# :)${(Lf)"$([[ -f ~/.ssh/config ]] && <~/.ssh/config)"}%%\#*}}##host(|name) *}#host(|name) }/\*}
           )'
+
+# zshrc.local {{{1
+[[ -f "${ZDOTDIR}/.zshrc.local" ]] && source "${ZDOTDIR}/.zshrc.local"
 # }}}
 
 # load renaming function
