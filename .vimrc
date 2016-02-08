@@ -38,7 +38,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 "Plug 'klen/python-mode', { 'for': 'python' }
