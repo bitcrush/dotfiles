@@ -61,11 +61,6 @@ endif
 filetype plugin indent on       " use file type based plugins and indentation
 call plug#end()
 
-" {{{1 vimrc.local config
-if filereadable($HOME . '/vim/vimrc.local')
-    source $HOME/vim/vimrc.local
-endif
-
 " {{{1 look
 let base16colorspace=256        " Access colors present in 256 colorspace
 
@@ -458,3 +453,9 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tabedit',
   \ 'ctrl-h':  'vertical topleft split',
   \ 'ctrl-l':  'vertical botright split' }
+
+" {{{1 vimrc.local config
+if filereadable($HOME . '/.vim/vimrc.local')
+    source $HOME/.vim/vimrc.local
+endif
+
