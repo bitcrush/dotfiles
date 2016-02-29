@@ -50,7 +50,7 @@ Plug 'renamer.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'vimwiki/vimwiki'
 Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --noupdate-rc' }
+Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --no-update-rc' }
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
