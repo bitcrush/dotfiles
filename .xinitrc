@@ -5,7 +5,7 @@ export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
 export LIBVA_DRIVER_NAME="vdpau"
 export VDPAU_DRIVER="r600"
 export STEAM_FRAME_FORCE_CLOSE=1
-export SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 
 # source X resources
 [[ -f ${HOME}/.Xresources ]] && xrdb -merge ${HOME}/.Xresources
