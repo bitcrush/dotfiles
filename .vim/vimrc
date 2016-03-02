@@ -44,7 +44,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 "Plug 'klen/python-mode', { 'for': 'python' }
 "Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'bash-support.vim', { 'for': 'sh' }
 Plug 'renamer.vim'
 Plug 'chriskempson/base16-vim'
@@ -143,8 +142,7 @@ nnoremap <F1> <Nop>
 nmap <silent> <F2> :call ToggleSpell()<CR>
 imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 
-" NERDTree
-map <silent> <F3> :NERDTreeToggle<CR>
+nnoremap <F3> <Nop>
 
 " Toggle relative number mode
 map <silent> <F4> y:call ToggleNumber()<CR>
