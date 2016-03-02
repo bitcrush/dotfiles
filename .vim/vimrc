@@ -299,15 +299,14 @@ if has('autocmd')
         au BufEnter *vimperatorrc*,*muttatorrc*,*.vimp setlocal filetype=vimperator
         " au BufEnter *.md,*.mkd setlocal filetype=markdown
         au BufEnter *.zsh-theme setlocal filetype=zsh
+
+        " set comment string for certain filetypes (requires vim-commentary)
         au FileType gitconfig setlocal commentstring=#\ %s
         au FileType tmux setlocal commentstring=#\ %s
         au FileType xdefaults setlocal commentstring=!\ %s
 
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
-
-        " Remove all trailing whitespace before saving certain files
-        au FileType c,cpp,java,python,lua,vim,html,css au BufWritePre <buffer> :%s/\s\+$//e
     augroup END
 
     " gpg encrypted files
@@ -342,6 +341,13 @@ if has('autocmd')
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
             \     execute 'normal! g`"zvzz' |
             \ endif
+    augroup END
+
+    " file mangling
+    augroup mangle
+        au!
+        " Remove all trailing whitespace before saving
+        au BufWritePre * :%s/\s\+$//e
     augroup END
 
     " Automatic renaming of tmux window
