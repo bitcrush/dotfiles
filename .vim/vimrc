@@ -19,7 +19,7 @@ set modelines=2                 " how many modelines can be used
 set selection=inclusive         " selection method
 set whichwrap=h,l,<,>,[,]       " allow jumping to their closing chars
 set clipboard+=unnamed          " use system clipboard
-set hidden                      " allows buffers to be hidden if a buffer is modified
+set hidden                      " possibility to have more than one unsaved buffer
 set confirm                     " confirm dropping unsaved buffers
 set synmaxcol=1000              " maximum line length for syntax highlighting
 set textwidth=0                 " don't automatically break lines
@@ -27,6 +27,8 @@ set lazyredraw                  " don't redraw while executing macros
 set viminfo+=n~/.vim/viminfo    " location of the viminfo file
 
 let g:is_posix=1                " syntax highlight shell scripts as per POSIX, not the original Bourne shell
+
+runtime macros/matchit.vim      " hit '%' on 'if' to jump to 'else'
 
 " {{{1 vim-plug
 
@@ -276,14 +278,14 @@ endfunction
 let b:myLang=0
 let g:myLangList=["nospell","de_de","en_us"]
 function! ToggleSpell()
-  let b:myLang=b:myLang+1
-  if b:myLang>=len(g:myLangList) | let b:myLang=0 | endif
-  if b:myLang==0
-    setlocal nospell
-  else
-    execute "setlocal spell spelllang=".get(g:myLangList, b:myLang)
-  endif
-  echo "spell checking language:" g:myLangList[b:myLang]
+    let b:myLang=b:myLang+1
+    if b:myLang>=len(g:myLangList) | let b:myLang=0 | endif
+    if b:myLang==0
+        setlocal nospell
+    else
+        execute "setlocal spell spelllang=".get(g:myLangList, b:myLang)
+    endif
+    echo "spell checking language:" g:myLangList[b:myLang]
 endfunction
 
 " {{{1 autocommands
