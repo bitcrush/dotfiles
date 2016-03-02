@@ -1,0 +1,12 @@
+" $HOME/.vim/vimrc.local
+
+" colorscheme default
+" let mapleader="\<Space>"
+"
+" let wiki.fspath = '~/owncloud/linked/'
+
+" let wiki.path = wiki.fspath . 'vimwiki/'
+" let wiki.path_html = wiki.fspath . 'vimwiki_html/'
+" let wiki.css_file = wiki.fspath . 'vimwiki_html/style.md2html.css'
+" let wiki.custom_wiki2html = wiki.fspath . 'vimwiki/md2html/md2html.py'
+" let wiki.template_path = wiki.fspath . 'vimwiki/templates/'
