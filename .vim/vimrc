@@ -304,6 +304,9 @@ if has('autocmd')
         au FileType tmux setlocal commentstring=#\ %s
         au FileType xdefaults setlocal commentstring=!\ %s
 
+        " set textwidth for markdown files (e.g.: vimwiki)
+        au FileType markdown setlocal textwidth=100
+
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
     augroup END
