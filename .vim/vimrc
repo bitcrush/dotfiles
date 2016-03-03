@@ -43,6 +43,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 "Plug 'klen/python-mode', { 'for': 'python' }
 "Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -146,8 +147,7 @@ imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 
 nnoremap <F3> <Nop>
 
-" Toggle relative number mode
-map <silent> <F4> y:call ToggleNumber()<CR>
+nnoremap <F4> <Nop>
 
 " Stop indenting when pasting with the mouse
 set pastetoggle=<F5>
@@ -206,9 +206,6 @@ nnoremap <leader>g vipgq
 
 " Make Y behave like other capitals
 nnoremap Y y$
-
-" Turn highlighting of last search results off
-map <leader>n :noh<CR>
 
 " Resync syntax highlighting
 nnoremap <leader>r :syntax sync fromstart<cr>:redraw!<cr>
