@@ -1,0 +1,10 @@
+# vim: set filetype=gitconfig:
+
+[user]
+        # email = user@domain.tld
+        # name = name
+
+[github]
+        # user = github-username
+        # token = ********************************
+

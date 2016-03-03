@@ -1,8 +1,5 @@
 # vim: set filetype=gitconfig:
 
-[include]
-        path = ~/.gitconfig.local
-
 # colors {{{
 [color]
         diff = auto
@@ -70,3 +67,7 @@
 
 [difftool]
         prompt = false
+
+[include]
+        path = ~/.gitconfig.local
+
