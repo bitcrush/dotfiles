@@ -1,0 +1,9 @@
+" vimperatorrc.local
+
+" Quickmarks
+silent qmark 1 http://slashdot.org/
+silent qmark 2 https://news.ycombinator.com/
+silent qmark 3 https://lwn.net/
+silent qmark 4 https://github.com/login
+
+" vim: ft=vimperator
