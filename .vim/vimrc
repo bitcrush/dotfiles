@@ -1,44 +1,45 @@
 " rcns vimrc
 
 " {{{1 settings
-set nocompatible                " Use Vim defaults instead of 100% vi compatibility
-set t_Co=256                    " support 256color terminals
-set encoding=utf-8              " UTF-8 by default
-set fileformats=unix,dos,mac    " end-of-line (<EOL>) formats
-set backspace=indent,eol,start  " more powerful backspacing
-set shell=/bin/sh               " default shell
-set esckeys                     " allow usage of curs keys within insert mode
-set nojoinspaces                " don't insert two spaces after a period with every joining of lines
-set nowrap                      " don't wrap lines
-set foldenable                  " enable folding
-set foldmethod=marker           " how folds are recognized
-set formatoptions=tcqn1         " vi compatible formatting
-set matchtime=3                 " tenths of second to hilight matching parent
-set modeline                    " allow the last line to be a modeline
-set modelines=2                 " how many modelines can be used
-set selection=inclusive         " selection method
-set whichwrap=h,l,<,>,[,]       " allow jumping to their closing chars
-set clipboard+=unnamed          " use system clipboard
-set hidden                      " possibility to have more than one unsaved buffer
-set confirm                     " confirm dropping unsaved buffers
-set synmaxcol=1000              " maximum line length for syntax highlighting
-set textwidth=0                 " don't automatically break lines
-set lazyredraw                  " don't redraw while executing macros
-set viminfo+=n~/.vim/viminfo    " location of the viminfo file
+let g:is_posix=1                    " syntax highlight shell scripts as per POSIX, not the original Bourne shell
+let $VIMHOME=split(&rtp, ',')[0]    " find the vim runtimepath
 
-let g:is_posix=1                " syntax highlight shell scripts as per POSIX, not the original Bourne shell
+set nocompatible                    " Use Vim defaults instead of 100% vi compatibility
+set t_Co=256                        " support 256color terminals
+set encoding=utf-8                  " UTF-8 by default
+set fileformats=unix,dos,mac        " end-of-line (<EOL>) formats
+set backspace=indent,eol,start      " more powerful backspacing
+set shell=/bin/sh                   " default shell
+set esckeys                         " allow usage of curs keys within insert mode
+set nojoinspaces                    " don't insert two spaces after a period with every joining of lines
+set nowrap                          " don't wrap lines
+set foldenable                      " enable folding
+set foldmethod=marker               " how folds are recognized
+set formatoptions=tcqn1             " vi compatible formatting
+set matchtime=3                     " tenths of second to hilight matching parent
+set modeline                        " allow the last line to be a modeline
+set modelines=2                     " how many modelines can be used
+set selection=inclusive             " selection method
+set whichwrap=h,l,<,>,[,]           " allow jumping to their closing chars
+set clipboard+=unnamed              " use system clipboard
+set hidden                          " possibility to have more than one unsaved buffer
+set confirm                         " confirm dropping unsaved buffers
+set synmaxcol=1000                  " maximum line length for syntax highlighting
+set textwidth=0                     " don't automatically break lines
+set lazyredraw                      " don't redraw while executing macros
+set viminfo+=n$VIMHOME/viminfo      " location of the viminfo file
 
-runtime macros/matchit.vim      " hit '%' on 'if' to jump to 'else'
+runtime macros/matchit.vim          " hit '%' on 'if' to jump to 'else'
 
 " {{{1 vim-plug
 
 " download vim-plug if nonexistent
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('$VIMHOME/autoload/plug.vim'))
+    silent !curl -fLo $VIMHOME/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('$VIMHOME/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -369,7 +370,7 @@ if has('autocmd')
     " Source vimrc right after saving the buffer
     augroup vimrc
         au!
-        au BufWritePost ~/.vimrc source %
+        au BufWritePost $MYVIMRC source %
     augroup END
 
     " Airline Customization
@@ -465,7 +466,7 @@ let g:fzf_action = {
   \ 'ctrl-l':  'vertical botright split' }
 
 " {{{1 vimrc.local config
-if filereadable($HOME . '/.vim/vimrc.local')
-    source $HOME/.vim/vimrc.local
+if filereadable(expand('$VIMHOME/vimrc.local'))
+    source $VIMHOME/vimrc.local
 endif
 
