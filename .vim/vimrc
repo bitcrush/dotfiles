@@ -301,11 +301,16 @@ if has('autocmd')
 
         " set comment string for certain filetypes (requires vim-commentary)
         au FileType gitconfig setlocal commentstring=#\ %s
+        au FileType php setlocal commentstring=//\ %s
         au FileType tmux setlocal commentstring=#\ %s
         au FileType xdefaults setlocal commentstring=!\ %s
 
-        " set textwidth for markdown files (e.g.: vimwiki)
-        au FileType markdown setlocal textwidth=100
+        " set textwidth for certain filetypes
+        au FileType markdown,vimwiki setlocal textwidth=100
+        au FileType php setlocal textwidth=120
+
+        " set mail specific settings
+        au FileType mail setlocal wrap lbr nohls noml tw=78 cc=79 fo=tcrq spell spl=de
 
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
