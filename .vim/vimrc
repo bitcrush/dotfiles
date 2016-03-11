@@ -296,10 +296,9 @@ if has('autocmd')
 
         " language/filetype specific settings
         au BufEnter *vimperatorrc*,*muttatorrc*,*.vimp setlocal filetype=vimperator
-        " au BufEnter *.md,*.mkd setlocal filetype=markdown
         au BufEnter *.zsh-theme setlocal filetype=zsh
 
-        " set comment string for certain filetypes (requires vim-commentary)
+        " set comment string for certain filetypes
         au FileType gitconfig setlocal commentstring=#\ %s
         au FileType php setlocal commentstring=//\ %s
         au FileType tmux setlocal commentstring=#\ %s
@@ -353,8 +352,9 @@ if has('autocmd')
     " file mangling
     augroup mangle
         au!
-        " Remove all trailing whitespace before saving
-        au BufWritePre * :%s/\s\+$//e
+        " Remove all trailing whitespace before saving (ignore files in blacklist)
+        let blacklist = ['mail', 'markdown']
+        au BufWritePre * if index(blacklist, &ft) < 0 | :%s/\s\+$//e
     augroup END
 
     " Automatic renaming of tmux window
