@@ -8,7 +8,7 @@ set toolbars=noaddons,nobookmarks,nomenu,nonavigation,tabs
 set status=input,location,bookmark,ssl,position
 set runtimepath=~/.config/vimperator/
 set history=10000
-set defsearch=google
+set defsearch=disconnect
 set visualbell
 set editor=vim
 set focuscontent
