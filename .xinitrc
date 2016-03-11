@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # set environment variables
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd"
 export LIBVA_DRIVER_NAME="vdpau"
 export VDPAU_DRIVER="r600"
 export STEAM_FRAME_FORCE_CLOSE=1
