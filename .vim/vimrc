@@ -46,6 +46,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 "Plug 'klen/python-mode', { 'for': 'python' }
 "Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'bash-support.vim', { 'for': 'sh' }
