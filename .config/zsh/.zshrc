@@ -23,8 +23,7 @@ HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 # source files {{{1
 zsh_files[1]="${ZDOTDIR}/functions"
 zsh_files[2]="${ZDOTDIR}/base16-default.dark.rcn.sh"
-# TODO: customize fzf bindings
-zsh_files[3]="/etc/profile.d/fzf.zsh"
+zsh_files[3]="/usr/share/fzf/key-bindings.zsh"
 
 for zsh_file in ${zsh_files[@]}; do
     [[ -f $zsh_file ]] && source $zsh_file
