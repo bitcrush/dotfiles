@@ -56,6 +56,8 @@ Plug 'chriskempson/base16-vim'
 Plug 'vimwiki/vimwiki', { 'on': 'VimwikiIndex' }
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --no-update-rc' }
+Plug 'pearofducks/ansible-vim'
+
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
