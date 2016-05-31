@@ -163,7 +163,7 @@ setopt unset                # don't error out when unset parameters are used
 
 # completion {{{1
 # load completion (already done by zplug)
-# autoload -U compinit && compinit
+autoload -U compinit && compinit
 
 # load completion listing extensions
 zmodload zsh/complist
