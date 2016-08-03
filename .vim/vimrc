@@ -304,9 +304,8 @@ if has('autocmd')
         au BufEnter *.zsh-theme setlocal filetype=zsh
 
         " set comment string for certain filetypes
-        au FileType gitconfig setlocal commentstring=#\ %s
+        au FileType gitconfig,puppet,tmux setlocal commentstring=#\ %s
         au FileType php setlocal commentstring=//\ %s
-        au FileType tmux setlocal commentstring=#\ %s
         au FileType xdefaults setlocal commentstring=!\ %s
 
         " set textwidth for certain filetypes
@@ -315,6 +314,12 @@ if has('autocmd')
 
         " set mail specific settings
         au FileType mail setlocal wrap lbr nohls noml tw=78 cc=79 fo=tcrq spell spl=de
+
+        " set to add proper PEP8 indentation/checking
+        au BufNewFile,BufRead *.py setlocal ts=4 sts=4 sw=4 tw=79 et ai ff=unix
+
+        " ensure puppet style guide compliance
+        au BufNewFile,BufRead *.pp setlocal ts=2 sts=2 sw=2 tw=140 et ai ff=unix
 
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
