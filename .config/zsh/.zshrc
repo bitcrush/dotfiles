@@ -6,6 +6,7 @@ zplug_url="https://git.io/zplug"
 source ${ZPLUG_HOME}/zplug
 
 zplug "zsh-users/zsh-completions", as:command
+zplug "mrkmg/borgbackup-zsh-completion", as:command
 zplug "zsh-users/zsh-history-substring-search"
 zplug "bitcrush/minimal"
 
