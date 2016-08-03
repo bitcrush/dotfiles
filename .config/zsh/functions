@@ -53,7 +53,7 @@ function extract() {
     local old_dirs current_dirs lower
     old_dirs=( *(N/) )
     unset REMOVE_ARCHIVE
-    
+
     if test "$1" = "-r"; then
         REMOVE_ARCHIVE=1
         shift
@@ -175,13 +175,13 @@ function filename2tag() {
         YEAR=$(grep -oP '(?<=[\[\(])[12][09][0-9]{2}(?=[\]\)])' <<<"${PWD##*/}")
         ARTIST=$(sed 's/^\([0-9]*\ \)\?\(.*\)\( - \)\(.*\)\(\..*$\)/\2/' <<<"$file")
         TITLE=$(sed 's/^\([0-9]*\ \)\?\(.*\)\( - \)\(.*\)\(\..*$\)/\4/' <<<"$file")
-        
+
         echo -e "album:\t$ALBUM"
         echo -e "year:\t$YEAR"
         echo -e "file:\t${file%.*}"
         echo -e "artist:\t$ARTIST"
         echo -e "title:\t$TITLE"
-    
+
         case $file in
             *.mp3)
                 id3tag --artist="$ARTIST" --song="$TITLE" --album="$ALBUM" --year="$YEAR" "$file"
@@ -216,7 +216,7 @@ function tag2filename() {
                 echo -e "title:\t${TITLE#*=}"
                 echo
                 /bin/mv -v "$file" "`printf '%02d' ${NR#*=}` ${ARTIST#*=} - ${TITLE#*=}.${file##*.}"
-                
+
             ;;
         esac
     done
@@ -409,7 +409,8 @@ if [[ $- =~ i ]] && has fzf ; then
                 bmark_path=${bmark_path:1}
             done <${ZDOTDIR}/bookmarks | $(__fzfcmd) -d12 -e)
 
-        dest_dir=$(echo $dest_dir | sed -e 's/^\w*\ *//g')
+        dest_dir=$(awk '{print $2}' <<<$dest_dir)
+
         if [[ -n $dest_dir ]]; then
             cd "$dest_dir"
         fi
