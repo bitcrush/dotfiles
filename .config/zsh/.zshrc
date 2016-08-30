@@ -1,9 +1,12 @@
 #!/bin/zsh
 
 # zplug {{{1
-zplug_url="https://git.io/zplug"
-[[ -r ${ZPLUG_HOME}/zplug ]] || ( curl -fLo ${ZPLUG_HOME}/zplug --create-dirs "$zplug_url")
-source ${ZPLUG_HOME}/zplug
+if [[ ! -d $ZPLUG_HOME ]]; then
+    git clone https://github.com/zplug/zplug "$ZPLUG_HOME"
+    source ${ZPLUG_HOME}/init.zsh && zplug update --self
+fi
+
+source ${ZPLUG_HOME}/init.zsh
 
 zplug "zsh-users/zsh-completions", as:command
 zplug "mrkmg/borgbackup-zsh-completion", as:command

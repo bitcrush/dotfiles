@@ -57,7 +57,10 @@ Plug 'vimwiki/vimwiki', { 'on': 'VimwikiIndex' }
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --no-update-rc' }
 Plug 'pearofducks/ansible-vim'
-
+Plug 'scrooloose/syntastic'
+Plug 'godlygeek/tabular', { 'for': 'pp' }
+Plug 'voxpupuli/vim-puppet', { 'for': 'pp' }
+Plug 'eiginn/iptables-vim',
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
@@ -302,6 +305,7 @@ if has('autocmd')
         " language/filetype specific settings
         au BufEnter *vimperatorrc*,*muttatorrc*,*.vimp setlocal filetype=vimperator
         au BufEnter *.zsh-theme setlocal filetype=zsh
+        au BufEnter *iptables,iptables*.* setlocal filetype=iptables
 
         " set comment string for certain filetypes
         au FileType gitconfig,puppet,tmux setlocal commentstring=#\ %s
@@ -319,7 +323,7 @@ if has('autocmd')
         au BufNewFile,BufRead *.py setlocal ts=4 sts=4 sw=4 tw=79 et ai ff=unix
 
         " ensure puppet style guide compliance
-        au BufNewFile,BufRead *.pp setlocal ts=2 sts=2 sw=2 tw=140 et ai ff=unix
+        au BufNewFile,BufRead *.pp setlocal ts=2 sts=2 sw=2 tw=140 cc=141 et ai ff=unix
 
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
