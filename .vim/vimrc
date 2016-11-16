@@ -58,8 +58,8 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --no-update-rc' }
 Plug 'pearofducks/ansible-vim'
 Plug 'scrooloose/syntastic'
-Plug 'godlygeek/tabular', { 'for': 'pp' }
-Plug 'voxpupuli/vim-puppet', { 'for': 'pp' }
+Plug 'godlygeek/tabular'
+Plug 'voxpupuli/vim-puppet', { 'for': 'puppet' }
 Plug 'eiginn/iptables-vim',
 
 if executable("curl")
