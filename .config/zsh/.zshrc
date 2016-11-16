@@ -9,7 +9,7 @@ fi
 source ${ZPLUG_HOME}/init.zsh
 
 zplug "zsh-users/zsh-completions", as:command
-zplug "mrkmg/borgbackup-zsh-completion", as:command
+zplug "mrkmg/borgbackup-zsh-completion"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "bitcrush/minimal"
 
