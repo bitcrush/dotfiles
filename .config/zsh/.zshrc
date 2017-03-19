@@ -8,10 +8,11 @@ fi
 
 source ${ZPLUG_HOME}/init.zsh
 
-zplug "zsh-users/zsh-completions", as:command
-zplug "mrkmg/borgbackup-zsh-completion"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "bitcrush/minimal"
+zplug 'zsh-users/zsh-completions'
+zplug 'mrkmg/borgbackup-zsh-completion'
+zplug 'zsh-users/zsh-history-substring-search'
+zplug 'bitcrush/minimal', as:theme
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # install plugins if there are any that haven't been installed yet
 if ! zplug check; then zplug install; fi
