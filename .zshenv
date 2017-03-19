@@ -12,7 +12,7 @@ eval `dircolors -b`
 
 # Exports
 typeset -U path
-path=($HOME/bin $path)
+path=($HOME/.gem/ruby/2.4.0/bin $HOME/bin $path)
 export GPG_TTY=$(tty)
 export LANGUAGE='en_US.utf8'
 export LOCALE='en_US.utf8'
