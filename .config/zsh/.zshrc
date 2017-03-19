@@ -101,6 +101,10 @@ if has fzf; then
 
     # Paste the selected command from history into the command line
     bindkey '^R' fzf-history
+
+    # create zle widgets and keybinds
+    bind-git-helper b f t r h
+    unset -f bind-git-helper
 fi
 
 # aliases {{{1
@@ -120,7 +124,7 @@ alias chm-f="find -type f -exec chmod 644 {} \;"
 alias myip="curl icanhazip.com"
 alias gs='git status'
 alias ga='git add'
-alias gb='git branch'
+# alias gb='git branch'
 alias gc='git commit'
 alias gd='git diff'
 alias go='git checkout'
