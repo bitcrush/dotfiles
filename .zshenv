@@ -5,7 +5,7 @@ ZDOTDIR=${HOME}/.config/zsh
 ZPLUG_HOME=${ZDOTDIR}/zplug
 
 # set space between right prompt and terminal margin (V>=5.0.5)
-[[ ! $TTY =~ tty ]] && ZLE_RPROMPT_INDENT=0
+[[ ! $TTY =~ tty ]] && [[ $TERM != xterm-termite ]] && ZLE_RPROMPT_INDENT=0
 
 # Dircolors...
 eval `dircolors -b`
