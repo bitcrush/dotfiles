@@ -57,7 +57,7 @@ Plug 'vimwiki/vimwiki', { 'on': 'VimwikiIndex' }
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --no-update-rc' }
 Plug 'pearofducks/ansible-vim'
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 Plug 'godlygeek/tabular'
 Plug 'voxpupuli/vim-puppet', { 'for': 'puppet' }
 Plug 'eiginn/iptables-vim',
