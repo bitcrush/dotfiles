@@ -45,6 +45,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -153,7 +154,7 @@ nnoremap <F1> <Nop>
 nmap <silent> <F2> :call ToggleSpell()<CR>
 imap <silent> <F2> <C-o>:call ToggleSpell()<CR>
 
-nnoremap <F3> <Nop>
+nnoremap <F3> :NERDTreeToggle<CR>
 
 nnoremap <F4> <Nop>
 
