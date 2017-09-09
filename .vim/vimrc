@@ -96,7 +96,8 @@ set report=0                    " show a report when N lines were changed, 0=sho
 set previewheight=5             " height of preview window
 set visualbell                  " set visual bell instead of audio bell
 set t_vb=                       " no argument means no flash for visual bell
-set splitbelow                  " put new split windows below
+set splitbelow                  " put new horizontal split windows below
+set splitright                  " put new vertical split windows right
 set cmdheight=1                 " cmdprompt height
 set history=500                 " keep 500 lines of command line history
 set foldcolumn=0                " add left margin to display fold state
