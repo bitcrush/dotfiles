@@ -341,6 +341,32 @@ function lowercase()
     done
 }
 
+# ssh {{{1
+function ssh()
+{
+    ORIGINAL_TERM=$TERM
+    if [[ $TERM == tmux ]] ; then
+        TERM="screen"
+    elif [[ $TERM == tmux-256color ]] ; then
+        TERM="screen-256color"
+    fi
+    TERM="$TERM" /usr/bin/ssh $@
+    export TERM=$ORIGINAL_TERM
+}
+
+# vagrant {{{1
+function vagrant()
+{
+    ORIGINAL_TERM=$TERM
+    if [[ $TERM == tmux ]] ; then
+        TERM="screen"
+    elif [[ $TERM == tmux-256color ]] ; then
+        TERM="screen-256color"
+    fi
+    TERM="$TERM" /usr/bin/vagrant $@
+    export TERM=$ORIGINAL_TERM
+}
+
 # bookmark {{{1
 # Add current path to bookmarks file
 function bookmark() {
