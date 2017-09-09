@@ -1,0 +1,322 @@
+[options]
+allow_bold = true
+audible_bell = false
+clickable_url = true
+cursor_blink = off
+cursor_shape = block
+dynamic_title = true
+filter_unmatched_urls = true
+font = Knack Nerd Font 7
+fullscreen = false
+#geometry = 640x480
+#icon_name = terminal
+#modify_other_keys = false
+mouse_autohide = false
+scroll_on_keystroke = true
+scroll_on_output = false
+scrollback_lines = 65535
+search_wrap = true
+#size_hints = false
+urgent_on_bell = true
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+browser = firefox
+
+[hints]
+#font = Monospace 12
+foreground = #dcdccc
+background = #3f3f3f
+active_foreground = #e68080
+active_background = #3f3f3f
+#padding = 2
+#border = #3f3f3f
+#border_width = 0.5
+#roundness = 2.0
+
+[colors]
+# # colors base16-bright {{{
+# # Base16 Bright
+# # Author: Chris Kempson (http://chriskempson.com)
+
+# foreground      = #e0e0e0
+# foreground_bold = #f5f5f5
+# cursor          = #f5f5f5
+# background      = rgba(40, 40, 40, 0.90)
+
+# # 16 color space
+
+# # Black, Gray, Silver, White
+# color0  = #000000
+# color8  = #b0b0b0
+# color7  = #e0e0e0
+# color15 = #ffffff
+
+# # Red
+# color1  = #fb0120
+# color9  = #fb0120
+
+# # Green
+# color2  = #a1c659
+# color10 = #a1c659
+
+# # Yellow
+# color3  = #fda331
+# color11 = #fda331
+
+# # Blue
+# color4  = #6fb3d2
+# color12 = #6fb3d2
+
+# # Purple
+# color5  = #d381c3
+# color13 = #d381c3
+
+# # Teal
+# color6  = #76c7b7
+# color14 = #76c7b7
+
+# # Extra colors
+# color16 = #fc6d24
+# color17 = #be643c
+# color18 = #303030
+# color19 = #505050
+# color20 = #d0d0d0
+# color21 = #f5f5f5
+# # }}}
+# colors base16-default-dark {{{
+foreground        = #d8d8d8
+foreground_bold   = #e8e8e8
+cursor            = #e8e8e8
+cursor_foreground = #181818
+# modified by rcn, original: #181818
+background        = rgba(40, 40, 40, 0.90)
+
+# Black, Gray, Silver, White
+color0  = #181818
+color8  = #585858
+color7  = #d8d8d8
+color15 = #f8f8f8
+
+# Red
+color1  = #ab4642
+color9  = #ab4642
+
+# Green
+color2  = #a1b56c
+color10 = #a1b56c
+
+# Yellow
+color3  = #f7ca88
+color11 = #f7ca88
+
+# Blue
+color4  = #7cafc2
+color12 = #7cafc2
+
+# Purple
+color5  = #ba8baf
+color13 = #ba8baf
+
+# Teal
+color6  = #86c1b9
+color14 = #86c1b9
+
+# Extra colors
+color15 = #f8f8f8
+color16 = #dc9656
+color17 = #a16946
+color18 = #282828
+color19 = #383838
+color20 = #b8b8b8
+color21 = #e8e8e8
+# }}}
+# # colors base16-default-light {{{
+# foreground      = #383838
+# foreground_bold = #282828
+# cursor          = #282828
+# background      = #f8f8f8
+
+# # Black, Gray, Silver, White
+# color0  = #f8f8f8
+# color8  = #b8b8b8
+# color7  = #383838
+# color15 = #181818
+
+# # Red
+# color1  = #ab4642
+# color9  = #ab4642
+
+# # Green
+# color2  = #a1b56c
+# color10 = #a1b56c
+
+# # Yellow
+# color3  = #f7ca88
+# color11 = #f7ca88
+
+# # Blue
+# color4  = #7cafc2
+# color12 = #7cafc2
+
+# # Purple
+# color5  = #ba8baf
+# color13 = #ba8baf
+
+# # Teal
+# color6  = #86c1b9
+# color14 = #86c1b9
+
+# # Extra colors
+# color15 = #181818
+# color16 = #dc9656
+# color17 = #a16946
+# color18 = #e8e8e8
+# color19 = #d8d8d8
+# color20 = #585858
+# color21 = #282828
+# # }}}
+# # colors base16-eighties {{{
+# # Base16 Eighties
+# # Author: Chris Kempson (http://chriskempson.com)
+
+# foreground      = #d3d0c8
+# foreground_bold = #e8e6df
+# cursor          = #e8e6df
+# background      = rgba(40, 40, 40, 0.90)
+
+# # 16 color space
+
+# # Black, Gray, Silver, White
+# color0  = #2d2d2d
+# color8  = #747369
+# color7  = #d3d0c8
+# color15 = #f2f0ec
+
+# # Red
+# color1  = #f2777a
+# color9  = #f2777a
+
+# # Green
+# color2  = #99cc99
+# color10 = #99cc99
+
+# # Yellow
+# color3  = #ffcc66
+# color11 = #ffcc66
+
+# # Blue
+# color4  = #6699cc
+# color12 = #6699cc
+
+# # Purple
+# color5  = #cc99cc
+# color13 = #cc99cc
+
+# # Teal
+# color6  = #66cccc
+# color14 = #66cccc
+
+# # Extra colors
+# color16 = #f99157
+# color17 = #d27b53
+# color18 = #393939
+# color19 = #515151
+# color20 = #a09f93
+# color21 = #e8e6df
+# # }}}
+# # colors base16-github {{{
+# foreground      = #333333
+# foreground_bold = #ffffff
+# cursor          = #ffffff
+# background      = #ffffff
+
+# # Black, Gray, Silver, White
+# color0  = #ffffff
+# color8  = #969896
+# color7  = #333333
+# color15 = #ffffff
+
+# # Red
+# color1  = #ed6a43
+# color9  = #ed6a43
+
+# # Green
+# color2  = #183691
+# color10 = #183691
+
+# # Yellow
+# color3  = #795da3
+# color11 = #795da3
+
+# # Blue
+# color4  = #795da3
+# color12 = #795da3
+
+# # Purple
+# color5  = #a71d5d
+# color13 = #a71d5d
+
+# # Teal
+# color6  = #183691
+# color14 = #183691
+
+# # Extra colors
+# color15 = #ffffff
+# color16 = #0086b3
+# color17 = #333333
+# color18 = #f5f5f5
+# color19 = #c8c8fa
+# color20 = #e8e8e8
+# color21 = #ffffff
+# # }}}
+# # colors base16-tomorrow-night {{{
+# # Base16 Tomorrow Night
+# # Author: Chris Kempson (http://chriskempson.com)
+
+# foreground      = #c5c8c6
+# foreground_bold = #e0e0e0
+# cursor          = #e0e0e0
+# background      = rgba(40, 40, 40, 0.90)
+
+# # 16 color space
+
+# # Black, Gray, Silver, White
+# color0  = #1d1f21
+# color8  = #969896
+# color7  = #c5c8c6
+# color15 = #ffffff
+
+# # Red
+# color1  = #cc6666
+# color9  = #cc6666
+
+# # Green
+# color2  = #b5bd68
+# color10 = #b5bd68
+
+# # Yellow
+# color3  = #f0c674
+# color11 = #f0c674
+
+# # Blue
+# color4  = #81a2be
+# color12 = #81a2be
+
+# # Purple
+# color5  = #b294bb
+# color13 = #b294bb
+
+# # Teal
+# color6  = #8abeb7
+# color14 = #8abeb7
+
+# # Extra colors
+# color16 = #de935f
+# color17 = #a3685a
+# color18 = #282a2e
+# color19 = #373b41
+# color20 = #b4b7b4
+# color21 = #e0e0e0
+# # }}}
+
+# vim: ft=dosini cms=#%s
