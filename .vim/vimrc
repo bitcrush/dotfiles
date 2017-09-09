@@ -43,6 +43,7 @@ call plug#begin('$VIMHOME/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'scrooloose/nerdtree'
@@ -213,6 +214,9 @@ map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " Align paragraphs when writing E-Mails
 nnoremap <leader>g vipgq
+
+" Commit to git
+nnoremap <leader>gs :Gstatus<cr>gg<C-n>
 
 " Make Y behave like other capitals
 nnoremap Y y$
