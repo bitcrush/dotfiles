@@ -1,86 +1,124 @@
-# vim: set filetype=gitconfig ts=4 sts=4 sw=4 et:
+# vim: set filetype=gitconfig ts=2 sts=2 sw=2 et:
 
-# colors {{{
-[color]
-    diff = auto
-    status = auto
-    branch = auto
-    interactive = auto
-    ui = auto
+[color] # {{{
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = auto
 
 [color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+  current = yellow reverse
+  local = yellow
+  remote = green
 
 [color "diff"]
-    meta = yellow bold
-    frag = magenta
-    plain = white bold
-    old = red bold
-    new = green bold
-    commit = yellow bold
-    func = green dim
-        #plain = white bold
+  meta = yellow bold
+  frag = magenta
+  plain = white bold
+  old = red bold
+  new = green bold
+  commit = yellow bold
+  func = green dim
+  #plain = white bold
 
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
 # }}}
 
-[alias]
-    dt = difftool
-    ba = branch -a
-    cb = checkout -b
-    co = checkout
-    ci = commit
-    st = status
-    br = branch
-    hs = log --abbrev-commit --graph --date=short --max-count=30 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
-    hsa = log --abbrev-commit --graph --date=short --max-count=30 --all --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
-    type = cat-file -t
-    dump = cat-file -p
-    alias = config --get-regexp ^alias\\.
-    unstage = reset HEAD --
+[alias] # {{{
+  # Abbreviations
+  br = branch
+  branches = branch -a
+  cb = checkout -b
+  ci = commit
+  co = checkout
+  dt = difftool
+  st = status -sb
+  stashes = stash list
+  tags = tag
+
+  # Display all configured aliases
+  alias = config --get-regexp ^alias\\.
+
+  # Amend to previous commit
+  amend = commit --amend
+
+  # Fix your last commit without prompting an editor
+  oops = commit --all --amend --no-edit
+
+  # Discard unstaged changes made to a file
+  discard = checkout --
+
+  # Unstage staged hunks or files
+  unstage = reset -q HEAD --
+
+  # Uncommit and unstage files
+  uncommit = reset --mixed HEAD~
+
+  # Pretty log output
+  # hs = log --abbrev-commit --graph --branches --remotes --date=short --max-count=30 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset • %<(75,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
+  hs = log --abbrev-commit --graph --date=short --max-count=30 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
+  hsn = hs --numstat
+  hsa = hs --all
+  hsan = hsn --all
+
+  # Print the last commit title & hash
+  last = --no-pager log -1 --oneline --color
+
+  # Print the type of a git object
+  type = cat-file -t
+
+  # Print the metadata of a git object
+  dump = cat-file -p
+
+  precommit = diff --cached --diff-algorithm=minimal -w
+
+  # Add a file/directory to your .gitignore
+  # ignore = "!f() { echo \"$(git rev-parse --show-prefix)${1}\" >> \"$(git rev-parse --show-toplevel)/.gitignore\"; }; f"
+  # ignore = "!f() { echo \"$(git rev-parse --show-prefix)${1}\"; }; f"
+  example = "!f() { PRE=$(git rev-parse --show-prefix); TOP=$(git rev-parse --show-toplevel); echo \"$PRE\"; echo \"$TOP\"; }; f"
+# }}}
 
 [url "https://aur.archlinux.org/"]
-    insteadOf = aur://
+  insteadOf = aur://
 
 [url "ssh+git://aur@aur.archlinux.org/"]
-    insteadOf = "aur:"
+  insteadOf = "aur:"
 
 [url "https://github.com/"]
-    insteadOf = "gh:"
+  insteadOf = "gh:"
 
 [url "git@github.com:"]
-    pushInsteadOf = "gh:"
+  pushInsteadOf = "gh:"
 
 [status]
-    relativePaths = true
-    showUntrackedFiles = no
+  relativePaths = true
+  showUntrackedFiles = no
 
 [core]
-    editor = vim
+  editor = vim
 
 [merge]
-    tool = vimdiff
+  tool = vimdiff
 
 [diff]
-    tool = vimdiff
-    noprefix = true
-    algorithm = patience
-    renames = copies
+  tool = vimdiff
+  noprefix = true
+  algorithm = patience
+  renames = copies
 
 #[pager]
-#        diff = "vim -c '%sm/\\e.\\{-}m//ge' -c 'set ft=diff' -c 'normal gg' -"
+#  diff = "vim -c '%sm/\\e.\\{-}m//ge' -c 'set ft=diff' -c 'normal gg' -"
 
 [push]
-    default = simple
+  default = simple
 
 [difftool]
-    prompt = false
+  prompt = false
 
 [include]
-    path = ~/.gitconfig.local
+  path = ~/.gitconfig.local
 
