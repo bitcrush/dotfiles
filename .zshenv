@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+typeset -U path
+path=($HOME/.gem/ruby/2.4.0/bin $HOME/bin $path)
+
 # location of zsh/zplug config files
 ZDOTDIR=${HOME}/.config/zsh
 ZPLUG_HOME=${ZDOTDIR}/zplug
@@ -11,8 +14,6 @@ ZPLUG_HOME=${ZDOTDIR}/zplug
 eval `dircolors -b`
 
 # Exports
-typeset -U path
-path=($HOME/.gem/ruby/2.4.0/bin $HOME/bin $path)
 export GPG_TTY=$(tty)
 export LANGUAGE='en_US.utf8'
 export LOCALE='en_US.utf8'
