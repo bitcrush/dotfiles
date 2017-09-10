@@ -107,6 +107,8 @@ set foldtext=NeatFoldText()     " change appearance of folded text
 
 set statusline=%F%m%r%h%w\ \|\ format:%{&ff}\ \|\ type:%Y\ \|\ pos:%4l,%4v\ \|\ lines:%L\ \|\ %{fugitive#statusline()}\ %=%3p%%
 
+hi Comment cterm=italic
+
 if has('mouse')
   set mouse=a
 endif
