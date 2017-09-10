@@ -346,6 +346,7 @@ if has('autocmd')
 
         " ensure puppet style guide compliance
         au BufNewFile,BufRead *.pp setlocal ts=2 sts=2 sw=2 tw=140 cc=141 et ai ff=unix
+        au BufNewFile,BufRead *.yaml,*.yml setlocal ts=2 sts=2 sw=2 tw=0 et ai ff=unix
 
         " Update 'changed' line on perl files before saving
         au BufWrite *.pl    %s/changed     => '.*/\="changed     => '" . strftime("%c") . "',"/e
