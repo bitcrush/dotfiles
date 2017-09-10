@@ -420,9 +420,9 @@ let g:gist_browser_command = 'firefox %URL% &'
 
 " {{{2 airline
 let g:airline_theme = 'base16'
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline_mode_map = {'c': 'COMMAND', '^S': 'S-BLOCK', 'R': 'REPLACE', 's': 'SELECT', 'V': 'V-LINE', '^V': 'V-BLOCK', 'i': 'INSERT', '__': '------', 'S': 'S-LINE', 'v': 'VISUAL', 'n': 'NORMAL'}
-let g:airline_symbols = {'linenr': '', 'paste': 'PASTE', 'readonly': '', 'modified': '+', 'space': ' ', 'whitespace': '✹', 'branch': ''}
+let g:airline_symbols = {'linenr': '', 'paste': '', 'readonly': '', 'modified': '+', 'space': ' ', 'whitespace': '', 'branch': ''}
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
