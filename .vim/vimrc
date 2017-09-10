@@ -63,6 +63,8 @@ Plug 'w0rp/ale'
 Plug 'godlygeek/tabular'
 Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
 Plug 'eiginn/iptables-vim',
+Plug 'ryanoasis/vim-devicons',
+Plug 'tpope/vim-dispatch',
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
