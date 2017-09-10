@@ -61,7 +61,7 @@ Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --no-update-rc' }
 Plug 'pearofducks/ansible-vim'
 Plug 'w0rp/ale'
 Plug 'godlygeek/tabular'
-Plug 'voxpupuli/vim-puppet', { 'for': 'puppet' }
+Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
 Plug 'eiginn/iptables-vim',
 
 if executable("curl")
