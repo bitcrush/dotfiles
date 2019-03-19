@@ -112,6 +112,9 @@
 #[pager]
 #  diff = "vim -c '%sm/\\e.\\{-}m//ge' -c 'set ft=diff' -c 'normal gg' -"
 
+[pull]
+  rebase = true
+
 [push]
   default = simple
 
