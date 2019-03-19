@@ -177,6 +177,9 @@ autoload -U compinit && compinit
 # load completion listing extensions
 zmodload zsh/complist
 
+# specify additional paths where to find completion files
+fpath=(${ZDOTDIR}/completions $fpath)
+
 # autocompletion with an arrow-key driven interface
 zstyle ':completion:*' menu select
 
