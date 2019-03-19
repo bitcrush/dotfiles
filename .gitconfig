@@ -61,9 +61,8 @@
   # Pretty log output
   # hs = log --abbrev-commit --graph --branches --remotes --date=short --max-count=30 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset • %<(75,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
   hs = log --abbrev-commit --graph --date=short --max-count=30 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
-  hsn = hs --numstat
-  hsa = hs --all
-  hsan = hsn --all
+  hsa = log --abbrev-commit --graph --date=short --max-count=30 --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset' --all
+  hst = log --abbrev-commit --graph --date=short --pretty=format:'%C(yellow)%h%Creset %C(bold magenta)%ad%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%Cred%d%Creset'
 
   # Print the last commit title & hash
   last = --no-pager log -1 --oneline --color
