@@ -404,15 +404,6 @@ if has('autocmd')
         au BufWritePre * if index(blacklist, &ft) < 0 | :%s/\s\+$//e
     augroup END
 
-    " Automatic renaming of tmux window
-    augroup tmux
-        au!
-        if exists('$TMUX') && !exists('$NORENAME')
-            au BufEnter * call system('tmux rename-window '.expand('%:t:S'))
-            au VimLeave * call system('tmux set-window automatic-rename on')
-        endif
-    augroup END
-
     " Source vimrc right after saving the buffer
     augroup vimrc
         au!
