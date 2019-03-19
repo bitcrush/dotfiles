@@ -76,9 +76,8 @@
   precommit = diff --cached --diff-algorithm=minimal -w
 
   # Add a file/directory to your .gitignore
-  # ignore = "!f() { echo \"$(git rev-parse --show-prefix)${1}\" >> \"$(git rev-parse --show-toplevel)/.gitignore\"; }; f"
-  # ignore = "!f() { echo \"$(git rev-parse --show-prefix)${1}\"; }; f"
-  example = "!f() { PRE=$(git rev-parse --show-prefix); TOP=$(git rev-parse --show-toplevel); echo \"$PRE\"; echo \"$TOP\"; }; f"
+  ignore = "!f() { echo /${GIT_PREFIX}${1} >> \"$(git rev-parse --show-toplevel)/.gitignore\"; }; f"
+
 # }}}
 
 [url "https://aur.archlinux.org/"]
