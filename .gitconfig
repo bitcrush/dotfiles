@@ -31,7 +31,7 @@
 [alias] # {{{
   # Abbreviations
   br = branch
-  branches = branch -a
+  branches = branch -a -vv
   cb = checkout -b
   ci = commit
   co = checkout
