@@ -405,6 +405,7 @@ function bookmark() {
         return 1
     else
         echo "${bmark_path}|$bmark_id" >> $bmark_file
+        sort -k2 -t'|' -o $bmark_file $bmark_file
     fi
 }
 # fzf {{{1
