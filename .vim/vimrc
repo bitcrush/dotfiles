@@ -210,8 +210,6 @@ nnoremap <silent> <C-o> <C-o>zz
 nnoremap <silent> <C-i> <C-i>zz
 
 " Quicker buffer navigation
-nnoremap gt :bnext<CR>
-nnoremap gT :bprevious<CR>
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprevious<CR>
 
