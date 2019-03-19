@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 typeset -U path
-path=($HOME/.gem/ruby/2.4.0/bin $HOME/bin $path)
+path=($HOME/bin $HOME/.gem/ruby/*/bin $path)
 
 # location of zsh/zplug config files
 ZDOTDIR=${HOME}/.config/zsh
