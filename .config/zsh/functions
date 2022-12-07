@@ -351,7 +351,7 @@ function ssh()
         TERM="screen-256color"
     fi
     TERM="$TERM" /usr/bin/ssh $@
-    export TERM=$ORIGINAL_TERM
+    trap "export TERM=$ORIGINAL_TERM" INT QUIT TERM EXIT
 }
 
 # vagrant {{{1
@@ -364,7 +364,7 @@ function vagrant()
         TERM="screen-256color"
     fi
     TERM="$TERM" /usr/bin/vagrant $@
-    export TERM=$ORIGINAL_TERM
+    trap "export TERM=$ORIGINAL_TERM" INT QUIT TERM EXIT
 }
 
 # bookmark {{{1
