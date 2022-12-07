@@ -89,7 +89,7 @@ foreground_bold   = #e8e8e8
 cursor            = #e8e8e8
 cursor_foreground = #181818
 # modified by rcn, original: #181818
-background        = rgba(40, 40, 40, 0.90)
+background        = rgba(40, 40, 40, 0.70)
 
 # Black, Gray, Silver, White
 color0  = #181818
