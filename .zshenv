@@ -1,11 +1,10 @@
 #!/bin/zsh
 
 typeset -U path
-path=($HOME/bin $HOME/.gem/ruby/*/bin $path)
+path=($HOME/bin $path)
 
 # location of zsh/zplug config files
 ZDOTDIR=${HOME}/.config/zsh
-ZPLUG_HOME=${ZDOTDIR}/zplug
 
 # set space between right prompt and terminal margin (V>=5.0.5)
 [[ ! $TTY =~ tty ]] && [[ $TERM != xterm-termite ]] && ZLE_RPROMPT_INDENT=0
@@ -23,6 +22,7 @@ export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
 export BROWSER='firefox'
+export WINEFSYNC=1
 
 # fzf
 export FZF_DEFAULT_COMMAND="find -type f"
@@ -37,4 +37,3 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
-
