@@ -333,7 +333,7 @@ if has('autocmd')
         au BufEnter *iptables,iptables*.* setlocal filetype=iptables
 
         " set comment string for certain filetypes
-        au FileType gitconfig,puppet,tmux setlocal commentstring=#\ %s
+        au FileType gitconfig,puppet,tmux,tf setlocal commentstring=#\ %s
         au FileType php setlocal commentstring=//\ %s
         au FileType xdefaults setlocal commentstring=!\ %s
 
