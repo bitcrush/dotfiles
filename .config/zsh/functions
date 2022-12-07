@@ -540,6 +540,13 @@ if [[ $- =~ i ]] && has fzf && has git ; then
 
 fi
 
+# mysql_hash {{{1
+function mysql_hash()
+{
+    local password="$1"
+    python -c "from hashlib import sha1; print('*' + sha1(sha1(\"$password\".encode('utf-8')).digest()).hexdigest().upper())"
+}
+
 # chkflac {{{1
 function chkflac()
 {
