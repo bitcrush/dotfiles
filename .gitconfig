@@ -107,6 +107,7 @@
 
 [merge]
   tool = vimdiff
+  conflictstyle = merge
 
 [diff]
   tool = vimdiff
