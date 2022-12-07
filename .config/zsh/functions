@@ -146,22 +146,26 @@ function flac2mp3() {
     [[ $1 = "-d" ]] && DEL=1 && shift
     for i in "$@"; do
 
-        TART=$(metaflac --show-tag=ARTIST $i)
-        TTIT=$(metaflac --show-tag=TITLE $i)
-        TYR=$(metaflac --show-tag=DATE $i)
-        TALB=$(metaflac --show-tag=ALBUM $i)
-        TGNR=$(metaflac --show-tag=GENRE $i)
-        TTNR=$(metaflac --show-tag=TRACKNUMBER $i)
+        local new_filename="${i/.flac/.mp3}"
 
-        flac -c -d "$i" | lame --noreplaygain --cbr -m s -h -b 320 \
-        --add-id3v2 --pad-id3v2 --ignore-tag-errors \
-        --tt "${TTIT#*=}" \
-        --tn "${TTNR#*=}" \
-        --ta "${TART#*=}" \
-        --tl "${TALB#*=}" \
-        --ty "${TYR#*=}" \
-        --tg "${TGNR#*=}" \
-        - "${i/.flac/.mp3}" && \
+        ffmpeg -i "$i" -ab 320k -map_metadata 0 -id3v2_version 3 "$new_filename"
+        # -write_id3v1 1
+
+        touch -r "$i" "$new_filename"
+        [[ $DEL == 1 ]] && rm "$i"
+    done
+}
+
+# aiff2flac {{{1
+function aiff2flac() {
+    [[ $1 = "-d" ]] && DEL=1 && shift
+    for i in "$@"; do
+
+        local new_filename="${i/.aiff/.flac}"
+
+        ffmpeg -i "$i" -acodec flac -compression_level 8 "$new_filename"
+
+        touch -r "$i" "$new_filename"
         [[ $DEL == 1 ]] && rm "$i"
     done
 }
