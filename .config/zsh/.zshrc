@@ -1,34 +1,26 @@
 #!/bin/zsh
 
-# zplug {{{1
-if [[ ! -d $ZPLUG_HOME ]]; then
-    git clone https://github.com/zplug/zplug "$ZPLUG_HOME"
-    source ${ZPLUG_HOME}/init.zsh && zplug update --self
-fi
+# zinit {{{1
+autoload -Uz compinit
+compinit
 
-source ${ZPLUG_HOME}/init.zsh
+source ~/.local/share/zinit/zinit.git/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-zplug 'zsh-users/zsh-completions'
-zplug 'mrkmg/borgbackup-zsh-completion'
-zplug 'zsh-users/zsh-history-substring-search'
-zplug 'bitcrush/minimal', as:theme
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+# ZINIT[MUTE_WARNINGS]=1
 
-# install plugins if there are any that haven't been installed yet
-if ! zplug check; then zplug install; fi
+zinit light mrkmg/borgbackup-zsh-completion
+zinit light zsh-users/zsh-history-substring-search
+zinit light zsh-vi-more/vi-motions
+zinit light bitcrush/minimal
 
-# source plugins and add commands to $PATH
-zplug load
-
-# zsh-history-substring-search
-HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=default,fg=red,bold'
-HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
-HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
-
+zinit ice blockf
+zinit light zsh-users/zsh-completions
+# }}}
 # source files {{{1
 zsh_files[1]="${ZDOTDIR}/functions"
-#zsh_files[2]="${ZDOTDIR}/base16-default.dark.rcn.sh"
-zsh_files[3]="/usr/share/fzf/key-bindings.zsh"
+zsh_files[2]="/usr/share/fzf/key-bindings.zsh"
 
 for zsh_file in ${zsh_files[@]}; do
     [[ -f $zsh_file ]] && source $zsh_file
