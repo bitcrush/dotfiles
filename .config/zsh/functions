@@ -539,3 +539,19 @@ if [[ $- =~ i ]] && has fzf && has git ; then
     }
 
 fi
+
+# chkflac {{{1
+function chkflac()
+{
+    local tune="$1"
+    local output=$(mktemp)
+
+    if ! file "$tune" | grep 'FLAC audio bitstream data' ; then
+        echo "File \"$tune\" is not a FLAC file."
+        return 1
+    fi
+
+    flac -s -d "$tune" -f -o "$output" && { LAC "$output" | grep '^Result: ' ; }
+
+    trap "rm $output" EXIT
+}
