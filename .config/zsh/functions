@@ -399,7 +399,7 @@ function bookmark() {
         echo "Please choose an ID with a length <= 20."; return 1
     elif grep -qE "\|${bmark_id}$" $bmark_file ; then
         echo "ID already in use. Please choose another name."; return 1
-    elif ! grep -E '^[A-Za-z0-9_.][A-Za-z0-9_-.]*$' <<<$bmark_id ; then
+    elif ! grep -E '^[A-Za-z0-9_.][A-Za-z0-9_.-]*$' <<<$bmark_id ; then
         echo "Invalid ID given. Valid characters are: A-Z a-z 0-9 _ - ."
         echo "In addition make sure not to start your ID with a hyphen."
         return 1
