@@ -280,7 +280,7 @@ zstyle ':completion:*' menu select=5
 
 # ssh/scp host and login completion
 zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
-          ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ }
+          ${=${${(f)"$(cat /etc/ssh_hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ }
           ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
           ${${${(M)${(s:# :)${(zj:# :)${(Lf)"$([[ -f ~/.ssh/config ]] && <~/.ssh/config)"}%%\#*}}##host(|name) *}#host(|name) }/\*}
           )'
