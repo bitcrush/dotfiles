@@ -81,6 +81,9 @@
   # Open all modified files in Vim
   edit = "!f() { vim $(git status -s | awk '{ print $2 }'); }; f"
 
+  # Rewrite stash description
+  # Usage: git stash-rename <stash> [save options] [<message>]
+  stash-rename = "!f() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; f"
 # }}}
 
 [url "https://aur.archlinux.org/"]
