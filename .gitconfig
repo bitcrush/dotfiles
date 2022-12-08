@@ -132,3 +132,5 @@
 
 [init]
   defaultBranch = main
+[safe]
+	directory = /home/shared/pemtool

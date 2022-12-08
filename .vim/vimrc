@@ -51,23 +51,20 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-"Plug 'prabirshrestha/asyncomplete.vim'
-"Plug 'klen/python-mode', { 'for': 'python' }
-"Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-" Plug 'bash-support.vim', { 'for': 'sh' }
+Plug 'sheerun/vim-polyglot'
 Plug 'qpkorr/vim-renamer'
 Plug 'chriskempson/base16-vim'
 Plug 'vimwiki/vimwiki', { 'on': 'VimwikiIndex' }
-Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'junegunn/fzf', { 'do': 'yes \| ./install --bin --no-update-rc' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'w0rp/ale'
 Plug 'godlygeek/tabular'
 Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
+Plug 'hashivim/vim-terraform', { 'for': 'terraform' }
 Plug 'eiginn/iptables-vim',
 Plug 'ryanoasis/vim-devicons',
-Plug 'tpope/vim-dispatch',
-Plug 'ericpruitt/tmux.vim', { 'for': 'tmux' }
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 if executable("curl")
     Plug 'mattn/webapi-vim'     " dependency of gist-vim
